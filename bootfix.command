@@ -5,15 +5,17 @@
 #		Yosemite dark boot for unsupported machines
 #
 #		Created By	:	w0lf			
-#		Last Edited	:	8/22/2014			
+#		Last Edited	:	10/04/2014			
 #		About		:	Adds your board ID to boot.efi to get new dark boot screen.
-#		Changes		:	Replaces first IS instead of last ID					
+#		Changes		:	Downloads and patches old working efi
+#						Backups now located @ /System/Library/CoreServices/efi_backups/*
+#		Note		:	Use this script at your own risk. 			
 #			
 #####
 
 do_work()
 {
-	echo -e "Now you'll need to enter your password for some sudo commands"
+	echo -e "First you will need to enter your password for some sudo commands"
 	echo -e "You won't see your password as you type it, just enter it and press return\n"
 	sudo -v
 	echo -e ""
@@ -22,8 +24,18 @@ do_work()
 	sudo chflags nouchg /System/Library/CoreServices/boot.efi
 	
 	cur_time=$(date +%y%m%d%H%M%S)
-	echo -e "Backing up boot.efi to ~/Desktop/boot${cur_time}.efi"
-	sudo cp /System/Library/CoreServices/boot.efi ~/Desktop/boot${cur_time}.efi
+	echo -e "Backing up boot.efi to /System/Library/CoreServices/efi_backups/boot_${cur_time}.efi"
+	if [[ ! -e /System/Library/CoreServices/efi_backups/ ]]; then sudo mkdir /System/Library/CoreServices/efi_backups; fi
+	sudo cp /System/Library/CoreServices/boot.efi /System/Library/CoreServices/efi_backups/boot_${cur_time}.efi
+	#sudo cp /System/Library/CoreServices/boot.efi ~/Desktop/boot${cur_time}.efi
+	
+	echo -e "Downloading working boot.efi"
+	if [[ -e /tmp/boot.efi ]]; then sudo rm /tmp/boot.efi; fi
+	curl -\# -L -o /tmp/boot.efi http://sourceforge.net/projects/darkboot/files/boot.efi/download
+	
+	echo -e "Moving working boot.efi"
+	sudo rm /System/Library/CoreServices/boot.efi
+	sudo mv /tmp/boot.efi /System/Library/CoreServices/boot.efi
 
 	echo -e "Getting boot.efi hex\n"
 	xxd -p /System/Library/CoreServices/boot.efi | tr -d '\n' > /tmp/___boot.efi
