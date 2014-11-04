@@ -125,6 +125,13 @@ if [[ $osx_ver = "10.10" ]]; then
 	if [[ ${#new_ID} -lt 21 ]]; then
 		do_work
 	fi
+
+# Lets Support 10.10.1
+if [[ $osx_ver = "10.10.1" ]]; then
+if [[ ${#new_ID} -lt 21 ]]; then
+                do_work
+        fi
+
 else
 	echo -e "Sorry this only works on OSX 10.10 Yosemite\n"
 fi
