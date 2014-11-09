@@ -4,14 +4,57 @@
 #
 #		Yosemite dark boot for unsupported machines
 #
-#		Created By	:	w0lf			
-#		Last Edited	:	10/04/2014			
+#		Created By	:	w0lf
+#		Project Page:	https://github.com/w0lfschild/DarkBoot		
+#		Last Edited	:	11/08/2014			
 #		About		:	Adds your board ID to boot.efi to get new dark boot screen.
-#		Changes		:	Downloads and patches old working efi
-#						Backups now located @ /System/Library/CoreServices/efi_backups/*
-#		Note		:	Use this script at your own risk. 			
+#		Changes		:	10.10.1+ support.
+#
+#		Notes		:	Use this script at your own risk. 
+#						Backups located @ /System/Library/CoreServices/efi_backups/*			
 #			
 #####
+
+vercomp() {
+    if [[ $1 == $2 ]]
+    then
+        return 0
+    fi
+    local IFS=.
+    local i ver1=($1) ver2=($2)
+    # fill empty fields in ver1 with zeros
+    for ((i=${#ver1[@]}; i<${#ver2[@]}; i++))
+    do
+        ver1[i]=0
+    done
+    for ((i=0; i<${#ver1[@]}; i++))
+    do
+        if [[ -z ${ver2[i]} ]]
+        then
+            # fill empty fields in ver2 with zeros
+            ver2[i]=0
+        fi
+        if ((10#${ver1[i]} > 10#${ver2[i]}))
+        then
+            return 1
+        fi
+        if ((10#${ver1[i]} < 10#${ver2[i]}))
+        then
+            return 2
+        fi
+    done
+    return 0
+}
+
+verres() {
+	vercomp "$1" "$2"
+	case $? in
+		0) output='=';;
+        1) output='>';;
+        2) output='<';;
+	esac
+	echo $output
+}
 
 do_work()
 {
@@ -121,10 +164,14 @@ new_ID=$(ioreg -p IODeviceTree -r -n / -d 1 | grep board-id)
 new_ID=${new_ID##*<\"}
 new_ID=${new_ID%%\">}
 osx_ver=$(sw_vers -productVersion)
-if [[ $osx_ver = "10.10" ]]; then
+testres=$(verres "$osx_ver" 10.10)
+
+if [[ $testres = ">" || $testres = "=" ]]; then
 	if [[ ${#new_ID} -lt 21 ]]; then
 		do_work
 	fi
 else
-	echo -e "Sorry this only works on OSX 10.10 Yosemite\n"
+	echo -e "Sorry this only works on OSX Yosemite\n"
 fi
+
+# End
