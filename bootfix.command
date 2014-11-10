@@ -5,12 +5,12 @@
 #		Yosemite dark boot for unsupported machines
 #
 #		Created By	:	w0lf
-#		Project Page	:	https://github.com/w0lfschild/DarkBoot		
+#		Project Page:	https://github.com/w0lfschild/DarkBoot		
 #		Last Edited	:	11/08/2014			
 #		About		:	Adds your board ID to boot.efi to get new dark boot screen.
 #		Changes		:	10.10.1+ support.
 #		Notes		:	Use this script at your own risk. 
-#					Backups located @ /System/Library/CoreServices/efi_backups/*			
+#						Backups located @ /System/Library/CoreServices/efi_backups/*			
 #			
 #####
 
