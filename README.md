@@ -1,15 +1,15 @@
 # DarkBoot
 This script enables the black boot screen + white Apple logo on "unsupported" Macs.
 
-### Intro
+![Preview](blk.png)
+
+### Information
 **Note**: This may break in the future.
 Confirmed working on:
 10.10.0	(14A389)
 10.10.1	(14B17)
 
-![Preview](blk.png)
-
-### How do I DarkDock?
+### How do I DarkBoot?
 Download and run bootfix.command then restart twice.
 
 ### License?
