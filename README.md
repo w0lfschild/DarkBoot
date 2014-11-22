@@ -8,8 +8,8 @@ This script enables the black boot screen + white Apple logo on "unsupported" Ma
 
 Confirmed working on:    
 **10.10.0** (14A389)    
-**10.10.1** (14B25)
-**10.10.2** (14C68m)
+**10.10.1** (14B25)    
+**10.10.2** (14C68m)    
 
 ### How to use:
 Download and run DarkBoot.command then restart twice.
