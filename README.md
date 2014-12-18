@@ -12,17 +12,17 @@ Confirmed working on:
 **10.10.2** (14C81f)    
 
 ### How to use:
-**If you want dark the boot screen:**
+**If you want dark the boot screen:**    
 Download and run DarkBoot.command then restart twice.
 
-**If you want gray the boot screen:**
-Download and run DarkBoot.command 
-	If you're prompted that your ID already exists in boot.efi
-		Enter 'y' to remove your ID then run Darkboot a 2nd time to add your ID back then run Darkboot a 3rd time to remove your ID again. To finish restart twice.
-	If your ID doesn't already exist in boot.efi
+**If you want gray the boot screen:**    
+Download and run DarkBoot.command    
+	If you're prompted that your ID already exists in boot.efi    
+		Enter 'y' to remove your ID then run Darkboot a 2nd time to add your ID back then run Darkboot a 3rd time to remove your ID again. To finish restart twice.    
+	If your ID doesn't already exist in boot.efi    
 		After Darkboot adds your ID run Darkboot again to remove your ID. To finish restart twice.
 
-**If you have the gray boot screen but DarkBoot says your ID is already present:**
+**If you have the gray boot screen but DarkBoot says your ID is already present:**    
 	Enter 'y' to remove your ID then run Darkboot a 2nd time to add your ID back. To finish restart twice.
 	
 ### License:
