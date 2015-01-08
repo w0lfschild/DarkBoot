@@ -9,7 +9,7 @@ This script enables the black boot screen + white Apple logo on "unsupported" Ma
 Confirmed working on:    
 **10.10.0** (14A389)    
 **10.10.1** (14B25)    
-**10.10.2** (14C81f)    
+**10.10.2** (14C94b)    
 
 ### How to use:
 **If you want dark the boot screen:**    
