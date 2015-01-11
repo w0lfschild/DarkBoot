@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<title>Pashua 0.9.5.1</title>
+<meta name="publisher" content="Carsten Blüm" />
+<link rel="stylesheet" href="../style.css" type="text/css" />
+</head>
+<body>
+
+<div id="frame">
+
+<header>
+    <a href="http://www.bluem.net/de/mac/" target="_blank"><span>Carsten Blüm Mac Development</span></a>
+</header>
+
+<h1>Pashua 0.9.5.1</h1>
+
+<h2>Was ist Pashua?</h2>
+<p>Pashua ist ein Utility zur Erzeugung von ›echten‹ Dialogfenstern für Perl-, PHP-, Tcl-, Python-, Groovy-, Shell-, Ruby- sowie Rexx-Skripte und AppleScripts unter Mac OS X. Hierfür stehen eine Reihe von GUI-Elementen zur Verfügung: Texteingabefelder, Check&shy;boxes, Aufklapp&shy;menüs, Combo Boxes, Buttons und so weiter; außerdem können auch Bilder und PDFs eingebettet werden.<br />
+Die vom Benutzer einge&shy;ge&shy;benen Daten werden von Pashua an das aufrufende Skript zurückgeben, welches dann mit diesen arbeiten kann.<br />
+Pashua bedient sich dabei einer äußerst einfachen Syntax für die Beschrei&shy;bung des Dialoges; alle Fleiß&shy;arbeiten wie das Posi&shy;tio&shy;nieren der Elemente, die Berechnung der Fenstergröße etc. werden vollautomatisch übernommen.</p>
+
+<h2>Was kostet Pashua?</h2>
+<p>Pashua ist kostenlos. Aber wenn das Programm für Sie nützlich ist und Sie ein »Danke« senden möchten, gibt es dafür <a href="http://www.bluem.net/jump/donations/">eine Reihe von Möglichkeiten</a>.</p>
+
+<h2>Wie benutzt man Pashua?</h2>
+<p>Im Ordner »Examples« auf dem Disk Image, welches dieses Readme enthält, befinden sich einige Dateien, welche die Anwendung exemplarisch zeigen:</p>
+<ul>
+<li><code>example.applescript</code> Aus einem AppleScript heraus.</li>
+<li><code>example.groovy</code> Aus einem Groovy-Skript heraus. Die Datei enthält die Klasse <code>PashuaRunner</code>, die in eigene Skripts eingebaut werden kann.</li>
+<li><code>example.php</code> Aus einem PHP-Skript heraus. Das Skript enthält die Funktion <code>pashua_run()</code>, welche Pashua aufruft und das Ergebnis parst.</li>
+<li><code>example.pl</code> Aus einem Perl-Skript heraus. Das Skript bindet das ebenfalls im gleichen Ordner lie&shy;gen&shy;de Perl-Modul <code>Pashua.pm</code> ein, welches die Kommunikation mit Pashua übernimmt. Am ein&shy;fach&shy;sten ist es, wenn man das Modul in ein Verzeichnis kopiert, das in <code>@INC</code> enthalten ist, bei&shy;spiels&shy;wei&shy;se <code>/Library/Perl</code>. Das Modul enthält eine POD-Dokumentation.</li>
+<li><code>example.py</code> Aus einem Python-Skript heraus. Das Skript bindet das ebenfalls im gleichen Ordner lie&shy;gen&shy;de Python-Modul <code>Pashua.py</code> ein, welches die Kommunikation mit Pashua übernimmt.</li>
+<li><code>example.rb</code> Aus einem Ruby-Skript heraus. Das Skript bindet das im gleichen Ordner liegende Ruby-Modul <code>Pashua.rb</code> ein, welches die Funktionalität für die Kommunikation mit Pashua enthält.</li>
+<li><code>example.rexx</code> Aus einem Rexx-Skript heraus. Dieses Skript setzt eine Installation von Rexx/Regina voraus; der Pfad in der Shebang-Line (der ersten Zeile des Skripts) muss ggf. auf die lokalen Gegebenheiten angepasst werden.</li>
+<li><code>example.sh</code> Aus einem Shell-Skript heraus. Die Datei enthält die Funktion <code>pashua_run</code>, die in eigene Shell-Skripts eingebaut werden kann.</li>
+<li><code>example.tcl</code> Aus einem Tcl-Skript heraus. Das Skript bindet die im glei&shy;chen Ordner lie&shy;gen&shy;de Datei <code>pashua_run.tcl</code> ein, welches eine Funktion für die Kommunikation mit Pashua enthält.</li>
+</ul>
+
+<p>Das AppleScript-Beispiel wurde als Applikation gesichert und kann daher einfach durch Doppelklicken gestartet werden. Alle anderen Beispiele kann man einfach ausprobieren, indem den Pfad des Skripts im Ter&shy;mi&shy;nal eingibt (am einfachsten geht das, indem man das Icon des gewünschten Skripts auf das Fenster des Ter&shy;mi&shy;nal-Programmes zieht) und dann Return drückt.<br />
+<em>Wichtig:</em> Es wird erwartet, dass Pashua (also das Programm, nicht das aufrufende Skript) entweder im all&shy;ge&shy;mei&shy;nen Programm-Ordner <code>/Applications</code>, im persönlichen Programm-Ordner <code>~/Applications</code>, im gleichen Ordner wie das aufrufende Skript oder im aktuellen Arbeits&shy;verzeichnis liegt. Andernfalls wird die Ausführung mit einer Feh&shy;ler&shy;meldung abgebrochen. Natürlich lässt sich das aber anpassen, wenn ein anderes Verhalten benötigt wird. <em>(Um Pashua einfach auszuprobieren, muss man aber nichts installieren, denn die Beispiele laufen alle direkt vom Disk Image aus.)</em></p>
+
+<h2>Wie ist die genaue Syntax der Konfiguration?</h2>
+<p>Sämtliche GUI-Elementtypen und deren Attribute werden in der (englischen)
+<script type="text/javascript">
+// <![CDATA[
+if (document.location.href.indexOf('/Volumes/Pashua') == -1) {
+	// Not launched from disk image
+	document.write('Dokumentation');
+} else {
+	document.write('<a href="file:///Volumes/Pashua/Documentation.html" target="_blank">Dokumentation</a>');
+}
+// ]]>
+</script>
+erklärt.</p>
+
+<h2>Wie steht es mit weiteren Programmiersprachen?</h2>
+<p>Prinzipiell kann man Pashua aus jeder Sprache heraus nutzen, die in eine Datei oder in eine Unix-Pipe schrei&shy;ben, ein externes Pro&shy;gramm via Shell mit Argu&shy;menten aufrufen, Strings bear&shy;beiten und entweder Variablen dy&shy;namisch deklarieren oder mit asso&shy;zia&shy;tiven Arrays umgehen kann.</p>
+
+<h2>Was ist neu in Version 0.9.5.1?</h2>
+<ul>
+<li>Dokumentation geringfügig verbessert</li>
+<li>Der Wert für »rely« kann nun beliebig groß gewählt werden</li>
+<li>Fehler in Doc comments in »Pashua.py« behoben</li>
+</ul>
+
+<p>Pashua 0.9.5.1 wurde am 20.06.2014 veröffentlicht.<br />
+Informationen für ältere Versionen <a href="http://www.bluem.net/jump/pashua-versions/" target="_blank">finden Sie auf der Website</a></p>
+
+<h2>Credits</h2>
+<p>Folgende Benutzer haben Code, Korrekturen und/oder Übersetzungen beigesteuert: Bruce M. Axtens, Hans Haesler, Mike Hall, Ed Heil, Canis Lupus, James Reese, Daniel Robillard, Eddy Roosnek, Tor Sigurdsson, Bruce Woller.</p>
+
+<h2>Das Kleingedruckte</h2>
+<p>Dieses Programm wird ohne jegliche Gewährleistung, Garantie, Support etc. zur Verfügung gestellt. Die Benut&shy;zung erfolgt auf eigenes Risiko, und sollte der unwahrscheinliche Fall auftreten, dass durch die Nutzung ein wie auch immer gearteter Schaden auftritt, kann niemand außer der das Programm benutzenden Person dafür haft&shy;bar gemacht werden.</p>
+
+
+<h2>Kontakt / Feedback</h2>
+<p>Carsten Blüm<br />
+E-Mail: <a href="mailto:macapps@bluem.net?Subject=Pashua%200.9.5.1">macapps@bluem.net</a><br />
+Pashua Homepage: <a href="http://www.bluem.net/de/mac/pashua/" target="_blank">www.bluem.net/de/mac/pashua/</a></p>
+
+</div>
+
+</body>
+</html>

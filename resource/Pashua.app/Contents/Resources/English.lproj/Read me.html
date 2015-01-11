@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Pashua 0.9.5.1</title>
+<meta name="publisher" content="Carsten Blüm" />
+<link rel="stylesheet" href="../style.css" type="text/css" />
+</head>
+<body>
+
+<div id="frame">
+
+<header>
+    <a href="http://www.bluem.net/de/mac/" target="_blank"><span>Carsten Blüm Mac Development</span></a>
+</header>
+
+<h1>Pashua 0.9.5.1</h1>
+
+<h2>What is Pashua?</h2>
+<p>Pashua ist a tool for creating ‘real’ dialog windows for Perl, PHP, Tcl, Python, Groovy, Ruby, Rexx and shell scripts as well as AppleScript. The GUI elements which can be used for such dialogs include text input fields, checkboxes, radiobuttons, popup menus, buttons and so on. Moreover, it is also possible to embed images or PDFs.<br />
+Any data submitted from the dialog will be passed on to the calling script, which can (of course) use it for anything.<br />
+To describe the dialog window, Pashua uses a very simple syntax. All the tedious details such as positioning the elements, calculating the window size etc. are handled automatically by Pashua, thus you can fully concentrate on your application.</p>
+
+<h2>Price</h2>
+<p>Pashua is free. However, if you appreciate it and would like to send a “Thank you”, there are <a href="http://www.bluem.net/jump/donations/" target="_blank">a number of ways to do that</a>.</p>
+
+<h2>How to use</h2>
+<p>In the folder “Examples” on the disk image containing this Readme, there are several scripts which demonstrate how to use Pashua:</p>
+<ul>
+<li><code>example.applescript</code> By calling from AppleScript.</li>
+<li><code>example.groovy</code> By calling from a Groovy script. The file contains the class <code>PashuaRunner</code> which you can use in your own scripts.</li>
+<li><code>example.php</code> By calling from a PHP command line script. The file contains a function called <code>pashua_run()</code>, which calls Pashua and returns the result.</li>
+<li><code>example.pl</code> by calling from a Perl script. This file uses the Perl module <code>Pashua.pm</code> (located in the same folder), which manages communicating with Pashua and parsing the result. For convenience reasons, you should copy this module to a directory that is in <code>@INC</code>, for example <code>/Library/Perl</code>. The module contains documentation in Perl’s POD format.</li>
+<li><code>example.py</code> By calling from a Python script. This file uses the Python module <code>Pashua.py</code> (located in the same folder), which manages communicating with Pashua and parsing the result.</li>
+<li><code>example.rb</code> By calling from a Ruby script. This file uses the module <code>Pashua.rb</code> (located in the same folder), which manages the communication with Pashua.</li>
+<li><code>example.rexx</code> By calling from a Rexx script. Using this script requires an installation of Rexx/Regina. If necessary, the path in the Shebang line (the script’s very first line) must be changed to match your filesystem layout.</li>
+<li><code>example.sh</code> By calling from a shell script. The file contains a function called <code>pashua_run</code> which you can use in your own scripts.</li>
+<li><code>example.tcl</code> By calling from a Tcl script. This file uses a function from file <code>pashua_run.tcl</code> (located in the same folder), which manages communicating with Pashua and parsing the result.</li>
+</ul>
+
+<p>The AppleScript example can be launched by simply doubleclicking the icon. All the other examples can be launched by entering the script path at the terminal (the easiest way to do this, is to drag the script onto Terminal.app).<br />
+<em>Important:</em> In order to work, Pashua (the application itself, not the calling script) must be located in the global application folder <code>/Applications</code>, in your personal application folder <code>~/Applications</code>, in the folder containing the calling script or in the working directory. Otherwise execution will fail. But of course you can modify the search locations according to your filesystem layout. <em>(But to simply launch the examples, you do not have to install anything: they will run directly from the disk image.)</em></p>
+
+<h2>Can you tell me more about the configuration syntax?</h2>
+<p>Pashua’s
+<script type="text/javascript">
+// <![CDATA[
+if (document.location.href.indexOf('/Volumes/Pashua') == -1) {
+	// Not launched from disk image
+	document.write('documentation');
+} else {
+	document.write('<a href="file:///Volumes/Pashua/Documentation.html" target="_blank">documentation</a> ');
+}
+// ]]>
+</script>
+explains the configuration syntax, as well as any GUI element types and their attributes.</p>
+
+<h2>What about additional programming languages?</h2>
+<p>Basically you can use Pashua from any language that is able to write a file or write to a Unix pipe, call an application with command line arguments, manipulate strings and declare variables dynamically or handle associative arrays.</p>
+
+<h2>What is new in version 0.9.5.1?</h2>
+<ul>
+<li>Slightly improved the documentation</li>
+<li>There is no longer a maximum allowed “rely” value</li>
+<li>Fixed errors in doc comments inside “Pashua.py”</li>
+</ul>
+<p>Pashua 0.9.5.1 was released on 06/20/2014.<br />
+Release notes for previous versions can be found  <a href="http://www.bluem.net/jump/pashua-versions/" target="_blank">on the website</a></p>
+
+<h2>Credits</h2>
+<p>The following users contributed code, fixes and/or translations: Bruce M. Axtens, Hans Haesler, Mike Hall, Ed Heil, Canis Lupus, James Reese, Daniel Robillard, Eddy Roosnek, Tor Sigurdsson, Bruce Woller.</p>
+
+<h2>Disclaimer</h2>
+<p>This application is provided as-is. Support is not included. Use this software at your own risk. If for some obscure reason any damage or data loss may arise from using it (which in my opinion is nearly impossible), it is nobody else’s problem than yours.</p>
+
+
+<h2>Contact / Feedback</h2>
+<p>Carsten Blüm<br />
+E-Mail: <a href="mailto:macapps@bluem.net?Subject=Pashua%200.9.5.1">macapps@bluem.net</a><br />
+Pashua Homepage: <a href="http://www.bluem.net/en/mac/pashua/" target="_blank">www.bluem.net/en/mac/pashua/</a></p>
+
+</div>
+
+</body>
+</html>
