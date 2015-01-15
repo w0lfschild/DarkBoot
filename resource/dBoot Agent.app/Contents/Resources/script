@@ -4,7 +4,7 @@
 #
 #		Created By	:	w0lf
 #		Project Page:	https://github.com/w0lfschild/DarkBoot		
-#		Last Edited	:	Jan / 11 / 2015			
+#		Last Edited	:	Jan / 15 / 2015			
 #			
 #####
 
@@ -69,19 +69,20 @@ pashua_run() {
 # root needed to bless and create /dboot
 ask_pass() {
 	pass_window="$pass_window
-				*.title = Dark Boot - $curver
+				*.title = Dark Boot - 1.1
 				*.floating = 1
 				*.transparency = 1.00
 				*.autosavekey = dBoot"
 	
 	pass_window="$pass_window
 				pw0.type = password
-				pw0.label = Enter your password to continue
+				pw0.label = Enter your password to continue:
+				pw0.mandatory = 1
 				pw0.width = 100
 				pw0.x = -10
 				pw0.y = 4"
 	
-	pashua_run "$pass_window" 'utf8'
+	pashua_run "$pass_window" 'utf8' "$pashua_directory"
 	pass_window=""
 	echo "$pw0" | sudo -Sv
 	if [[ $pw0 = "" ]]; then echo -e "No password entered, quitting..."; exit; else pw0=""; fi
@@ -89,7 +90,7 @@ ask_pass() {
 
 # Check what is currently blessed and then bless proper efi
 check_bless() {
-	blessed=$(bless --info | grep "Blessed System File")
+	blessed=$(bless --info | grep efi)
 	blessed='/'${blessed#*/}
 	if [[ $1 = default ]]; then
 		if [[ "$blessed" != /System/Library/CoreServices/boot.efi ]]; then bless_efi /System/Library/CoreServices boot.efi; fi
@@ -100,12 +101,16 @@ check_bless() {
 
 # Bless any efi $1 = Directory $2 = Efi name
 bless_efi() {
+	ask_pass
 	echo -e "$1/$2 blessed"
 	pushd "$1" 1>/dev/null
 	sudo bless --folder . --file "$2" --labelfile .disk_label
 	popd 1>/dev/null
 }
 
+scriptDirectory=$(cd "${0%/*}" && echo $PWD)
+pashua_directory="$scriptDirectory"
+for i in {1..3}; do pashua_directory=$(dirname "$pashua_directory"); done
 my_color=$(defaults read org.w0lf.dBoot color || echo -n "default")
 check_bless $my_color
 
