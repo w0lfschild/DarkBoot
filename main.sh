@@ -4,7 +4,7 @@
 #
 #		Created By	:	w0lf
 #		Project Page:	https://github.com/w0lfschild/DarkBoot		
-#		Last Edited	:	Jan / 11 / 2015			
+#		Last Edited	:	Jan / 15 / 2015			
 #			
 #####
 
@@ -66,6 +66,15 @@ pashua_run() {
 
 }
 
+logging() {
+	log_dir="$HOME"/Library/Application\ Support/dBoot/logs
+	if [[ ! -e "$log_dir" ]]; then mkdir -pv "$log_dir"; fi
+	for (( c=1; c<6; c++ )); do if [ ! -e "$log_dir"/${c}.log ]; then touch "$log_dir"/${c}.log; fi; done
+	for (( c=5; c>1; c-- )); do cat "$log_dir"/$((c - 1)).log > "$log_dir"/${c}.log; done
+	> "$log_dir"/1.log
+	exec &>"$log_dir"/1.log
+}
+
 # root needed to bless and create /dboot
 ask_pass() {
 	pass_window="$pass_window
@@ -77,11 +86,12 @@ ask_pass() {
 	pass_window="$pass_window
 				pw0.type = password
 				pw0.label = Enter your password to continue
+				pw0.mandatory = 1
 				pw0.width = 100
 				pw0.x = -10
 				pw0.y = 4"
 	
-	pashua_run "$pass_window" 'utf8'
+	pashua_run "$pass_window" 'utf8' "$scriptDirectory"
 	pass_window=""
 	echo "$pw0" | sudo -Sv
 	echo ""
@@ -90,7 +100,7 @@ ask_pass() {
 
 # Check what is currently blessed and then bless proper efi
 check_bless() {
-	blessed=$(bless --info | grep "Blessed System File")
+	blessed=$(bless --info | grep efi)
 	blessed='/'${blessed#*/}
 	if [[ $1 = default ]]; then
 		if [[ "$blessed" != /System/Library/CoreServices/boot.efi ]]; then bless_efi /System/Library/CoreServices boot.efi; fi
@@ -114,27 +124,15 @@ patch_efi() {
 	echo -e "Converting boot.efi to hex"
 	xxd -p /dboot/boot.efi | tr -d '\n' > /tmp/___boot.efi
 	
-	if ! $(grep -q "$board_HEX" /tmp/___boot.efi); then
-		sudo mv /dboot/boot.efi /dboot/gray_boot.efi
-		echo -e "Finding ID to replace"
-		replace_HEX=$(perl -p -e 's/^.*?4d61632d/4d61632d/' /tmp/___boot.efi)
-		replace_HEX=${replace_HEX:0:40}
-		replace_ID=$(echo -n $replace_HEX | xxd -r -ps)
-		echo -e "Replacing ID\nNew $board_HEX\nOld $replace_HEX"
-		sed -i -e "s|$replace_HEX|$board_HEX|g" /tmp/___boot.efi
-	else
-		sudo mv /dboot/boot.efi /dboot/black_boot.efi
-		sed -i -e "s|$board_HEX|4d61632d00000000000000000000000000000000|g" /tmp/___boot.efi
-	fi
+	sudo mv /dboot/boot.efi /dboot/gray_boot.efi
 	
-	echo -e "Creating custom boot.efi and cleaning up /tmp"
+	echo -e "Adding your board ID"
+	sed -i -e "s|4d61632d7265706c616365207468697320747874|$board_HEX|g" /tmp/___boot.efi
+	
+	echo -e "Moving files and cleaning up /tmp"
 	perl -pe 'chomp if eof' /tmp/___boot.efi > /tmp/__boot.efi
 	xxd -r -p /tmp/__boot.efi /tmp/_boot.efi
-	if [[ -e /dboot/gray_boot.efi ]]; then
-		sudo mv /tmp/_boot.efi /dboot/black_boot.efi
-	else
-		sudo mv /tmp/_boot.efi /dboot/gray_boot.efi
-	fi
+	sudo mv /tmp/_boot.efi /dboot/black_boot.efi
 	rm /tmp/*boot.efi*
 }
 
@@ -195,12 +193,13 @@ main() {
 				chk0.x = 0
 				chk0.y = 4"
 	
-	pashua_run "$main_window" 'utf8'
+	pashua_run "$main_window" 'utf8' "$scriptDirectory"
 	
 	if [[ $db0 = "1" ]]; then
 		ask_pass
 		defaults write org.w0lf.dBoot color $pop0
-		if [[ ! -e /dboot/${pop0}_boot.efi ]]; then install_efi; fi
+		#if [[ ! -e /dboot/${pop0}_boot.efi ]]; then install_efi; fi
+		install_efi
 		check_bless $pop0
 		if [[ $chk0 = "1" ]]; then
 			if [[ $login_enabled = 0 ]]; then
