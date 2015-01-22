@@ -4,7 +4,7 @@
 #
 #		Created By	:	w0lf
 #		Project Page:	https://github.com/w0lfschild/DarkBoot		
-#		Last Edited	:	Jan / 15 / 2015			
+#		Last Edited	:	Jan / 22 / 2015			
 #			
 #####
 
@@ -90,7 +90,7 @@ ask_pass() {
 
 # Check what is currently blessed and then bless proper efi
 check_bless() {
-	blessed=$(bless --info | grep efi)
+	blessed=$(bless --info / | grep efi)
 	blessed='/'${blessed#*/}
 	if [[ $1 = default ]]; then
 		if [[ "$blessed" != /System/Library/CoreServices/boot.efi ]]; then bless_efi /System/Library/CoreServices boot.efi; fi
