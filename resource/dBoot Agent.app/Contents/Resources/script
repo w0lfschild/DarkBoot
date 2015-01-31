@@ -4,7 +4,7 @@
 #
 #		Created By	:	w0lf
 #		Project Page:	https://github.com/w0lfschild/DarkBoot		
-#		Last Edited	:	Jan / 15 / 2015			
+#		Last Edited	:	Jan / 31 / 2015			
 #			
 #####
 
@@ -69,7 +69,7 @@ pashua_run() {
 # root needed to bless and create /dboot
 ask_pass() {
 	pass_window="$pass_window
-				*.title = Dark Boot - 1.1
+				*.title = Dark Boot - $curver
 				*.floating = 1
 				*.transparency = 1.00
 				*.autosavekey = dBoot"
@@ -104,14 +104,18 @@ bless_efi() {
 	ask_pass
 	echo -e "$1/$2 blessed"
 	pushd "$1" 1>/dev/null
-	sudo bless --folder . --file "$2" --labelfile .disk_label
+	sudo bless --verbose --folder . --file "$2" --labelfile .disk_label
 	popd 1>/dev/null
 }
 
+PlistBuddy=/usr/libexec/PlistBuddy" -c"
 scriptDirectory=$(cd "${0%/*}" && echo $PWD)
 pashua_directory="$scriptDirectory"
 for i in {1..3}; do pashua_directory=$(dirname "$pashua_directory"); done
-my_color=$(defaults read org.w0lf.dBoot color || echo -n "default")
+info_directory=$(dirname "$pashua_directory")
+my_plist="$HOME/Library/Preferences/org.w0lf.dBoot.plist"
+curver=$($PlistBuddy "Print CFBundleShortVersionString" "$info_directory"/info.plist)
+my_color=$($PlistBUddy "Print color" "$my_plist" || echo -n "default")
 check_bless $my_color
 
 # End
