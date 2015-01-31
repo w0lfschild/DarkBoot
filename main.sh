@@ -4,7 +4,7 @@
 #
 #		Created By	:	w0lf
 #		Project Page:	https://github.com/w0lfschild/DarkBoot		
-#		Last Edited	:	Jan / 22 / 2015			
+#		Last Edited	:	Jan / 31 / 2015			
 #			
 #####
 
@@ -66,8 +66,9 @@ pashua_run() {
 
 }
 
+# save log files
 logging() {
-	log_dir="$HOME"/Library/Application\ Support/dBoot/logs
+	log_dir="$HOME/Library/Application Support/dBoot/logs"
 	if [[ ! -e "$log_dir" ]]; then mkdir -pv "$log_dir"; fi
 	for (( c=1; c<6; c++ )); do if [ ! -e "$log_dir"/${c}.log ]; then touch "$log_dir"/${c}.log; fi; done
 	for (( c=5; c>1; c-- )); do cat "$log_dir"/$((c - 1)).log > "$log_dir"/${c}.log; done
@@ -149,12 +150,12 @@ install_efi() {
 bless_efi() {
 	echo -e "$1/$2 blessed"
 	pushd "$1" 1>/dev/null
-	sudo bless --folder . --file "$2" --labelfile .disk_label
+	sudo bless --verbose --folder . --file "$2" --labelfile .disk_label
 	popd 1>/dev/null
 }
 
 main() {
-	my_color=$(defaults read org.w0lf.dBoot color || echo -n "default")
+	my_color=$($PlistBuddy "Print color" "$my_plist" || echo -n "default")
 	login_items=$(osascript -e 'tell application "System Events" to get the name of every login item')
 	if [[ "$login_items" = *"dBoot Agent"* ]]; then login_enabled=1; else login_enabled=0; fi
 	
@@ -166,6 +167,21 @@ main() {
 	
 	main_window="$main_window
 				db0.type = defaultbutton"
+				
+	main_window="$main_window
+				textbx0.type = textbox
+				textbx0.width = 500
+				textbx0.height = 200
+				textbx0.disabled = 1
+				textbx0.default = This application enables the black boot screen + white Apple logo on unsupported Macs.[return][return]\
+How to use:[return][return]\
+Select the color you would like your boot screen to be and press OK[return]\
+Enter your password and press OK[return]\
+Reboot twice for changes to take effect[return][return]\
+This may break in the future. Currently confirmed working on:[return][return]\
+10.10.0 (14A389)[return]\
+10.10.1 (14B25)[return]\
+10.10.2 (14C109)"
 	
 	main_window="$main_window
 				tb0.type = text
@@ -173,7 +189,7 @@ main() {
 				tb0.width = 150
 				tb0.default = Boot Color : 
 				tb0.x = 0
-				tb0.y = 40"
+				tb0.y = 5"
 
 	main_window="$main_window	
 				pop0.type = popup
@@ -183,14 +199,14 @@ main() {
 				pop0.option = black
 				pop0.default = $my_color
 				pop0.x = 80
-				pop0.y = 34"
+				pop0.y = 1"
 				
 	main_window="$main_window
 				chk0.tooltip = Check to make sure your selected option is enforced at every startup/login.
 				chk0.type = checkbox
 				chk0.label = Check at login
 				chk0.default = $login_enabled
-				chk0.x = 0
+				chk0.x = 220
 				chk0.y = 4"
 	
 	pashua_run "$main_window" 'utf8' "$scriptDirectory"
@@ -198,7 +214,6 @@ main() {
 	if [[ $db0 = "1" ]]; then
 		ask_pass
 		defaults write org.w0lf.dBoot color $pop0
-		#if [[ ! -e /dboot/${pop0}_boot.efi ]]; then install_efi; fi
 		install_efi
 		check_bless $pop0
 		if [[ $chk0 = "1" ]]; then
@@ -229,7 +244,9 @@ for i in {1..2}; do app_directory=$(dirname "$app_directory"); done
 helper="$app_directory"/Contents/Resources/"dBoot Agent".app
 
 # Variables
-curver=$(defaults read "$app_directory"/Contents/Info.plist CFBundleShortVersionString)
+PlistBuddy=/usr/libexec/PlistBuddy" -c"
+my_plist="$HOME/Library/Preferences/org.w0lf.dBoot.plist"
+curver=$($PlistBuddy "Print CFBundleShortVersionString" "$app_directory"/Contents/Info.plist)
 boot_color="Default"
 
 # Run
