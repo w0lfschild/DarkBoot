@@ -116,11 +116,13 @@ patch_efi() {
 	board_ID=$(ioreg -p IODeviceTree -r -n / -d 1 | grep board-id)
 	board_ID=${board_ID##*<\"}
 	board_ID=${board_ID%%\">}
+	echo -e "$board_ID"
 
 	echo -e "Converting board-ID to hex"
 	board_HEX=$(echo -n $board_ID | xxd -ps | sed 's|[[:xdigit:]]\{2\}|\\x&|g')
 	board_HEX=$(echo "$board_HEX" | sed 's|\\x||g')
 	while [[ ${#board_HEX} -lt 40 ]]; do board_HEX=${board_HEX}0; done
+	echo -e "$board_HEX"
 	
 	echo -e "Converting boot.efi to hex"
 	xxd -p /dboot/boot.efi | tr -d '\n' > /tmp/___boot.efi
@@ -216,6 +218,7 @@ This may break in the future. Currently confirmed working on:[return][return]\
 		defaults write org.w0lf.dBoot color $pop0
 		install_efi
 		check_bless $pop0
+		bless --info / | head -2
 		if [[ $chk0 = "1" ]]; then
 			if [[ $login_enabled = 0 ]]; then
 osascript <<EOD
