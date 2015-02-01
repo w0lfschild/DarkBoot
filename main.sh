@@ -226,13 +226,14 @@ Support for systems below Yosemite is currently unknown.[return][return]\
 How to use:[return][return]\
 • Select your desired Boot Color and press Apply[return]\
 • Enter your password and press OK[return]\
-• Reboot twice for changes to take effect[return][return]\
-How to use command line:[return][return]\
-• The following options are available:[return][return]\
-	-c		Must be folowed by boot color -- black, grey, or default[return][return]\
-	-l 		Login Item must be folowed by -- yes or no[return][return]\
-• /Dark Boot.app/Contents/Resource/script -c black -l yes
+• Reboot twice for changes to take effect
 
+# [return][return]\
+# How to use command line:[return][return]\
+# • The following options are available:[return][return]\
+# 	-c		Boot color - black, grey, or default[return][return]\
+# 	-l 		Enable login item - yes or no[return][return]\
+# • /Dark Boot.app/Contents/Resource/script -c black -l yes
 
 tb0.type = text
 tb0.height = 0

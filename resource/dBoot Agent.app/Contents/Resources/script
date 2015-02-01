@@ -175,7 +175,7 @@ app_dir="$HOME/Library/Application Support/dBoot"
 my_plist="$HOME/Library/Preferences/org.w0lf.dBoot.plist"
 dboot_efi="$pashua_directory"/boot.efi
 curver=$($PlistBuddy "Print CFBundleShortVersionString" "$info_directory"/info.plist)
-boot_color=$($PlistBUddy "Print color" "$my_plist" || echo -n "default")
+boot_color=$($PlistBuddy "Print color" "$my_plist" || echo -n "default")
 cur_efi=$(check_efi)
 
 if [[ $cur_efi != $boot_color ]]; then
