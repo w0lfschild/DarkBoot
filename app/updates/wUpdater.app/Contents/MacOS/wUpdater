@@ -3,8 +3,8 @@
 # # # # # # # # # # # # # # # # # # # # 
 #
 # Maintained By	: Wolfgang Baird
-# Version		: 3.2
-# Updated		: Jan / 7 / 2014
+# Version		: 3.4
+# Updated		: Apr / 05 / 2014
 #
 # # # # # # # # # # # # # # # # # # # # 
 
@@ -133,7 +133,9 @@ install_app() {
 	echo -n ""
 	"$resourceDirectory"/trash "$oldDirectory"
 	sleep 1
-	mv "$replacementApp" $(dirname "$oldDirectory")
+	# mv "$replacementApp" $(dirname "$oldDirectory")
+	_oldDIR=$(dirname "$oldDirectory")
+	/usr/bin/osascript -e "tell application \"Finder\" to move POSIX file \"$replacementApp\" to POSIX file \"$_oldDIR\" with replace"
 	echo ""
 	echo "Process complete"
 	sleep 1
@@ -363,7 +365,7 @@ if [[ "$#" = 0 ]]; then
 	echo "\$4 - URL to check current version"
 	echo "\$5 - URL to download current version"
 	echo ""
-	echo "eg : $scriptDirectory/wUpdater u /Applications/cDock.app http://sourceforge.net/projects/cDock/files/version.txt/download http://sourceforge.net/projects/cDock/files/latest/download"
+	echo "eg : $scriptDirectory/wUpdater u /Applications/cDock.app http://sourceforge.net/projects/cDock/files/version.txt http://sourceforge.net/projects/cDock/files/latest/download"
 	echo ""
 	echo "END"
 fi
