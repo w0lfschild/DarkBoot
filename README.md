@@ -8,6 +8,7 @@ This script/application enables the black boot screen + white Apple logo on "uns
 **10.10.0** (14A389)    
 **10.10.1** (14B25)    
 **10.10.2** (14C109)    
+**10.10.3** (14D131)    
 
 ### How to use:
 1. Download the latest release here : https://github.com/w0lfschild/DarkBoot/releases/latest

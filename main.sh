@@ -4,11 +4,160 @@
 #
 #		Created By	:	w0lf
 #		Project Page:	https://github.com/w0lfschild/DarkBoot		
-#		Last Edited	:	Feb / 01 / 2015			
+#		Last Edited	:	Mar / 10 / 2015			
 #			
 #####
 
-# Draw windows with pashua
+# Functions
+
+ask_pass() {
+	sudo_status=$(sudo echo null 2>&1)
+	
+	pass_window="
+*.title = Dark Boot - $curver
+*.floating = 1
+*.transparency = 1.00
+*.autosavekey = dBoot
+pw0.type = password
+pw0.label = Enter your password to continue
+pw0.mandatory = 1
+pw0.width = 100
+pw0.x = -10
+pw0.y = 4"
+	
+	if [[ $sudo_status != "null" ]]; then
+		pashua_run "$pass_window" 'utf8' "$scriptDirectory"
+		pass_window=""
+		echo "$pw0" | sudo -Sv
+		echo ""
+		if [[ $pw0 = "" ]]; then echo -e "No password entered"; else pw0=""; fi
+	else
+		sudo -v
+	fi
+}
+check_bless() {
+	blessed=$(bless --info / | grep efi)
+	blessed='/'${blessed#*/}
+	if [[ "$blessed" != /System/Library/CoreServices/boot.efi ]]; then 
+		efi_bless /System/Library/CoreServices boot.efi
+	fi
+}
+clean_up() {
+	rm "$app_dir"/*boot.efi*
+	rm /tmp/*boot.efi*
+	sudo chmod 644 /System/Library/CoreServices/boot.efi
+	sudo chown root:wheel /System/Library/CoreServices/boot.efi
+	sudo chflags uchg /System/Library/CoreServices/boot.efi
+}
+efi_backup() {
+	if [[ -e /System/Library/CoreServices/boot_stock.efi ]]; then sudo rm /System/Library/CoreServices/boot_stock.efi; fi
+	sudo mv /System/Library/CoreServices/boot.efi /System/Library/CoreServices/boot_stock.efi
+}
+efi_bless() {
+	echo -e "$1/$2 blessed"
+	pushd "$1" 1>/dev/null
+	sudo bless --folder . --file "$2" --labelfile .disk_label
+	popd 1>/dev/null
+}
+efi_check() {
+	res="default"
+	xxd -p /System/Library/CoreServices/boot.efi | tr -d '\n' > /tmp/_boot.efi
+	if ! $(grep -qa 4d61632d00000000000000000000000000000000 /tmp/_boot.efi); then 
+		res="default"
+	elif $(grep -qa 4d61632d7265706c616365207468697320747874 /tmp/_boot.efi); then 
+		res="gray"
+	else
+		res="black"
+	fi
+	rm /tmp/_boot.efi
+	echo -n "$res"
+}
+efi_install() {
+	sudo rm /System/Library/CoreServices/boot.efi
+	if [[ $boot_color = "black" ]]; then
+		sudo cp "$app_dir"/_boot.efi /System/Library/CoreServices/boot.efi
+	fi
+	if [[ $boot_color = "grey" ]]; then
+		sudo cp "$app_dir"/boot.efi /System/Library/CoreServices/boot.efi
+	fi
+}
+efi_patch() {
+	board_ID=$(ioreg -p IODeviceTree -r -n / -d 1 | grep board-id)
+	board_ID=${board_ID##*<\"}
+	board_ID=${board_ID%%\">}
+	echo -e "Board-ID : $board_ID"
+
+	board_HEX=$(echo -n $board_ID | xxd -ps | sed 's|[[:xdigit:]]\{2\}|\\x&|g')
+	board_HEX=$(echo "$board_HEX" | sed 's|\\x||g')
+	while [[ ${#board_HEX} -lt 40 ]]; do board_HEX=${board_HEX}0; done
+	echo -e "Board-ID Hex : $board_HEX"
+	
+	echo -e "Converting boot.efi to hex"
+	xxd -p "$app_dir"/boot.efi | tr -d '\n' > "$app_dir"/___boot.efi
+	
+	echo -e "Adding your board ID"
+	sed -i -e "s|4d61632d7265706c616365207468697320747874|$board_HEX|g" "$app_dir"/___boot.efi
+	
+	echo -e "Moving files and cleaning up "$app_dir""
+	perl -pe 'chomp if eof' "$app_dir"/___boot.efi > "$app_dir"/__boot.efi
+	xxd -r -p "$app_dir"/__boot.efi "$app_dir"/_boot.efi
+}
+efi_restore() {
+	if [[ -e /System/Library/CoreServices/boot_stock.efi ]]; then
+		sudo rm /System/Library/CoreServices/boot.efi
+		sudo mv /System/Library/CoreServices/boot_stock.efi /System/Library/CoreServices/boot.efi
+	fi
+}
+logging() {
+	log_dir="$HOME/Library/Application Support/dBoot/logs"
+	if [[ ! -e "$log_dir" ]]; then mkdir -pv "$log_dir"; fi
+	for (( c=1; c<6; c++ )); do if [ ! -e "$log_dir"/${c}.log ]; then touch "$log_dir"/${c}.log; fi; done
+	for (( c=5; c>1; c-- )); do cat "$log_dir"/$((c - 1)).log > "$log_dir"/${c}.log; done
+	> "$log_dir"/1.log
+	exec &>"$log_dir"/1.log
+}
+login_add() {
+	
+echo -e "Adding login item"
+
+if [[ ! -e "$helper_2" ]]; then
+	sudo mkdir -p /Library/Scripts/dBoot
+	sudo cp "$helper_1" "$helper_2"
+	sudo chmod 700 "$helper_2"
+fi
+
+if [[ $(sudo cat /etc/sudoers | grep dBoot) = "" ]]; then
+	sudo touch /etc/sudoers
+	sudo echo "%sudo ALL=NOPASSWD: /Library/Scripts/dBoot/dBoot.sh" >> /etc/sudoers
+fi
+
+osascript <<EOD
+tell application "System Events"
+make new login item at end of login items with properties {path:"$helper_2", hidden:false}
+end tell
+EOD
+
+}
+login_del() {
+	
+echo -e "Removing login item"
+
+if [[ -e "$helper_2" ]]; then
+	sudo rm -r /Library/Scripts/dBoot
+fi
+
+if [[ $(sudo cat /etc/sudoers | grep dBoot) != "" ]]; then
+	sudo touch /etc/sudoers
+	# sudo echo "%sudo ALL=NOPASSWD: /Library/Scripts/dBoot/dBoot.sh" >> /etc/sudoers
+fi
+
+osascript <<EOD
+tell application "System Events"
+delete login item "dBoot.sh"
+end tell
+EOD
+
+}	
 pashua_run() {
 
 	# Write config file
@@ -66,198 +215,99 @@ pashua_run() {
 	done
 
 }
-
-# Setup log files
-logging() {
-	log_dir="$HOME/Library/Application Support/dBoot/logs"
-	if [[ ! -e "$log_dir" ]]; then mkdir -pv "$log_dir"; fi
-	for (( c=1; c<6; c++ )); do if [ ! -e "$log_dir"/${c}.log ]; then touch "$log_dir"/${c}.log; fi; done
-	for (( c=5; c>1; c-- )); do cat "$log_dir"/$((c - 1)).log > "$log_dir"/${c}.log; done
-	> "$log_dir"/1.log
-	exec &>"$log_dir"/1.log
-}
-
-# For root needs
-ask_pass() {
-	pass_window="$pass_window
-	*.title = Dark Boot - $curver
-	*.floating = 1
-	*.transparency = 1.00
-	*.autosavekey = dBoot
-	pw0.type = password
-	pw0.label = Enter your password to continue
-	pw0.mandatory = 1
-	pw0.width = 100
-	pw0.x = -10
-	pw0.y = 4"
+update_check() {
+	cur_date=$(date "+%y%m%d")	
+	lastupdateCheck=$($PlistBuddy "Print lastupdateCheck:" "$app_plist" 2>/dev/null || defaults write org.w0lf.dBoot "lastupdateCheck" 0 2>/dev/null)
 	
-	pashua_run "$pass_window" 'utf8' "$scriptDirectory"
-	pass_window=""
-	echo "$pw0" | sudo -Sv
-	echo ""
-	if [[ $pw0 = "" ]]; then echo -e "No password entered, quitting..."; exit; else pw0=""; fi
-}
+	# If we haven't already checked for updates today
+	if [[ "$lastupdateCheck" != "$cur_date" ]]; then	
+		results=$(ping -c 1 -t 5 "http://www.sourceforge.net" 2>/dev/null || echo "Unable to connect to internet")
+		if [[ $results = *"Unable to"* ]]; then
+			echo "ping failed : $results"
+		else
+			echo "ping success"
+			beta_updates=$($PlistBuddy "Print betaUpdates:" "$app_plist" 2>/dev/null || echo -n 0)
+			update_auto_install=$($PlistBuddy "Print autoInstall:" "$app_plist" 2>/dev/null || { defaults write org.w0lf.dBoot "autoInstall" 0; echo -n 0; } )
 
-# Bless any efi 
-# $1 = Folder
-# $2 = File
-bless_efi() {
-	echo -e "$1/$2 blessed"
-	pushd "$1" 1>/dev/null
-	sudo bless --folder . --file "$2" --labelfile .disk_label
-	popd 1>/dev/null
-}
+			# Stable urls
+			dlurl="http://sourceforge.net/projects/cdock/files/latest"
+			verurl="http://sourceforge.net/projects/cdock/files/version.txt"
+			logurl="http://sourceforge.net/projects/cdock/files/versionInfo.txt"
 
-# Check what is currently blessed and then bless proper efi
-check_bless() {
-	blessed=$(bless --info / | grep efi)
-	blessed='/'${blessed#*/}
-	if [[ "$blessed" != /System/Library/CoreServices/boot.efi ]]; then 
-		bless_efi /System/Library/CoreServices boot.efi
+			# Beta or Stable updates
+			if [[ $beta_updates -eq 1 ]]; then
+				stable_version=$(verres $(curl -\# -L "http://sourceforge.net/projects/cdock/files/version.txt") $(curl -\# -L "http://sourceforge.net/projects/cdock/files/cDock%20Beta/versionBeta.txt"))
+	
+				if [[ $stable_version = "<" ]]; then
+					# Beta urls
+					dlurl="http://sourceforge.net/projects/cdock/files/cDock%20Beta/current.zip"
+					verurl="http://sourceforge.net/projects/cdock/files/cDock%20Beta/versionBeta.txt"
+					logurl="http://sourceforge.net/projects/cdock/files/cDock%20Beta/versionInfoBeta.txt"
+				fi
+			fi
+		
+			defaults write org.w0lf.dBoot "lastupdateCheck" "${cur_date}"
+			./updates/wUpdater.app/Contents/MacOS/wUpdater c "$app_directory" org.w0lf.dBoot $curver $verurl $logurl $dlurl $update_auto_install &
+		fi
 	fi
 }
-
-# Patch users board-ID into custom efi
-patch_efi() {
-	board_ID=$(ioreg -p IODeviceTree -r -n / -d 1 | grep board-id)
-	board_ID=${board_ID##*<\"}
-	board_ID=${board_ID%%\">}
-	echo -e "Board-ID : $board_ID"
-
-	board_HEX=$(echo -n $board_ID | xxd -ps | sed 's|[[:xdigit:]]\{2\}|\\x&|g')
-	board_HEX=$(echo "$board_HEX" | sed 's|\\x||g')
-	while [[ ${#board_HEX} -lt 40 ]]; do board_HEX=${board_HEX}0; done
-	echo -e "Board-ID Hex : $board_HEX"
-	
-	echo -e "Converting boot.efi to hex"
-	xxd -p "$app_dir"/boot.efi | tr -d '\n' > "$app_dir"/___boot.efi
-	
-	echo -e "Adding your board ID"
-	sed -i -e "s|4d61632d7265706c616365207468697320747874|$board_HEX|g" "$app_dir"/___boot.efi
-	
-	echo -e "Moving files and cleaning up "$app_dir""
-	perl -pe 'chomp if eof' "$app_dir"/___boot.efi > "$app_dir"/__boot.efi
-	xxd -r -p "$app_dir"/__boot.efi "$app_dir"/_boot.efi
+vercomp() {
+    if [[ $1 == $2 ]]
+    then
+        return 0
+    fi
+    local IFS=.
+    local i ver1=($1) ver2=($2)
+    # fill empty fields in ver1 with zeros
+    for ((i=${#ver1[@]}; i<${#ver2[@]}; i++))
+    do
+        ver1[i]=0
+    done
+    for ((i=0; i<${#ver1[@]}; i++))
+    do
+        if [[ -z ${ver2[i]} ]]
+        then
+            # fill empty fields in ver2 with zeros
+            ver2[i]=0
+        fi
+        if ((10#${ver1[i]} > 10#${ver2[i]}))
+        then
+            return 1
+        fi
+        if ((10#${ver1[i]} < 10#${ver2[i]}))
+        then
+            return 2
+        fi
+    done
+    return 0
+}
+verres() {
+	vercomp "$1" "$2"
+	case $? in
+		0) output='=';;
+        1) output='>';;
+        2) output='<';;
+	esac
+	echo $output
 }
 
-# Check what current efi is installed and return either black, grey or default
-check_efi() {
-	res="default"
-	xxd -p /System/Library/CoreServices/boot.efi | tr -d '\n' > /tmp/_boot.efi
-	if ! $(grep -qa 4d61632d00000000000000000000000000000000 /tmp/_boot.efi); then 
-		res="default"
-	elif $(grep -qa 4d61632d7265706c616365207468697320747874 /tmp/_boot.efi); then 
-		res="gray"
-	else
-		res="black"
-	fi
-	echo "$res"
-}
-
-# Backup efi file
-backup_efi() {
-	if [[ -e /System/Library/CoreServices/boot_stock.efi ]]; then sudo rm /System/Library/CoreServices/boot_stock.efi; fi
-	sudo mv /System/Library/CoreServices/boot.efi /System/Library/CoreServices/boot_stock.efi
-}
-
-# Install custom efi
-install_efi() {
-	sudo rm /System/Library/CoreServices/boot.efi
-	if [[ $boot_color = "black" ]]; then
-		sudo cp "$app_dir"/_boot.efi /System/Library/CoreServices/boot.efi
-	fi
-	if [[ $boot_color = "grey" ]]; then
-		sudo cp "$app_dir"/boot.efi /System/Library/CoreServices/boot.efi
-	fi
-}
-
-# Restore stock efi
-restore_efi() {
-	if [[ -e /System/Library/CoreServices/boot_stock.efi ]]; then
-		sudo rm /System/Library/CoreServices/boot.efi
-		sudo mv /System/Library/CoreServices/boot_stock.efi /System/Library/CoreServices/boot.efi
-	fi
-}
-
-# Clean up files and permissions
-clean_up() {
-	rm "$app_dir"/*boot.efi*
-	rm /tmp/*boot.efi*
-	sudo chmod 644 /System/Library/CoreServices/boot.efi
-	sudo chown root:wheel /System/Library/CoreServices/boot.efi
-	sudo chflags uchg /System/Library/CoreServices/boot.efi
-}
-
-# Command line
-cmd() {
-	# -c COLOR
-	# default, gray, black
-	
-	# -l LOGIN ITEM
-	# yes, no
-	
-	echo "Sample Text"
-}
+# Main window
 
 main_method() {
-	my_color=$($PlistBuddy "Print color" "$my_plist" || echo -n "default")
+	my_color=$(efi_check)
 	login_items=$(osascript -e 'tell application "System Events" to get the name of every login item')
 	if [[ "$login_items" = *"dBoot Agent"* ]]; then login_enabled=1; else login_enabled=0; fi
+	
+	app_info=$(tr -d '\n' < "$app_windows"/info.txt)
+	main_window=$(cat "$app_windows"/main.txt)
 	main_window="$main_window
 *.title = Dark Boot - $curver
-*.floating = 1
-*.transparency = 1.00
-*.autosavekey = dBoot
-
-db0.type = defaultbutton
-db0.label = Apply
-
-cb0.type = cancelbutton
-cb0.label = Quit
-
-textbx0.type = textbox
-textbx0.width = 480
-textbx0.height = 150
-textbx0.disabled = 1
-textbx0.rely = 10
-textbx0.default = This application enables the black boot screen on unsupported Macs.[return]\
-Confirmed working on OS X 10.10 to 10.10.2[return]\
-Support for systems below Yosemite is currently unknown.[return][return]\
-How to use:[return][return]\
-• Select your desired Boot Color and press Apply[return]\
-• Enter your password and press OK[return]\
-• Reboot twice for changes to take effect
-
-# [return][return]\
-# How to use command line:[return][return]\
-# • The following options are available:[return][return]\
-# 	-c		Boot color - black, grey, or default[return][return]\
-# 	-l 		Enable login item - yes or no[return][return]\
-# • /Dark Boot.app/Contents/Resource/script -c black -l yes
-
-tb0.type = text
-tb0.height = 0
-tb0.width = 150
-tb0.default = Boot Color : 
-tb0.x = 0
-tb0.y = 25
-
-pop0.type = popup
-pop0.width = 120
-pop0.option = default
-pop0.option = gray
-pop0.option = black
+textbx0.default = $app_info
 pop0.default = $my_color
-pop0.x = 80
-pop0.y = 21
+chk0.default = $login_enabled"
 
-chk0.tooltip = Check to make sure your selected option is enforced at every startup/login.
-chk0.type = checkbox
-chk0.label = Check at login
-chk0.default = $login_enabled
-chk0.x = 0
-chk0.y = 4"
 	pashua_run "$main_window" 'utf8' "$scriptDirectory"
+	
 	if [[ $db0 = "1" ]]; then
 		boot_color=$pop0
 		ask_pass
@@ -266,58 +316,48 @@ chk0.y = 4"
 		if [[ -e "$app_dir"/boot.efi ]]; then rm "$app_dir"/boot.efi; fi
 		if [[ -e "$app_dir" ]]; then mkdir -p "$app_dir"; fi
 		cp "$dboot_efi" "$app_dir"/boot.efi
-		cur_efi=$(check_efi)
+		cur_efi=$(efi_check)
 		echo -e "Current efi : $cur_efi"
 		echo -e "Selected efi : $boot_color"
 		if [[ $boot_color = "default" ]]; then
 			if [[ $cur_efi != "default" ]]; then
 				echo -e "Restoring stock efi"
-				restore_efi
+				efi_restore
 			fi	
 		else
 			if [[ $cur_efi = "default" ]]; then
 				echo -e "Backing up stock efi"
-				backup_efi
+				efi_backup
 			fi
 			echo -e "Creating patched custom efi"
-			patch_efi
+			efi_patch
 			echo -e "Installing patched custom efi"
-			install_efi
+			efi_install
 		fi
 		echo -e "Cleaning up"
 		clean_up
 		echo -e "Checking bless"
-		check_bless $pop0
+		check_bless $boot_color
 		bless --info / | head -2
 		echo -e "verigfying login item staus"
 		if [[ $chk0 = "1" ]]; then
-			if [[ $login_enabled = 0 ]]; then
-				echo -e "Adding login item"
-osascript <<EOD
-tell application "System Events"
-make new login item at end of login items with properties {path:"$helper", hidden:false}
-end tell
-EOD
-			fi
+			(($login_enabled)) || login_add
 		else
-			if [[ $login_enabled = 1 ]]; then
-				echo -e "Removing login item"
-osascript <<EOD
-tell application "System Events"
-delete login item "Dark Boot"
-end tell
-EOD
-			fi
+			(($login_enabled)) && login_del
 		fi
 	fi
 }
 
 # Directories
 scriptDirectory=$(cd "${0%/*}" && echo $PWD)
-dboot_efi="$scriptDirectory"/boot.efi
+app_windows="$scriptDirectory"/windows/en
 app_directory="$scriptDirectory"
 for i in {1..2}; do app_directory=$(dirname "$app_directory"); done
-helper="$app_directory"/Contents/Resources/"dBoot Agent".app
+
+# Files
+dboot_efi="$scriptDirectory"/boot.efi
+helper_1="$app_directory"/Contents/Resources/"dBoot Agent".sh
+helper_2=/Library/Scripts/dBoot/dBoot.sh
 
 # Variables
 PlistBuddy=/usr/libexec/PlistBuddy" -c"

@@ -1,0 +1,24 @@
+------------------------------------------------
+
+Version		: 0.0
+Build date	: 01 / 01 / 2015
+
+------------------------------------------------
+This is a beta build. Please let me know if issues arise.
+------------------------------------------------
+
+New
+
+--
+
+Improvements and fixes
+
+--
+
+------------------------------------------------
+
+NOTE: If automatic updates fail. You can manually download updates here: 
+
+https://github.com/w0lfschild/DarkBoot/releases/latest
+
+------------------------------------------------

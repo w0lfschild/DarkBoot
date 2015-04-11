@@ -4,7 +4,7 @@
 #
 #		Created By	:	w0lf
 #		Project Page:	https://github.com/w0lfschild/DarkBoot		
-#		Last Edited	:	Feb / 01 / 2015			
+#		Last Edited	:	Mar / 10 / 2015			
 #			
 #####
 
@@ -118,6 +118,14 @@ patch_efi() {
 	xxd -r -p "$app_dir"/__boot.efi "$app_dir"/_boot.efi
 }
 
+check_bless() {
+	blessed=$(bless --info / | grep efi)
+	blessed='/'${blessed#*/}
+	if [[ "$blessed" != /System/Library/CoreServices/boot.efi ]]; then 
+		efi_bless /System/Library/CoreServices boot.efi
+	fi
+}
+
 # Check what current efi is installed and return either black, grey or default
 check_efi() {
 	res="default"
@@ -199,6 +207,11 @@ if [[ $cur_efi != $boot_color ]]; then
 		echo -e "Installing patched custom efi"
 		install_efi
 	fi
+	echo -e "Cleaning up"
+	clean_up
+	echo -e "Checking bless"
+	check_bless $boot_color
+	bless --info / | head -2
 fi
 
 # End

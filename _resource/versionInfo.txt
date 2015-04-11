@@ -1,0 +1,28 @@
+------------------------------------------------
+
+Version		: 2.5
+Build date	: Apr / 11 / 2015
+
+------------------------------------------------
+
+2.5
+
+New
+- Automatic updates
+
+Fixed
+- dBoot failing to launch in some cases
+- dBoot failing to apply in some cases
+- dBoot Agent not cleaning up and re-setting boot.efi permissions after edit
+
+Changed
+- dBoot Agent is now a script
+- dBoot Agent does not require password
+- Updated credits
+
+------------------------------------------------
+
+If auto-updates fail. You can manually download updates here: 
+https://github.com/w0lfschild/DarkBoot/releases/latest
+
+------------------------------------------------
