@@ -350,9 +350,15 @@ chk0.default = $login_enabled"
 
 # Directories
 scriptDirectory=$(cd "${0%/*}" && echo $PWD)
-app_windows="$scriptDirectory"/windows/en
 app_directory="$scriptDirectory"
 for i in {1..2}; do app_directory=$(dirname "$app_directory"); done
+
+lang=$(locale | grep LANG | cut -d\" -f2 | cut -d_ -f1)
+if [[ -e "$scriptDirectory"/windows/"$lang" ]]; then
+	app_windows="$scriptDirectory"/windows/"$lang"
+else
+	app_windows="$scriptDirectory"/windows/en
+fi
 
 # Files
 dboot_efi="$scriptDirectory"/boot.efi
