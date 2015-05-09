@@ -18,7 +18,7 @@ This should work on all Macs. Submit a report [here](https://github.com/w0lfschi
 2. Unzip the download
 3. Open the Dark Boot app
 4. Select the color you would like your boot screen to be and press OK
-5. Enter your password and press OK
+5. Enter your admin password and press OK
 6. Reboot twice for changes to take effect
 	
 ### License:
