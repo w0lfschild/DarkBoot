@@ -4,7 +4,7 @@
 #
 #		Created By	:	w0lf
 #		Project Page:	https://github.com/w0lfschild/DarkBoot		
-#		Last Edited	:	Mar / 10 / 2015			
+#		Last Edited	:	May / 09 / 2015			
 #			
 #####
 
@@ -35,38 +35,43 @@ ask_pass() {
 	pw1.x = -10
 	pw1.y = 4"
 	
-	pass_attempt=0
-	pass_success=0
-	while [[ $pass_attempt -lt 5 ]]; do
-		sudo_status=$(sudo echo null 2>&1)
-		if [[ $sudo_status != "null" ]]; then
-			if [[ $pass_attempt > 0 ]]; then
+	pass_attempt=1
+	pass_success=1
+	pass_val=""
+	while [[ $pass_attempt -lt 6 ]]; do
+		sudo_status=$(sudo echo _success 2>&1)
+		if [[ $sudo_status != "_success" ]]; then
+			if [[ $pass_attempt > 1 ]]; then
 				pashua_run "$pass_fail_window" 'utf8' "$scriptDirectory"
+				pass_val="$pw1"
 			else
 				pashua_run "$pass_window" 'utf8' "$scriptDirectory"
+				pass_val="$pw0"
 			fi
-			echo "$pw0" | sudo -Sv
-			sudo_status=$(sudo echo null 2>&1)
+			echo "$pass_val" | sudo -Sv
+			sudo_status=$(sudo echo _success 2>&1)
 			echo ""
 			echo "Password attempt : "$pass_attempt
 			echo "Sudo status : "$sudo_status
-			if [[ $sudo_status = "null" ]]; then
-				pass_attempt=5
+			if [[ $sudo_status = "_success" ]]; then
+				pass_attempt=6
 				pass_success=1
 			else
 				pass_attempt=$(( $pass_attempt + 1 ))
 				echo -e "Incorrect or no password entered"
 			fi
+			pass_val=""
 			pw0=""
+			pw1=""
 		else
-			pass_attempt=5
+			pass_attempt=6
 			pass_success=1
 			sudo -v
 		fi
 	done
 
 	if [[ $pass_success = 1 ]]; then
-		echo "_success"
+		echo "..."
 	fi
 }
 check_bless() {
@@ -78,7 +83,7 @@ check_bless() {
 }
 clean_up() {
 	rm "$app_dir"/*boot.efi*
-	rm /tmp/*boot.efi*
+	# rm /tmp/*boot.efi*
 	sudo chmod 644 /System/Library/CoreServices/boot.efi
 	sudo chown root:wheel /System/Library/CoreServices/boot.efi
 	sudo chflags uchg /System/Library/CoreServices/boot.efi
@@ -156,7 +161,8 @@ echo -e "Adding login item"
 
 if [[ ! -e "$helper_2" ]]; then
 	sudo mkdir -p /Library/Scripts/dBoot
-	sudo cp "$helper_1" "$helper_2"
+	sudo cp -f "$helper_1" "$helper_2"
+	sudo cp "$dboot_efi" /Library/Scripts/dBoot/boot.efi
 	sudo chmod 700 "$helper_2"
 fi
 
@@ -251,11 +257,13 @@ pashua_run() {
 
 }
 update_check() {
-	curver=0
 	cur_date=$(date "+%y%m%d")
-	cur_date=0
 	lastupdateCheck=$($PlistBuddy "Print lastupdateCheck:" "$app_plist" 2>/dev/null || defaults write org.w0lf.dBoot "lastupdateCheck" 0 2>/dev/null)
-	lastupdateCheck=1
+	
+	# Testing
+	# curver=0
+	# cur_date=0
+	# lastupdateCheck=1
 	
 	# If we haven't already checked for updates today
 	if [[ "$lastupdateCheck" != "$cur_date" ]]; then	
@@ -272,17 +280,6 @@ update_check() {
 			dlurl=$(curl -s https://api.github.com/repos/w0lfschild/DarkBoot/releases/latest | grep 'browser_' | cut -d\" -f4)
 			verurl="https://raw.githubusercontent.com/w0lfschild/DarkBoot/master/_resource/version.txt"
 			logurl="https://raw.githubusercontent.com/w0lfschild/DarkBoot/master/_resource/versionInfo.txt"
-
-			# Beta or Stable updates
-			# if [[ $beta_updates -eq 1 ]]; then
-# 				stable_version=$(verres $(curl -\# -L "http://sourceforge.net/projects/cdock/files/version.txt") $(curl -\# -L "http://sourceforge.net/projects/cdock/files/cDock%20Beta/versionBeta.txt"))
-# 				if [[ $stable_version = "<" ]]; then
-# 					# Beta urls
-# 					dlurl="http://sourceforge.net/projects/cdock/files/cDock%20Beta/current.zip"
-# 					verurl="http://sourceforge.net/projects/cdock/files/cDock%20Beta/versionBeta.txt"
-# 					logurl="http://sourceforge.net/projects/cdock/files/cDock%20Beta/versionInfoBeta.txt"
-# 				fi
-# 			fi
 		
 			defaults write org.w0lf.dBoot "lastupdateCheck" "${cur_date}"
 			./updates/wUpdater.app/Contents/MacOS/wUpdater c "$app_directory" org.w0lf.dBoot $curver $verurl $logurl $dlurl $update_auto_install &
@@ -384,6 +381,7 @@ chk0.default = $login_enabled"
 		else
 			(($login_enabled)) && login_del
 		fi
+		echo "Done"
 	fi
 }
 
