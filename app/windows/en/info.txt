@@ -1,5 +1,5 @@
 This application enables the black boot screen on unsupported Macs.[return]
-Confirmed working on OS X 10.10 to 10.10.3[return]
+Confirmed working on OS X 10.10 to 10.10.4[return]
 Support for systems below Yosemite is currently untested.[return][return]
 How to use:[return][return]
 • Select your desired Boot Color and press Apply[return]
