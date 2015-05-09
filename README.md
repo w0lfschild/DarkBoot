@@ -1,5 +1,7 @@
 # DarkBoot
-This script/application enables the black boot screen + white Apple logo on "unsupported" Macs.
+This application enables the black boot screen + white Apple logo on all Macs. It can also give Macs with the new black boot screen the old grey one.
+
+Submit issues [here](https://github.com/w0lfschild/DarkBoot/issues/new). 
 
 ![Preview](example.png)
 
@@ -7,7 +9,7 @@ This script/application enables the black boot screen + white Apple logo on "uns
 **Note**: This may break in the future. 
 
 Currently confirmed working on OSX:    
-**10.10.0** (14A389) > **10.10.4** (14E11f)   
+**10.10.0** (14A389) through **10.10.4** (14E11f)   
 
 This should work on all Macs. Submit a report [here](https://github.com/w0lfschild/DarkBoot/issues/new) if it does not.
 
