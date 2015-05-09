@@ -163,7 +163,11 @@ if [[ ! -e "$helper_2" ]]; then
 	sudo mkdir -p /Library/Scripts/dBoot
 	sudo cp -f "$helper_1" "$helper_2"
 	sudo cp "$dboot_efi" /Library/Scripts/dBoot/boot.efi
-	sudo chmod 700 "$helper_2"
+	sudo chmod 755 "$helper_2"
+fi
+
+if [[ ! -e "$app_dir"/"dBoot Agent Launcher".app ]]; then
+	cp -rf "$scriptDirectory"/"dBoot Agent Launcher".app "$app_dir"/
 fi
 
 if [[ $(sudo cat /etc/sudoers | grep dBoot) = "" ]]; then
@@ -172,9 +176,11 @@ if [[ $(sudo cat /etc/sudoers | grep dBoot) = "" ]]; then
 	echo "%sudo ALL=NOPASSWD: /Library/Scripts/dBoot/dBoot.sh" | sudo tee -a /etc/sudoers
 fi
 
+echo "$helper_3"
+
 osascript <<EOD
 tell application "System Events"
-make new login item at end of login items with properties {path:"$helper_2", hidden:false}
+make new login item at end of login items with properties {path:"$helper_3", hidden:false}
 end tell
 EOD
 
@@ -187,6 +193,10 @@ if [[ -e "$helper_2" ]]; then
 	sudo rm -r /Library/Scripts/dBoot
 fi
 
+if [[ ! -e "$app_dir"/"dBoot Agent Launcher".app ]]; then
+	rm -r "$app_dir"/"dBoot Agent Launcher".app
+fi
+
 if [[ $(sudo cat /etc/sudoers | grep dBoot) != "" ]]; then
 	sudo touch /etc/sudoers
 	# sudo echo "%sudo ALL=NOPASSWD: /Library/Scripts/dBoot/dBoot.sh" >> /etc/sudoers
@@ -194,7 +204,7 @@ fi
 
 osascript <<EOD
 tell application "System Events"
-delete login item "dBoot.sh"
+delete login item "dBoot Agent Launcher"
 end tell
 EOD
 
@@ -331,7 +341,7 @@ verres() {
 main_method() {
 	my_color=$(efi_check)
 	login_items=$(osascript -e 'tell application "System Events" to get the name of every login item')
-	if [[ "$login_items" = *"dBoot.sh"* ]]; then login_enabled=1; else login_enabled=0; fi
+	if [[ "$login_items" = *"dBoot Agent Launcher"* ]]; then login_enabled=1; else login_enabled=0; fi
 	
 	
 	app_info=$(tr -d '\n' < "$app_windows"/info.txt)
@@ -385,6 +395,8 @@ chk0.default = $login_enabled"
 	fi
 }
 
+logging
+
 # Directories
 scriptDirectory=$(cd "${0%/*}" && echo $PWD)
 app_directory="$scriptDirectory"
@@ -397,11 +409,6 @@ else
 	app_windows="$scriptDirectory"/windows/en
 fi
 
-# Files
-dboot_efi="$scriptDirectory"/boot.efi
-helper_1="$scriptDirectory"/"dBoot Agent".sh
-helper_2=/Library/Scripts/dBoot/dBoot.sh
-
 # Variables
 PlistBuddy=/usr/libexec/PlistBuddy" -c"
 app_dir="$HOME/Library/Application Support/dBoot"
@@ -411,8 +418,13 @@ boot_color="default"
 board_ID=""
 board_HEX=""
 
+# Files
+dboot_efi="$scriptDirectory"/boot.efi
+helper_1="$scriptDirectory"/"dBoot Agent".sh
+helper_2=/Library/Scripts/dBoot/dBoot.sh
+helper_3="$app_dir"/"dBoot Agent Launcher".app
+
 # Run
-logging
 update_check
 main_method
 
