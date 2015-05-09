@@ -38,7 +38,6 @@ vercomp() {
     done
     return 0
 }
-
 verres() {
 	vercomp "$1" "$2"
 	case $? in
@@ -48,7 +47,6 @@ verres() {
 	esac
 	echo $output
 }
-
 pashua_run() {
 
 	# Write config file
@@ -106,7 +104,6 @@ pashua_run() {
 	done
 
 }
-
 install_app() {
 	
 	#	result_value=0
@@ -141,7 +138,6 @@ install_app() {
 	sleep 1
 	open -a "$oldDirectory"
 }
-
 ping_test() {
 	# Ping www.google.com to check internet connection
 	myurl=www.google.com
@@ -157,7 +153,6 @@ ping_test() {
 		kill $KILLME
 	fi
 }
-
 ping_success() {
 	# Get latest version
 	latestVersion=$(curl -\# -L "$versionURL")
@@ -180,7 +175,6 @@ ping_success() {
 		echo "No new updates available"
 	fi
 }
-
 update_prompt() {
 	# Get change log and prompt for user response
 	curl -\# -L -o /tmp/wUpdater_log.txt "$logURL" 2> /dev/null
@@ -262,7 +256,6 @@ update_prompt() {
 		fi
 	fi
 }
-
 update_confimed() {
 	echo "Downloading update..."
 	if [ -e /tmp/"$applicationName".zip ]; then rm /tmp/"$applicationName".zip; fi
@@ -279,7 +272,6 @@ update_confimed() {
 	echo "Launching installer..."
 	exec /tmp/"$applicationName".app/Contents/Resources/updates/wUpdater.app/Contents/MacOS/wUpdater "i" "$oldDirectory" &
 }
-
 download_wprogress() {
 	curl -\# -L -o /tmp/"$applicationName".zip "$downloadURL" 2> /tmp/updateTracker &
 	pids="$pids $!"
@@ -288,7 +280,6 @@ download_wprogress() {
 	exec 7>&-
 	rm -f /tmp/upipe
 }
-
 wait_for_process() {
 	rm -f /tmp/upipe
 	mkfifo /tmp/upipe
@@ -339,7 +330,6 @@ wait_for_process() {
 	rm -f /tmp/upipe
 	rm -f /tmp/updateTracker
 }
-
 debug() {
 	echo "DEBUG: $*" >/dev/null
 }

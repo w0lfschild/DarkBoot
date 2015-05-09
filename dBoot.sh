@@ -11,28 +11,62 @@
 # Functions
 
 ask_pass() {
-	sudo_status=$(sudo echo null 2>&1)
-	
 	pass_window="
-*.title = Dark Boot - $curver
-*.floating = 1
-*.transparency = 1.00
-*.autosavekey = dBoot
-pw0.type = password
-pw0.label = Enter your password to continue
-pw0.mandatory = 1
-pw0.width = 100
-pw0.x = -10
-pw0.y = 4"
+	*.title = dBoot
+	*.floating = 1
+	*.transparency = 1.00
+	*.autosavekey = dBoot_pass0
+	pw0.type = password
+	pw0.label = Password required to continue...
+	pw0.mandatory = 1
+	pw0.width = 100
+	pw0.x = -10
+	pw0.y = 4"
+
+	pass_fail_window="
+	*.title = dBoot
+	*.floating = 1
+	*.transparency = 1.00
+	*.autosavekey = dBoot_pass1
+	pw1.type = password
+	pw1.label = Incorrect password, try again...
+	pw1.mandatory = 1
+	pw1.width = 100
+	pw1.x = -10
+	pw1.y = 4"
 	
-	if [[ $sudo_status != "null" ]]; then
-		pashua_run "$pass_window" 'utf8' "$scriptDirectory"
-		pass_window=""
-		echo "$pw0" | sudo -Sv
-		echo ""
-		if [[ $pw0 = "" ]]; then echo -e "No password entered"; else pw0=""; fi
-	else
-		sudo -v
+	pass_attempt=0
+	pass_success=0
+	while [[ $pass_attempt -lt 5 ]]; do
+		sudo_status=$(sudo echo null 2>&1)
+		if [[ $sudo_status != "null" ]]; then
+			if [[ $pass_attempt > 0 ]]; then
+				pashua_run "$pass_fail_window" 'utf8' "$scriptDirectory"
+			else
+				pashua_run "$pass_window" 'utf8' "$scriptDirectory"
+			fi
+			echo "$pw0" | sudo -Sv
+			sudo_status=$(sudo echo null 2>&1)
+			echo ""
+			echo "Password attempt : "$pass_attempt
+			echo "Sudo status : "$sudo_status
+			if [[ $sudo_status = "null" ]]; then
+				pass_attempt=5
+				pass_success=1
+			else
+				pass_attempt=$(( $pass_attempt + 1 ))
+				echo -e "Incorrect or no password entered"
+			fi
+			pw0=""
+		else
+			pass_attempt=5
+			pass_success=1
+			sudo -v
+		fi
+	done
+
+	if [[ $pass_success = 1 ]]; then
+		echo "_success"
 	fi
 }
 check_bless() {
@@ -128,7 +162,8 @@ fi
 
 if [[ $(sudo cat /etc/sudoers | grep dBoot) = "" ]]; then
 	sudo touch /etc/sudoers
-	sudo echo "%sudo ALL=NOPASSWD: /Library/Scripts/dBoot/dBoot.sh" >> /etc/sudoers
+	# sudo echo "%sudo ALL=NOPASSWD: /Library/Scripts/dBoot/dBoot.sh" >> /etc/sudoers
+	echo "%sudo ALL=NOPASSWD: /Library/Scripts/dBoot/dBoot.sh" | sudo tee -a /etc/sudoers
 fi
 
 osascript <<EOD
@@ -216,35 +251,38 @@ pashua_run() {
 
 }
 update_check() {
-	cur_date=$(date "+%y%m%d")	
+	curver=0
+	cur_date=$(date "+%y%m%d")
+	cur_date=0
 	lastupdateCheck=$($PlistBuddy "Print lastupdateCheck:" "$app_plist" 2>/dev/null || defaults write org.w0lf.dBoot "lastupdateCheck" 0 2>/dev/null)
+	lastupdateCheck=1
 	
 	# If we haven't already checked for updates today
 	if [[ "$lastupdateCheck" != "$cur_date" ]]; then	
-		results=$(ping -c 1 -t 5 "http://www.sourceforge.net" 2>/dev/null || echo "Unable to connect to internet")
+		results=$(ping -c 1 -t 5 "https://www.github.com" 2>/dev/null || echo "Unable to connect to internet")
 		if [[ $results = *"Unable to"* ]]; then
 			echo "ping failed : $results"
 		else
 			echo "ping success"
 			beta_updates=$($PlistBuddy "Print betaUpdates:" "$app_plist" 2>/dev/null || echo -n 0)
 			update_auto_install=$($PlistBuddy "Print autoInstall:" "$app_plist" 2>/dev/null || { defaults write org.w0lf.dBoot "autoInstall" 0; echo -n 0; } )
-
+			update_auto_install=0
+			
 			# Stable urls
-			dlurl="http://sourceforge.net/projects/cdock/files/latest"
-			verurl="http://sourceforge.net/projects/cdock/files/version.txt"
-			logurl="http://sourceforge.net/projects/cdock/files/versionInfo.txt"
+			dlurl=$(curl -s https://api.github.com/repos/w0lfschild/DarkBoot/releases/latest | grep 'browser_' | cut -d\" -f4)
+			verurl="https://raw.githubusercontent.com/w0lfschild/DarkBoot/master/_resource/version.txt"
+			logurl="https://raw.githubusercontent.com/w0lfschild/DarkBoot/master/_resource/versionInfo.txt"
 
 			# Beta or Stable updates
-			if [[ $beta_updates -eq 1 ]]; then
-				stable_version=$(verres $(curl -\# -L "http://sourceforge.net/projects/cdock/files/version.txt") $(curl -\# -L "http://sourceforge.net/projects/cdock/files/cDock%20Beta/versionBeta.txt"))
-	
-				if [[ $stable_version = "<" ]]; then
-					# Beta urls
-					dlurl="http://sourceforge.net/projects/cdock/files/cDock%20Beta/current.zip"
-					verurl="http://sourceforge.net/projects/cdock/files/cDock%20Beta/versionBeta.txt"
-					logurl="http://sourceforge.net/projects/cdock/files/cDock%20Beta/versionInfoBeta.txt"
-				fi
-			fi
+			# if [[ $beta_updates -eq 1 ]]; then
+# 				stable_version=$(verres $(curl -\# -L "http://sourceforge.net/projects/cdock/files/version.txt") $(curl -\# -L "http://sourceforge.net/projects/cdock/files/cDock%20Beta/versionBeta.txt"))
+# 				if [[ $stable_version = "<" ]]; then
+# 					# Beta urls
+# 					dlurl="http://sourceforge.net/projects/cdock/files/cDock%20Beta/current.zip"
+# 					verurl="http://sourceforge.net/projects/cdock/files/cDock%20Beta/versionBeta.txt"
+# 					logurl="http://sourceforge.net/projects/cdock/files/cDock%20Beta/versionInfoBeta.txt"
+# 				fi
+# 			fi
 		
 			defaults write org.w0lf.dBoot "lastupdateCheck" "${cur_date}"
 			./updates/wUpdater.app/Contents/MacOS/wUpdater c "$app_directory" org.w0lf.dBoot $curver $verurl $logurl $dlurl $update_auto_install &
@@ -296,7 +334,8 @@ verres() {
 main_method() {
 	my_color=$(efi_check)
 	login_items=$(osascript -e 'tell application "System Events" to get the name of every login item')
-	if [[ "$login_items" = *"dBoot Agent"* ]]; then login_enabled=1; else login_enabled=0; fi
+	if [[ "$login_items" = *"dBoot.sh"* ]]; then login_enabled=1; else login_enabled=0; fi
+	
 	
 	app_info=$(tr -d '\n' < "$app_windows"/info.txt)
 	main_window=$(cat "$app_windows"/main.txt)
@@ -362,7 +401,7 @@ fi
 
 # Files
 dboot_efi="$scriptDirectory"/boot.efi
-helper_1="$app_directory"/Contents/Resources/"dBoot Agent".sh
+helper_1="$scriptDirectory"/"dBoot Agent".sh
 helper_2=/Library/Scripts/dBoot/dBoot.sh
 
 # Variables
@@ -376,6 +415,7 @@ board_HEX=""
 
 # Run
 logging
+update_check
 main_method
 
 # End
