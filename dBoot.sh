@@ -425,7 +425,7 @@ helper_2=/Library/Scripts/dBoot/dBoot.sh
 helper_3="$app_dir"/"dBoot Agent Launcher".app
 
 # Run
-update_check
+update_check &
 main_method
 
 # End
