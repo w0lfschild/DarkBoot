@@ -59,7 +59,7 @@
 				<key>ActionParameters</key>
 				<dict>
 					<key>COMMAND_STRING</key>
-					<string>/Library/Scripts/dBoot/dBoot.sh</string>
+					<string>sudo /Library/Scripts/dBoot/dBoot.sh</string>
 					<key>CheckedForUserDefaultShell</key>
 					<true/>
 					<key>inputMethod</key>
