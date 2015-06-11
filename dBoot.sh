@@ -4,7 +4,7 @@
 #
 #		Created By	:	w0lf
 #		Project Page:	https://github.com/w0lfschild/DarkBoot		
-#		Last Edited	:	May / 09 / 2015			
+#		Last Edited	:	Jun / 11 / 2015			
 #			
 #####
 
@@ -343,20 +343,42 @@ main_method() {
 	login_items=$(osascript -e 'tell application "System Events" to get the name of every login item')
 	if [[ "$login_items" = *"dBoot Agent Launcher"* ]]; then login_enabled=1; else login_enabled=0; fi
 	
-	
 	app_info=$(tr -d '\n' < "$app_windows"/info.txt)
 	main_window=$(cat "$app_windows"/main.txt)
 	main_window="$main_window
 *.title = Dark Boot - $curver
-textbx0.default = $app_info
-pop0.default = $my_color
-chk0.default = $login_enabled"
+mw_textbx0.default = $app_info
+mw_pop0.default = $my_color
+mw_chk0.default = $login_enabled
+"
+
+	# OSX El Capitan Rootless
+	OSX_version=$(sw_vers -productVersion)
+	OSX_version=$(verres 10.11 $OSX_version)
+	if [[ $OSX_version != "<" ]]; then
+		nvram_bootargs=$(nvram boot-args)
+		are_we_rootless=0
+		if [[ "$nvram_bootargs" = *"rootless=0"* ]]; then are_we_rootless=1; fi
+		main_window="$main_window
+mw_chk1.tooltip = Rootless must be disabled for Dark Boot to work on OSX 10.11+.
+mw_chk1.type = checkbox
+mw_chk1.label = Rootless disabled
+mw_chk1.x = 110
+mw_chk1.y = 4
+mw_chk1.disabled = 1
+mw_chk1.default = $are_we_rootless"
+	fi
 
 	pashua_run "$main_window" 'utf8' "$scriptDirectory"
 	
-	if [[ $db0 = "1" ]]; then
-		boot_color=$pop0
+	if [[ $mw_db0 = "1" ]]; then
+		boot_color=$mw_pop0
 		ask_pass
+		if [[ $OSX_version != "<" ]]; then
+			if [[ "$are_we_rootless" = "0" ]]; then
+				draw_rootless_window
+			fi
+		fi
 		sudo chflags nouchg /System/Library/CoreServices/boot.efi
 		defaults write org.w0lf.dBoot color $boot_color
 		if [[ -e "$app_dir"/boot.efi ]]; then rm "$app_dir"/boot.efi; fi
@@ -386,12 +408,25 @@ chk0.default = $login_enabled"
 		check_bless $boot_color
 		bless --info / | head -2
 		echo -e "verigfying login item staus"
-		if [[ $chk0 = "1" ]]; then
+		if [[ $mw_chk0 = "1" ]]; then
 			(($login_enabled)) || login_add
 		else
 			(($login_enabled)) && login_del
 		fi
 		echo "Done"
+	fi
+}
+draw_rootless_window() {
+	rootless_window=$(cat "$app_windows"/root_warning.txt)
+	pashua_run "$rootless_window" 'utf8' "$scriptDirectory"
+	
+	if [[ $rw_db0 = "1" ]]; then
+		# Add rootless=0 to nvram boot-args and reboot
+		ba=$(nvram boot-args | sed -E "s/boot-args//g")
+		sudo nvram boot-args="rootless=0 $(echo $ba)"
+		sudo reboot
+	else
+		exit
 	fi
 }
 
@@ -426,6 +461,8 @@ helper_3="$app_dir"/"dBoot Agent Launcher".app
 
 # Run
 update_check &
+# draw_rootless_window
+# exit
 main_method
 
 # End

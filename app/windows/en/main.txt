@@ -2,35 +2,35 @@
 *.transparency = 1.00
 *.autosavekey = dBoot
 
-db0.type = defaultbutton
-db0.label = Apply
+mw_db0.type = defaultbutton
+mw_db0.label = Apply
 
-cb0.type = cancelbutton
-cb0.label = Quit
+mw_cb0.type = cancelbutton
+mw_cb0.label = Quit
 
-textbx0.type = textbox
-textbx0.width = 480
-textbx0.height = 150
-textbx0.disabled = 1
-textbx0.rely = 10
+mw_textbx0.type = textbox
+mw_textbx0.width = 480
+mw_textbx0.height = 150
+mw_textbx0.disabled = 1
+mw_textbx0.rely = 10
 
-tb0.type = text
-tb0.height = 0
-tb0.width = 150
-tb0.text = Boot Color : 
-tb0.x = 0
-tb0.y = 25
+mw_tb0.type = text
+mw_tb0.height = 0
+mw_tb0.width = 150
+mw_tb0.text = Boot Color : 
+mw_tb0.x = 0
+mw_tb0.y = 25
 
-pop0.type = popup
-pop0.width = 120
-pop0.option = default
-pop0.option = gray
-pop0.option = black
-pop0.x = 80
-pop0.y = 21
+mw_pop0.type = popup
+mw_pop0.width = 120
+mw_pop0.option = default
+mw_pop0.option = gray
+mw_pop0.option = black
+mw_pop0.x = 80
+mw_pop0.y = 21
 
-chk0.tooltip = Check to make sure your selected option is enforced at every startup or login.
-chk0.type = checkbox
-chk0.label = Check at login
-chk0.x = 0
-chk0.y = 4
+mw_chk0.tooltip = Check to make sure your selected option is enforced at every startup or login.
+mw_chk0.type = checkbox
+mw_chk0.label = Check at login
+mw_chk0.x = 0
+mw_chk0.y = 4

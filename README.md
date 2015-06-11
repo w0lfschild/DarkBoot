@@ -9,7 +9,7 @@ Submit issues [here](https://github.com/w0lfschild/DarkBoot/issues/new).
 **Note**: This may break in the future. 
 
 Currently confirmed working on OSX:    
-**10.10.0** (14A389) to **10.10.4** (14E26a)   
+**10.10** (14A389) to **10.11** (15A178w)   
 
 This should work on all Macs. Submit a report [here](https://github.com/w0lfschild/DarkBoot/issues/new) if it does not.
 
