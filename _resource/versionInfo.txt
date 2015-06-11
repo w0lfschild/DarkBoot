@@ -1,9 +1,16 @@
 ------------------------------------------------
-Version		: 3.2
+Version		: 3.3
 Build date	: Jun / 01 / 2015
 If auto-updates fail. 
 You can manually download updates here: 
 https://github.com/w0lfschild/DarkBoot/releases/latest
+------------------------------------------------
+
+3.3
+
+New
+- Support for El Capitan (OSX 10.11)
+
 ------------------------------------------------
 
 3.2
