@@ -354,7 +354,7 @@ mw_chk0.default = $login_enabled
 
 	# OSX El Capitan Rootless
 	OSX_version=$(sw_vers -productVersion)
-	OSX_version=$(verres 10.11 $OSX_version)
+	OSX_version=$(verres $OSX_version 10.11)
 	if [[ $OSX_version != "<" ]]; then
 		nvram_bootargs=$(nvram boot-args)
 		are_we_rootless=0
