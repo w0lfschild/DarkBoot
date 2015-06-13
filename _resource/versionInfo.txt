@@ -1,12 +1,12 @@
 ------------------------------------------------
-Version		: 3.3
+Version		: 3.3.1
 Build date	: Jun / 01 / 2015
 If auto-updates fail. 
 You can manually download updates here: 
 https://github.com/w0lfschild/DarkBoot/releases/latest
 ------------------------------------------------
 
-3.3
+3.3.1
 
 Fixed
 - Dark Boot thinking older OSX were using rootless
