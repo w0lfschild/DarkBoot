@@ -1,9 +1,15 @@
 ------------------------------------------------
-Version		: 3.3.1
-Build date	: Jun / 01 / 2015
-If auto-updates fail. 
-You can manually download updates here: 
-https://github.com/w0lfschild/DarkBoot/releases/latest
+Version		: 3.4
+Build date	: Jul / 14 / 2015
+------------------------------------------------
+
+3.4
+
+- Option to cancel password dialog
+- Increase update check interval
+- Improve rootless check for 10.11
+- Fix issue where app would fail to open if it couldn't detect language
+
 ------------------------------------------------
 
 3.3.1
