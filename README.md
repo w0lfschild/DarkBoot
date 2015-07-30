@@ -1,7 +1,7 @@
 # DarkBoot
 
 [![Build Status](https://img.shields.io/github/release/w0lfschild/DarkBoot.svg)](https://github.com/w0lfschild/DarkBoot/releases/latest)   
-![Build Status](https://img.shields.io/github/downloads/w0lfschild/DarkBoot/latest/total.svg)
+[![Build Status](https://img.shields.io/github/downloads/w0lfschild/DarkBoot/latest/total.svg)](https://github.com/w0lfschild/DarkBoot/archive/master.zip) 
 
 This application enables the black boot screen + white Apple logo on all Macs. It should also be able to give Macs with the new black boot screen the old grey one.
 
