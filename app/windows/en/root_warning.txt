@@ -4,16 +4,11 @@
 *.autosavekey = dBoot_root
 
 rw_db0.type = defaultbutton
-rw_db0.label = Okay
-
-rw_cb0.type = cancelbutton
-rw_cb0.label = Cancel
+rw_db0.label = Exit
 
 rw_textbx0.type = textbox
 rw_textbx0.width = 480
 rw_textbx0.height = 170
 rw_textbx0.disabled = 1
 rw_textbx0.rely = 10
-rw_textbx0.default = Dark Boot has determined that Rootless is currently enabled on your system. Unfortunately this will prevent Dark Boot from doing anything.[return][return]You have two options:[return][return]1: To continue and disable Rootless press 'Okay'. This will cause your system to reboot. You will need to run Dark Boot again after your System reboots.[return][return]2: To cancel and do nothing press 'Cancel'. This will close Dark Boot and nothing will be changed.
-
-# Note to self: To re-enable Rootless run this command:[return]ba=$(nvram boot-args | sed -E "s/boot-args|rootless=0//g"); sudo nvram boot-args="$(echo $ba)"; sleep; sudo reboot
+rw_textbx0.default = Dark Boot has determined that Rootless is currently enabled on your system. Unfortunately this will prevent Dark Boot from doing anything.[return][return]In order to disable rootless you must follow these steps:[return]1 - Shutdown your computer[return]2 - Boot while holding Command + R[return]3 - Open terminal from the menu bar[return]4 - Enter the command scrutil disable[return]5 - Reboot and Re-run Dark Boot[return]

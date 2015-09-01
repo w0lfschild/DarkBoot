@@ -10,7 +10,7 @@ mw_cb0.label = Quit
 
 mw_textbx0.type = textbox
 mw_textbx0.width = 480
-mw_textbx0.height = 150
+mw_textbx0.height = 350
 mw_textbx0.disabled = 1
 mw_textbx0.rely = 10
 

@@ -1,6 +1,16 @@
 ------------------------------------------------
-Version		: 3.4
-Build date	: Jul / 14 / 2015
+Version		: 3.5
+Build date	: Aug / 31 / 2015
+------------------------------------------------
+
+3.5
+
+- Update El Capitan rootless information
+- Verified compatibility with 10.9
+- Recreated launch agent
+- Fix applescript issue with launch agent
+- Miscellaneous improvements
+
 ------------------------------------------------
 
 3.4
@@ -8,21 +18,21 @@ Build date	: Jul / 14 / 2015
 - Option to cancel password dialog
 - Increase update check interval
 - Improve rootless check for 10.11
-- Fix issue where app would fail to open if it couldn't detect language
+- Fix issue where application would fail to open
 
 ------------------------------------------------
 
 3.3.1
 
 Fixed
-- Dark Boot thinking older OSX were using rootless
+- Dark Boot thinking older OS X were using rootless
 
 ------------------------------------------------
 
 3.3
 
 New
-- Support for El Capitan (OSX 10.11)
+- Support for El Capitan (OS X 10.11)
 
 ------------------------------------------------
 

@@ -1,12 +1,7 @@
 #! /bin/bash
 
-#####
-#
-#		Created By	:	w0lf
-#		Project Page:	https://github.com/w0lfschild/DarkBoot		
-#		Last Edited	:	Jul / 14 / 2015			
-#			
-#####
+# Created By	:	Wolfgang Baird
+# Project Page	:	https://github.com/w0lfschild/DarkBoot
 
 # Functions
 
@@ -103,56 +98,15 @@ logging() {
 login_add() {
 	
 	echo -e "Adding login item"
-
-	if [[ ! -e "$helper_2" ]]; then
-		sudo mkdir -p /Library/Scripts/dBoot
-		sudo cp -f "$helper_1" "$helper_2"
-		sudo cp "$dboot_efi" /Library/Scripts/dBoot/boot.efi
-		sudo chmod 755 "$helper_2"
-	fi
-
-	if [[ ! -e "$app_dir"/"dBoot Agent Launcher".app ]]; then
-		cp -rf "$scriptDirectory"/"dBoot Agent Launcher".app "$app_dir"/
-	fi
-
-	if [[ $(sudo cat /etc/sudoers | grep dBoot) = "" ]]; then
-		sudo touch /etc/sudoers
-		# sudo echo "%sudo ALL=NOPASSWD: /Library/Scripts/dBoot/dBoot.sh" >> /etc/sudoers
-		echo "%sudo ALL=NOPASSWD: /Library/Scripts/dBoot/dBoot.sh" | sudo tee -a /etc/sudoers
-	fi
-
-	echo "$helper_3"
-
-osascript <<EOD
-tell application "System Events"
-make new login item at end of login items with properties {path:"$helper_3", hidden:false}
-end tell
-EOD
+	osascript -e "tell application \"System Events\" to delete login items \"Dark Boot Agent\""
+	osascript -e "tell application \"System Events\" to make new login item at end of login items with properties {path:\"$my__agent\", hidden:false}"
 
 }
 
 login_del() {
 	
 	echo -e "Removing login item"
-
-	if [[ -e "$helper_2" ]]; then
-		sudo rm -r /Library/Scripts/dBoot
-	fi
-
-	if [[ ! -e "$app_dir"/"dBoot Agent Launcher".app ]]; then
-		rm -r "$app_dir"/"dBoot Agent Launcher".app
-	fi
-
-	if [[ $(sudo cat /etc/sudoers | grep dBoot) != "" ]]; then
-		sudo touch /etc/sudoers
-		# sudo echo "%sudo ALL=NOPASSWD: /Library/Scripts/dBoot/dBoot.sh" >> /etc/sudoers
-	fi
-
-osascript <<EOD
-tell application "System Events"
-delete login item "dBoot Agent Launcher"
-end tell
-EOD
+	osascript -e "tell application \"System Events\" to delete login items \"Dark Boot Agent\""
 
 }
 
@@ -172,19 +126,15 @@ main_method() {
 	mw_chk0.default = $login_enabled
 	"
 
-	# OSX El Capitan Rootless
-	OSX_version=$(sw_vers -productVersion)
-	OSX_version=$(verres $OSX_version 10.11)
-	if [[ $OSX_version != "<" ]]; then
-		are_we_rootless=0
-
-		# check nvram boot-args
-		nvram_bootargs=$(nvram boot-args)
-		if [[ "$nvram_bootargs" = *"rootless=0"* ]]; then are_we_rootless=1; fi
-
-		# check nvram rootless
-		nvram_bootargs=$(nvram rootless)
-		if [[ "$nvram_bootargs" = *"rootless"*"0"* ]]; then are_we_rootless=1; fi
+	sys_isrootless=1
+	if [[ $(sw_vers -productVersion | cut -f2 -d.) -gt "10" ]]; then
+		# El Capitan or newer detected
+		
+		error_capture=$( touch /System/test 2>&1 )
+		if [[ $error_capture == *"Operation not permitted"* ]]; then
+			# Expected output is Permission denied on system with rootless off
+			sys_isrootless=0
+		fi
 
 		main_window="$main_window
 		mw_chk1.tooltip = Rootless must be disabled for Dark Boot to work on OSX 10.11+.
@@ -193,23 +143,28 @@ main_method() {
 		mw_chk1.x = 110
 		mw_chk1.y = 4
 		mw_chk1.disabled = 1
-		mw_chk1.default = $are_we_rootless"
+		mw_chk1.default = $sys_isrootless"
 	fi
 
 	pashua_run "$main_window" 'utf8' "$scriptDirectory"
 	
 	if [[ $mw_db0 = "1" ]]; then
 		boot_color=$mw_pop0
-		if [[ $(ask_pass "Dark Boot") == "_success" ]]; then
-			if [[ $OSX_version != "<" ]]; then
-				if [[ "$are_we_rootless" = "0" ]]; then
-					draw_rootless_window
-				fi
-			fi
+
+		if [[ "$sys_isrootless" = "0" ]]; then
+
+			# Show rootless window
+			rootless_window=$(cat "$app_windows"/root_warning.txt)
+			pashua_run "$rootless_window" 'utf8' "$scriptDirectory"
+			exit
+
+		elif [[ $(ask_pass "Dark Boot") == "_success" ]]; then
+
+			# Got privledges
 			sudo chflags nouchg /System/Library/CoreServices/boot.efi
 			defaults write org.w0lf.dBoot color $boot_color
 			if [[ -e "$app_dir"/boot.efi ]]; then rm "$app_dir"/boot.efi; fi
-			if [[ -e "$app_dir" ]]; then mkdir -p "$app_dir"; fi
+			if [[ ! -e "$app_dir" ]]; then mkdir -p "$app_dir"; fi
 			cp "$dboot_efi" "$app_dir"/boot.efi
 			cur_efi=$(efi_check)
 			echo -e "Current efi : $cur_efi"
@@ -240,24 +195,14 @@ main_method() {
 			else
 				(($login_enabled)) && login_del
 			fi
-			echo "Done"
-		else
-			echo "Did not receive root privileges"
-		fi
-	fi
-}
+			say "Done"
 
-draw_rootless_window() {
-	rootless_window=$(cat "$app_windows"/root_warning.txt)
-	pashua_run "$rootless_window" 'utf8' "$scriptDirectory"
-	
-	if [[ $rw_db0 = "1" ]]; then
-		# Add rootless=0 to nvram boot-args and reboot
-		ba=$(nvram boot-args | sed -E "s/boot-args//g")
-		sudo nvram boot-args="rootless=0 $(echo $ba)"
-		sudo reboot
-	else
-		exit
+		else
+
+			# Got nothing
+			echo "Did not receive root privileges"
+
+		fi
 	fi
 }
 
@@ -291,11 +236,9 @@ boot_color="default"
 board_ID=""
 board_HEX=""
 
-# Files
+# Agent
 dboot_efi="$scriptDirectory"/boot.efi
-helper_1="$scriptDirectory"/"dBoot Agent".sh
-helper_2=/Library/Scripts/dBoot/dBoot.sh
-helper_3="$app_dir"/"dBoot Agent Launcher".app
+my__agent="$scriptDirectory"/"Dark Boot Agent".sh
 
 update_check \
 "https://api.github.com/repos/w0lfschild/DarkBoot/releases/latest" \
