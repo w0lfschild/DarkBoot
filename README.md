@@ -10,7 +10,8 @@ This application enables the black boot screen + white Apple logo on all Macs.
 Submit issues [here](https://github.com/w0lfschild/DarkBoot/issues/new). 
 
 ### Information:
-This should work on any version of OS X that it will open on. Currently confirmed working on OSX: **10.9** to **10.11**   
+This should work on any version of OS X that it will open on.    
+Currently confirmed working on OSX: **10.9** to **10.11**   
 This should work on most Macs. Submit a report [here](https://github.com/w0lfschild/DarkBoot/issues/new) if it does not.
 
 ### How to use:
