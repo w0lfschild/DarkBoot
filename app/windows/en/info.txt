@@ -1,7 +1,6 @@
 This application enables the black boot screen on unsupported Macs.[return]
 	• Confirmed working on OS X 10.9 (Mavericks) to 10.11 (El Capitan)[return]
 	• Dark Boot may not work on all Macs use with caution[return]
-	• Use with caution on Beta/Unconfirmed versions of OSX[return][return]
 How to use:[return]
 	• Select your desired Boot Color and press Apply[return]
 	• Enter your admin password and press OK[return]
