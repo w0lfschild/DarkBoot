@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'BootXChanger' target in the 'BootXChanger' project
+//
+
+#ifdef __OBJC__
+    #import <Cocoa/Cocoa.h>
+#endif

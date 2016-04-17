@@ -1,0 +1,5 @@
+"ImageUnusable" = "This image cannot be used as a boot image.";
+"OffsetNotFound" = "The Location of the boot image could not be determined.";
+"OffsetNotFound2" = "Would you like to report this error?";
+"Report" = "Report";
+"Quit" = "Quit";
