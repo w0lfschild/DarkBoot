@@ -19,19 +19,19 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>4.0.1</string>
+	<string>4.0.5</string>
 	<key>CFBundleSignature</key>
 	<string>BtXg</string>
 	<key>CFBundleVersion</key>
-	<string>101</string>
+	<string>105</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>BXApplication</string>
-	<key>SUPublicDSAKeyFile</key>
-	<string>dsa_pub.pem</string>
 	<key>SUFeedURL</key>
 	<string>https://github.com/w0lfschild/app_updates/raw/master/DarkBoot/appcast.xml</string>
+	<key>SUPublicDSAKeyFile</key>
+	<string>dsa_pub.pem</string>
 	<key>WebsiteURL</key>
 	<string>https://github.com/w0lfschild/DarkBoot</string>
 </dict>
