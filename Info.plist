@@ -28,8 +28,10 @@
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
 	<string>BXApplication</string>
+	<key>SUPublicDSAKeyFile</key>
+	<string>dsa_pub.pem</string>
 	<key>SUFeedURL</key>
-	<string>https://github.com/w0lfschild/app_updates/blob/master/DarkBoot/appcast.xml</string>
+	<string>https://github.com/w0lfschild/app_updates/raw/master/DarkBoot/appcast.xml</string>
 	<key>WebsiteURL</key>
 	<string>https://github.com/w0lfschild/DarkBoot</string>
 </dict>

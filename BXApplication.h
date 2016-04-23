@@ -25,6 +25,7 @@
 - (IBAction)showDefaultImage:(id)sender;
 - (IBAction)showCurrentImage:(id)sender;
 - (IBAction)saveBootImage:(id)sender;
+- (IBAction)removeBXPlist:(id)sender;
 - (BOOL)installBootImage:(NSImage*)img withBackgroundColor:(NSColor*)bgColor error:(NSError**)err;
 - (BOOL)authorize;
 - (void)deauthorize;

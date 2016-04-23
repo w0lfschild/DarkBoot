@@ -166,6 +166,20 @@ enum BXErrorCode {
     system("launchctl load /Library/LaunchDaemons/com.dabrain13.darkboot.plist");
 }
 
+- (IBAction)removeBXPlist:(id)sener
+{
+    OSStatus e;
+    char *bootPlist = "/Library/LaunchDaemons/com.dabrain13.darkboot.plist";
+    
+    // Run the tool using the authorization reference
+    char *tool = "/bin/rm";
+    char *args0[] = { "-f", bootPlist, nil };
+    FILE *pipe = NULL;
+    e = AuthorizationExecuteWithPrivileges(auth, tool, kAuthorizationFlagDefaults, args0, &pipe);
+    system("launchctl unload /Library/LaunchDaemons/com.dabrain13.darkboot.plist");
+    [bootColorWell setColor:[NSColor grayColor]];
+}
+
 - (void)setupDarkBoot {
 //    long selectedbgc = [currentBGColor indexOfSelectedItem];
     if ([self currentBackgroundColor] != bootColorWell.color) {

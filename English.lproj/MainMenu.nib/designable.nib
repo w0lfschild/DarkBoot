@@ -225,20 +225,21 @@
         <window title="Dark Boot" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" showsToolbarButton="NO" animationBehavior="default" id="371">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" fullSizeContentView="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" bottomStrut="YES"/>
-            <rect key="contentRect" x="139" y="479" width="328" height="250"/>
+            <rect key="contentRect" x="139" y="479" width="356" height="368"/>
             <rect key="screenRect" x="0.0" y="0.0" width="1280" height="778"/>
             <value key="minSize" type="size" width="328" height="234"/>
+            <value key="maxSize" type="size" width="356" height="368"/>
             <view key="contentView" id="372">
-                <rect key="frame" x="0.0" y="0.0" width="328" height="250"/>
+                <rect key="frame" x="0.0" y="0.0" width="356" height="368"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <imageView id="376" customClass="BXBootImageView">
-                        <rect key="frame" x="17" y="58" width="160" height="160"/>
+                        <rect key="frame" x="17" y="148" width="160" height="160"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <imageCell key="cell" selectable="YES" editable="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="377"/>
                     </imageView>
                     <button toolTip="Reverts to the default Boot Image" verticalHuggingPriority="750" id="379">
-                        <rect key="frame" x="176" y="188" width="138" height="32"/>
+                        <rect key="frame" x="176" y="277" width="166" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Default Image" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="380">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -249,21 +250,21 @@
                         </connections>
                     </button>
                     <colorWell id="485">
-                        <rect key="frame" x="182" y="117" width="126" height="23"/>
+                        <rect key="frame" x="196" y="204" width="126" height="23"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <color key="color" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="calibratedRGB"/>
                     </colorWell>
                     <textField verticalHuggingPriority="750" id="488">
-                        <rect key="frame" x="180" y="148" width="130" height="17"/>
+                        <rect key="frame" x="194" y="235" width="130" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Background Colour" id="489">
+                        <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Image Background" id="489">
                             <font key="font" metaFont="system"/>
                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                         </textFieldCell>
                     </textField>
                     <textField verticalHuggingPriority="750" id="brK-u6-q63">
-                        <rect key="frame" x="180" y="92" width="130" height="17"/>
+                        <rect key="frame" x="18" y="92" width="130" height="17"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <textFieldCell key="cell" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Boot Color" id="qXn-8x-Ipp">
                             <font key="font" metaFont="system"/>
@@ -272,7 +273,7 @@
                         </textFieldCell>
                     </textField>
                     <button toolTip="Reverts to the System's current Boot Image" verticalHuggingPriority="750" id="381">
-                        <rect key="frame" x="176" y="166" width="138" height="32"/>
+                        <rect key="frame" x="176" y="253" width="166" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES"/>
                         <buttonCell key="cell" type="push" title="Current Image" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="382">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -282,8 +283,45 @@
                             <action selector="showCurrentImage:" target="-3" id="491"/>
                         </connections>
                     </button>
+                    <colorWell id="B3h-gj-ok6">
+                        <rect key="frame" x="20" y="61" width="126" height="23"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <color key="color" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="calibratedRGB"/>
+                    </colorWell>
+                    <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="AVa-dq-qsK">
+                        <rect key="frame" x="0.0" y="140" width="356" height="5"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <font key="titleFont" metaFont="system"/>
+                    </box>
+                    <box verticalHuggingPriority="750" title="Box" boxType="separator" titlePosition="noTitle" id="ndO-EM-AXc">
+                        <rect key="frame" x="0.0" y="50" width="356" height="5"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <color key="borderColor" white="0.0" alpha="0.41999999999999998" colorSpace="calibratedWhite"/>
+                        <color key="fillColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                        <font key="titleFont" metaFont="system"/>
+                    </box>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="yhS-KN-9oB">
+                        <rect key="frame" x="126" y="313" width="104" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Boot Image" id="woR-Vb-8fm">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
+                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" id="X2B-zD-dJZ">
+                        <rect key="frame" x="101" y="117" width="154" height="17"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Boot Screen Color" id="iM8-I6-yrZ">
+                            <font key="font" metaFont="system"/>
+                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                            <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                        </textFieldCell>
+                    </textField>
                     <button toolTip="Saves the Boot Image" verticalHuggingPriority="750" id="383">
-                        <rect key="frame" x="116" y="13" width="96" height="32"/>
+                        <rect key="frame" x="130" y="13" width="96" height="32"/>
                         <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
                         <buttonCell key="cell" type="push" title="Apply" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="384">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -293,14 +331,20 @@
                             <action selector="saveBootImage:" target="-3" id="492"/>
                         </connections>
                     </button>
-                    <colorWell id="B3h-gj-ok6">
-                        <rect key="frame" x="182" y="61" width="126" height="23"/>
-                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <color key="color" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="calibratedRGB"/>
-                    </colorWell>
+                    <button verticalHuggingPriority="750" id="uzt-H9-63w">
+                        <rect key="frame" x="176" y="54" width="166" height="32"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                        <buttonCell key="cell" type="push" title="Restore Default" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="CH8-gq-FIG">
+                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                            <font key="font" metaFont="system"/>
+                        </buttonCell>
+                        <connections>
+                            <action selector="removeBXPlist:" target="-3" id="04o-cL-1RQ"/>
+                        </connections>
+                    </button>
                 </subviews>
             </view>
-            <point key="canvasLocation" x="372" y="372"/>
+            <point key="canvasLocation" x="439" y="343"/>
         </window>
         <customObject id="453" customClass="SUUpdater"/>
         <window title="Dark Boot Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" animationBehavior="default" id="456">

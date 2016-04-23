@@ -24,6 +24,7 @@
 		FB5464E11CB9A8D900508447 /* com.dabrain13.darkboot.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB5464E01CB9A8D900508447 /* com.dabrain13.darkboot.plist */; };
 		FBBE84A91CC30FB0001C0E8F /* Dark Boot.icns in Resources */ = {isa = PBXBuildFile; fileRef = FBBE84A81CC30FB0001C0E8F /* Dark Boot.icns */; };
 		FBBE84AB1CC31AF7001C0E8F /* updates in Resources */ = {isa = PBXBuildFile; fileRef = FBBE84AA1CC31AF7001C0E8F /* updates */; };
+		FBF3F2F71CCBC5CB00B1B8CA /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = FBF3F2F61CCBC5CB00B1B8CA /* dsa_pub.pem */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -127,6 +128,7 @@
 		FB5464E01CB9A8D900508447 /* com.dabrain13.darkboot.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = com.dabrain13.darkboot.plist; sourceTree = "<group>"; };
 		FBBE84A81CC30FB0001C0E8F /* Dark Boot.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Dark Boot.icns"; sourceTree = "<group>"; };
 		FBBE84AA1CC31AF7001C0E8F /* updates */ = {isa = PBXFileReference; lastKnownFileType = folder; path = updates; sourceTree = "<group>"; };
+		FBF3F2F61CCBC5CB00B1B8CA /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -217,6 +219,7 @@
 			children = (
 				FBBE84AA1CC31AF7001C0E8F /* updates */,
 				FB5464E01CB9A8D900508447 /* com.dabrain13.darkboot.plist */,
+				FBF3F2F61CCBC5CB00B1B8CA /* dsa_pub.pem */,
 				284A5C9D11A59F9100EAC012 /* default.png */,
 				FBBE84A81CC30FB0001C0E8F /* Dark Boot.icns */,
 				281A7D0B0D0C4FE700DD6E10 /* Credits.rtf */,
@@ -324,6 +327,7 @@
 				FBBE84A91CC30FB0001C0E8F /* Dark Boot.icns in Resources */,
 				8D11072B0486CEB800E47090 /* InfoPlist.strings in Resources */,
 				28D3C0F60CDE1C3A003F3018 /* Localizable.strings in Resources */,
+				FBF3F2F71CCBC5CB00B1B8CA /* dsa_pub.pem in Resources */,
 				281A7D0D0D0C4FE700DD6E10 /* Credits.rtf in Resources */,
 				FBBE84AB1CC31AF7001C0E8F /* updates in Resources */,
 				FB5464E11CB9A8D900508447 /* com.dabrain13.darkboot.plist in Resources */,
