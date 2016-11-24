@@ -27,7 +27,7 @@
 //        path to image
 
 static NSString *bootPlistPath = @"/Library/Preferences/SystemConfiguration/com.apple.Boot.plist";
-static NSString *bootLogoPath = @"/System/Library/CoreServices/BootLogo.png";
+static NSString *bootLogoPath = @"/Library/Caches/BootLogo.png";
 
 BOOL InstallBootImage(int color, NSString *path);
 

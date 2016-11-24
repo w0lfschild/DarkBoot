@@ -20,13 +20,13 @@
  */
 
 #import "BXBootImageView.h"
-#import "BXApplication.h"
+#import "DBApplication.h"
 
 @implementation BXBootImageView
 
 - (void)setImage:(NSImage *)newImage {
 	if (newImage == nil) {
-		[(BXApplication*)NSApp showDefaultImage:self];
+		[(DBApplication*)NSApp showDefaultImage:self];
 		return;
 	}
 
