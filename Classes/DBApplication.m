@@ -39,6 +39,20 @@ enum BXErrorCode
     PFMoveToApplicationsFolderIfNecessary();
     
     [mainWindow setMovableByWindowBackground:YES];
+//    [mainWindow setTitle:@""];
+    
+    if ([[NSProcessInfo processInfo] operatingSystemVersion].minorVersion < 10)
+    {
+        //        _window.centerTrafficLightButtons = false;
+        //        _window.showsBaselineSeparator = false;
+        //        _window.titleBarHeight = 0.0;
+    } else {
+        [mainWindow setTitlebarAppearsTransparent:true];
+        mainWindow.styleMask |= NSFullSizeContentViewWindowMask;
+        NSRect frame = mainWindow.frame;
+        frame.size.height += 22;
+        [mainWindow setFrame:frame display:true];
+    }
     
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
     [appName setStringValue:[infoDict objectForKey:@"CFBundleExecutable"]];

@@ -13,18 +13,18 @@
 		286CC41C0CDCD61F00ACA824 /* BXBootImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 286CC41B0CDCD61F00ACA824 /* BXBootImageView.m */; };
 		28D089B611A5DCBE001B092C /* InstallBootImage in CopyFiles */ = {isa = PBXBuildFile; fileRef = 28D089AC11A5DC3C001B092C /* InstallBootImage */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		28D08A2411A5E54D001B092C /* InstallBootImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 285AC1F10CDF6C2C008AF706 /* InstallBootImage.m */; };
-		28F7B44D0D619039005E2AEA /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 28F7B44C0D619039005E2AEA /* Sparkle.framework */; };
-		28F7B46C0D61906A005E2AEA /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 28F7B44C0D619039005E2AEA /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
 		8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */; };
-		FB084CCB1DE769DA00ACD9FB /* Dark Boot.icns in Resources */ = {isa = PBXBuildFile; fileRef = FB084CCA1DE769DA00ACD9FB /* Dark Boot.icns */; };
-		FB11870E1DE62F8F008BBBF1 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FB11870D1DE62F8F008BBBF1 /* MainMenu.xib */; };
 		FB1187121DE63A16008BBBF1 /* github.png in Resources */ = {isa = PBXBuildFile; fileRef = FB1187111DE63A16008BBBF1 /* github.png */; };
 		FB1187161DE63A30008BBBF1 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FB1187131DE63A30008BBBF1 /* Credits.rtf */; };
 		FB1187171DE63A30008BBBF1 /* EULA.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FB1187141DE63A30008BBBF1 /* EULA.rtf */; };
 		FB1187181DE63A30008BBBF1 /* Changelog.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FB1187151DE63A30008BBBF1 /* Changelog.rtf */; };
 		FB1A29E41DD977920099DA03 /* PFMoveApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = FB1A29E31DD977920099DA03 /* PFMoveApplication.m */; };
 		FB5464E11CB9A8D900508447 /* com.dabrain13.darkboot.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB5464E01CB9A8D900508447 /* com.dabrain13.darkboot.plist */; };
+		FBC129BB1DEA2DE900B0D6D5 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC129BA1DEA2DE900B0D6D5 /* Sparkle.framework */; };
+		FBC129BC1DEA2DEE00B0D6D5 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FBC129BA1DEA2DE900B0D6D5 /* Sparkle.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FBC129BE1DEA2E4000B0D6D5 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBC129BD1DEA2E4000B0D6D5 /* MainMenu.xib */; };
+		FBC129C01DEA2E4F00B0D6D5 /* Dark Boot.icns in Resources */ = {isa = PBXBuildFile; fileRef = FBC129BF1DEA2E4F00B0D6D5 /* Dark Boot.icns */; };
 		FBF3F2F71CCBC5CB00B1B8CA /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = FBF3F2F61CCBC5CB00B1B8CA /* dsa_pub.pem */; };
 /* End PBXBuildFile section */
 
@@ -55,7 +55,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				28F7B46C0D61906A005E2AEA /* Sparkle.framework in CopyFiles */,
+				FBC129BC1DEA2DEE00B0D6D5 /* Sparkle.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -65,29 +65,30 @@
 		1058C7A1FEA54F0111CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		13E42FB307B3F0F600E4EEF1 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 		28210AEA0CDF548500FAD3CF /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
-		284A5C9D11A59F9100EAC012 /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = default.png; path = Resources/default.png; sourceTree = "<group>"; };
-		284A5CAC11A5A07500EAC012 /* DBApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DBApplication.h; sourceTree = "<group>"; };
-		284A5CAD11A5A07500EAC012 /* DBApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DBApplication.m; sourceTree = "<group>"; };
-		285AC1F10CDF6C2C008AF706 /* InstallBootImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InstallBootImage.m; sourceTree = "<group>"; };
-		286CC41A0CDCD61F00ACA824 /* BXBootImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BXBootImageView.h; sourceTree = "<group>"; };
-		286CC41B0CDCD61F00ACA824 /* BXBootImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BXBootImageView.m; sourceTree = "<group>"; };
+		284A5C9D11A59F9100EAC012 /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = default.png; path = Resources/Images/default.png; sourceTree = SOURCE_ROOT; };
+		284A5CAC11A5A07500EAC012 /* DBApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DBApplication.h; path = Classes/DBApplication.h; sourceTree = SOURCE_ROOT; };
+		284A5CAD11A5A07500EAC012 /* DBApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DBApplication.m; path = Classes/DBApplication.m; sourceTree = SOURCE_ROOT; };
+		285AC1F10CDF6C2C008AF706 /* InstallBootImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstallBootImage.m; path = Classes/InstallBootImage.m; sourceTree = SOURCE_ROOT; };
+		286CC41A0CDCD61F00ACA824 /* BXBootImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BXBootImageView.h; path = Classes/BXBootImageView.h; sourceTree = SOURCE_ROOT; };
+		286CC41B0CDCD61F00ACA824 /* BXBootImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BXBootImageView.m; path = Classes/BXBootImageView.m; sourceTree = SOURCE_ROOT; };
 		28D089AC11A5DC3C001B092C /* InstallBootImage */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = InstallBootImage; sourceTree = BUILT_PRODUCTS_DIR; };
 		28F7B44C0D619039005E2AEA /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
-		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Classes/main.m; sourceTree = SOURCE_ROOT; };
 		29B97324FDCFA39411CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		29B97325FDCFA39411CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
-		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = SOURCE_ROOT; };
 		8D1107320486CEB800E47090 /* Dark Boot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dark Boot.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		FB084CCA1DE769DA00ACD9FB /* Dark Boot.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = "Dark Boot.icns"; sourceTree = "<group>"; };
-		FB11870D1DE62F8F008BBBF1 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MainMenu.xib; sourceTree = "<group>"; };
-		FB1187111DE63A16008BBBF1 /* github.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = github.png; sourceTree = "<group>"; };
-		FB1187131DE63A30008BBBF1 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Credits.rtf; sourceTree = "<group>"; };
-		FB1187141DE63A30008BBBF1 /* EULA.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = EULA.rtf; sourceTree = "<group>"; };
-		FB1187151DE63A30008BBBF1 /* Changelog.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; path = Changelog.rtf; sourceTree = "<group>"; };
-		FB1A29E21DD977920099DA03 /* PFMoveApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PFMoveApplication.h; sourceTree = "<group>"; };
-		FB1A29E31DD977920099DA03 /* PFMoveApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PFMoveApplication.m; sourceTree = "<group>"; };
-		FB5464E01CB9A8D900508447 /* com.dabrain13.darkboot.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = com.dabrain13.darkboot.plist; sourceTree = "<group>"; };
-		FBF3F2F61CCBC5CB00B1B8CA /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = dsa_pub.pem; sourceTree = "<group>"; };
+		FB1187111DE63A16008BBBF1 /* github.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = github.png; path = Resources/Images/github.png; sourceTree = SOURCE_ROOT; };
+		FB1187131DE63A30008BBBF1 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = Credits.rtf; path = Resources/Info/Credits.rtf; sourceTree = SOURCE_ROOT; };
+		FB1187141DE63A30008BBBF1 /* EULA.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = EULA.rtf; path = Resources/Info/EULA.rtf; sourceTree = SOURCE_ROOT; };
+		FB1187151DE63A30008BBBF1 /* Changelog.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = Changelog.rtf; path = Resources/Info/Changelog.rtf; sourceTree = SOURCE_ROOT; };
+		FB1A29E21DD977920099DA03 /* PFMoveApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PFMoveApplication.h; path = Classes/PFMove/PFMoveApplication.h; sourceTree = SOURCE_ROOT; };
+		FB1A29E31DD977920099DA03 /* PFMoveApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = PFMoveApplication.m; path = Classes/PFMove/PFMoveApplication.m; sourceTree = SOURCE_ROOT; };
+		FB5464E01CB9A8D900508447 /* com.dabrain13.darkboot.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = com.dabrain13.darkboot.plist; path = Resources/com.dabrain13.darkboot.plist; sourceTree = SOURCE_ROOT; };
+		FBC129BA1DEA2DE900B0D6D5 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = Frameworks/Sparkle.framework; sourceTree = "<group>"; };
+		FBC129BD1DEA2E4000B0D6D5 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/MainMenu.xib; sourceTree = "<group>"; };
+		FBC129BF1DEA2E4F00B0D6D5 /* Dark Boot.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = "Dark Boot.icns"; path = "Resources/Dark Boot.icns"; sourceTree = "<group>"; };
+		FBF3F2F61CCBC5CB00B1B8CA /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = Resources/dsa_pub.pem; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -103,8 +104,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D11072F0486CEB800E47090 /* Cocoa.framework in Frameworks */,
+				FBC129BB1DEA2DE900B0D6D5 /* Sparkle.framework in Frameworks */,
 				28210AEB0CDF548500FAD3CF /* Security.framework in Frameworks */,
-				28F7B44D0D619039005E2AEA /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,12 +177,12 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				FBC129BD1DEA2E4000B0D6D5 /* MainMenu.xib */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				FB5464E01CB9A8D900508447 /* com.dabrain13.darkboot.plist */,
 				FBF3F2F61CCBC5CB00B1B8CA /* dsa_pub.pem */,
 				FB1187101DE639F5008BBBF1 /* info */,
 				FB11870F1DE639E3008BBBF1 /* images */,
-				FB11870D1DE62F8F008BBBF1 /* MainMenu.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -189,6 +190,7 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FBC129BA1DEA2DE900B0D6D5 /* Sparkle.framework */,
 				1058C7A0FEA54F0111CA2CBB /* Linked Frameworks */,
 				1058C7A2FEA54F0111CA2CBB /* Other Frameworks */,
 			);
@@ -200,7 +202,7 @@
 			children = (
 				284A5C9D11A59F9100EAC012 /* default.png */,
 				FB1187111DE63A16008BBBF1 /* github.png */,
-				FB084CCA1DE769DA00ACD9FB /* Dark Boot.icns */,
+				FBC129BF1DEA2E4F00B0D6D5 /* Dark Boot.icns */,
 			);
 			name = images;
 			sourceTree = "<group>";
@@ -322,9 +324,9 @@
 				FB5464E11CB9A8D900508447 /* com.dabrain13.darkboot.plist in Resources */,
 				284A5C9E11A59F9100EAC012 /* default.png in Resources */,
 				FB1187181DE63A30008BBBF1 /* Changelog.rtf in Resources */,
+				FBC129C01DEA2E4F00B0D6D5 /* Dark Boot.icns in Resources */,
 				FB1187161DE63A30008BBBF1 /* Credits.rtf in Resources */,
-				FB11870E1DE62F8F008BBBF1 /* MainMenu.xib in Resources */,
-				FB084CCB1DE769DA00ACD9FB /* Dark Boot.icns in Resources */,
+				FBC129BE1DEA2E4000B0D6D5 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,6 +428,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)\"";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -435,7 +438,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
 				GCC_VERSION = "";
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
@@ -458,6 +461,7 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1)",
+					"$(PROJECT_DIR)/Frameworks",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
 				GCC_CHAR_IS_UNSIGNED_CHAR = YES;
@@ -466,7 +470,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = NO;
 				GCC_PREFIX_HEADER = "";
 				GCC_VERSION = "";
-				INFOPLIST_FILE = Info.plist;
+				INFOPLIST_FILE = Resources/Info.plist;
 				INSTALL_PATH = "$(HOME)/Applications";
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
