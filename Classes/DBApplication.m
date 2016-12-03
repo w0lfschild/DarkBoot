@@ -97,10 +97,11 @@ enum BXErrorCode
     
     [self selectView:viewBootColor];
     
-    [bootColorWell setColor:[self currentBackgroundColor]];
+
     NSColor *bk = [self currentBackgroundColor];
-    if (bk)
+    if (bk != nil)
     {
+        [bootColorWell setColor:[self currentBackgroundColor]];
         NSString *bgs = [self currentBackgroundString];
         if ([bgs isEqualToString:@"4d1ede05-38c7-4a6a-9cc6-4bcca8b38c14:DefaultBackgroundColor=%00%00%00"])
         {
@@ -116,9 +117,9 @@ enum BXErrorCode
         }
         [bootColorWell setColor:bk];
     } else {
+        [bootColorWell setColor:[NSColor grayColor]];
         [defColor setState:NSOnState];
     }
-    
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication {
@@ -270,11 +271,11 @@ enum BXErrorCode
     [dict writeToFile:@"/tmp/BXplist.plist" atomically:YES];
     
     char *tool = "/bin/mv";
-    char *args0[] = { "-f", "/tmp/BXplist.plist", (char)[path_bootColorPlist UTF8String], nil };
+    char *args0[] = { "-f", "/tmp/BXplist.plist", (char*)[path_bootColorPlist UTF8String], nil };
     [self runAuthorization:tool :args0];
     
     tool = "/usr/sbin/chown";
-    char *args1[] = { "root:admin", (char)[path_bootColorPlist UTF8String], nil };
+    char *args1[] = { "root:admin", (char*)[path_bootColorPlist UTF8String], nil };
     [self runAuthorization:tool :args1];
     
     system("launchctl unload /Library/LaunchDaemons/com.dabrain13.darkboot.plist");
