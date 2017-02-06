@@ -2,7 +2,7 @@
 
 This application allows you to edit the boot screen of modern macs.
 
-![Preview](example.png)
+![Preview](preview.png)
 
 ### Information:
 This should work on macOS 10.9 and above on all macs. 

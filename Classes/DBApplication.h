@@ -18,6 +18,7 @@
     IBOutlet NSButton *viewAbout;
     IBOutlet NSButton *viewPreferences;
     
+    IBOutlet NSButton *feedbackButton;
     IBOutlet NSButton *reportButton;
     IBOutlet NSButton *donateButton;
     

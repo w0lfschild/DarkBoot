@@ -3,8 +3,10 @@
 //  Copyright © 2016 Wolfgang Baird. All rights reserved.
 //
 
+@import LetsMove;
+
 #import "DBApplication.h"
-#import "PFMoveApplication.h"
+#import <DevMateKit/DevMateKit.h>
 
 #include <sys/stat.h>
 #include <unistd.h>
@@ -36,10 +38,12 @@ enum BXErrorCode
 }
 
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification {
-    PFMoveToApplicationsFolderIfNecessary();
+    [DevMateKit sendTrackingReport:nil delegate:nil];
+    [DevMateKit setupIssuesController:nil reportingUnhandledIssues:YES];
     
+    PFMoveToApplicationsFolderIfNecessary();
+
     [mainWindow setMovableByWindowBackground:YES];
-//    [mainWindow setTitle:@""];
     
     if ([[NSProcessInfo processInfo] operatingSystemVersion].minorVersion < 10)
     {
@@ -63,8 +67,7 @@ enum BXErrorCode
     [[changeLog textStorage] setAttributedString:[[NSAttributedString alloc] initWithPath:[[NSBundle mainBundle] pathForResource:@"Changelog" ofType:@"rtf"] documentAttributes:nil]];
     
     Class vibrantClass=NSClassFromString(@"NSVisualEffectView");
-    if (vibrantClass)
-    {
+    if (vibrantClass) {
         NSVisualEffectView *vibrant=[[vibrantClass alloc] initWithFrame:[[mainWindow contentView] bounds]];
         [vibrant setAutoresizingMask:NSViewWidthSizable|NSViewHeightSizable];
         [vibrant setBlendingMode:NSVisualEffectBlendingModeBehindWindow];
@@ -81,8 +84,7 @@ enum BXErrorCode
     [webButton setAction:@selector(visitWebsite)];
     
     tabViewButtons = [NSArray arrayWithObjects:viewBootColor, viewBootImage, viewLoginImage, viewAbout, viewPreferences, nil];
-    for (NSButton *btn in tabViewButtons)
-    {
+    for (NSButton *btn in tabViewButtons) {
         [btn setWantsLayer:YES];
         [btn setTarget:self];
         [btn setAction:@selector(selectView:)];
@@ -90,6 +92,8 @@ enum BXErrorCode
     
     [donateButton setWantsLayer:YES];
     [reportButton setWantsLayer:YES];
+    [feedbackButton setWantsLayer:YES];
+    [feedbackButton.layer setBackgroundColor:[NSColor colorWithCalibratedRed:0.438f green:0.121f blue:0.199f alpha:0.258f].CGColor];
     [donateButton.layer setBackgroundColor:[NSColor colorWithCalibratedRed:0.438f green:0.121f blue:0.199f alpha:0.258f].CGColor];
     [reportButton.layer setBackgroundColor:[NSColor colorWithCalibratedRed:0.438f green:0.121f blue:0.199f alpha:0.258f].CGColor];
     
@@ -99,20 +103,14 @@ enum BXErrorCode
     
 
     NSColor *bk = [self currentBackgroundColor];
-    if (bk != nil)
-    {
+    if (bk != nil) {
         [bootColorWell setColor:[self currentBackgroundColor]];
         NSString *bgs = [self currentBackgroundString];
-        if ([bgs isEqualToString:@"4d1ede05-38c7-4a6a-9cc6-4bcca8b38c14:DefaultBackgroundColor=%00%00%00"])
-        {
+        if ([bgs isEqualToString:@"4d1ede05-38c7-4a6a-9cc6-4bcca8b38c14:DefaultBackgroundColor=%00%00%00"]) {
             [blkColor setState:NSOnState];
-        }
-        else if ([bgs isEqualToString:@"4d1ede05-38c7-4a6a-9cc6-4bcca8b38c14:DefaultBackgroundColor=%99%99%99"])
-        {
+        } else if ([bgs isEqualToString:@"4d1ede05-38c7-4a6a-9cc6-4bcca8b38c14:DefaultBackgroundColor=%99%99%99"]) {
             [gryColor setState:NSOnState];
-        }
-        else
-        {
+        } else {
             [clrColor setState:NSOnState];
         }
         [bootColorWell setColor:bk];
@@ -236,13 +234,15 @@ enum BXErrorCode
     if ([[NSFileManager defaultManager] fileExistsAtPath:path_bootColorPlist]) {
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithContentsOfFile:path_bootColorPlist];
         NSArray* args = [dict objectForKey:@"ProgramArguments"];
-        NSString* color = [args objectAtIndex:1];
-        NSArray* foo = [color componentsSeparatedByString: @"%"];
-        long b = strtol([[foo objectAtIndex: 1] UTF8String], NULL, 16); // r
-        long g = strtol([[foo objectAtIndex: 2] UTF8String], NULL, 16);
-        long r = strtol([[foo objectAtIndex: 3] UTF8String], NULL, 16); // b
-        result = [NSColor colorWithDeviceRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
-        NSLog(@"r%ld g%ld b%ld", r, g, b);
+        if (args.count > 1) {
+            NSString* color = [args objectAtIndex:1];
+            NSArray* foo = [color componentsSeparatedByString: @"%"];
+            long b = strtol([[foo objectAtIndex: 1] UTF8String], NULL, 16); // r
+            long g = strtol([[foo objectAtIndex: 2] UTF8String], NULL, 16);
+            long r = strtol([[foo objectAtIndex: 3] UTF8String], NULL, 16); // b
+            result = [NSColor colorWithDeviceRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
+            NSLog(@"r%ld g%ld b%ld", r, g, b);
+        }
     }
     return result;
 }
@@ -284,10 +284,18 @@ enum BXErrorCode
 
 - (void)installLoginImage:(NSImage*)img {
     chflags([path_loginImage UTF8String], 0);
-    NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithData:[img TIFFRepresentation]];
-    NSData *imgData2 = [rep representationUsingType:NSPNGFileType properties:[[NSDictionary alloc] init]];
-    [imgData2 writeToFile:path_loginImage atomically: NO];
-    chflags([path_loginImage UTF8String], UF_IMMUTABLE);
+    
+    NSData *imageData = [img TIFFRepresentation];
+    NSData *loginData = [[self defaultLoginImage] TIFFRepresentation];
+    
+    if ([imageData isEqualToData:loginData]) {
+        [[NSFileManager defaultManager] removeItemAtPath:path_loginImage error:nil];
+    } else {
+        NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithData:[img TIFFRepresentation]];
+        NSData *imgData2 = [rep representationUsingType:NSPNGFileType properties:[[NSDictionary alloc] init]];
+        [imgData2 writeToFile:path_loginImage atomically: NO];
+        chflags([path_loginImage UTF8String], UF_IMMUTABLE);
+    }
 }
 
 - (BOOL)installBootImage:(NSImage*)img withBackgroundColor:(NSColor*)bgColor error:(NSError**)err {
@@ -356,25 +364,19 @@ enum BXErrorCode
 }
 
 - (void)setupDarkBoot {
-    if ([defColor state] == NSOnState)
-    {
+    if ([defColor state] == NSOnState) {
         if ([[NSFileManager defaultManager] fileExistsAtPath:path_bootColorPlist])
             [self removeBXPlist:nil];
     }
-    if ([blkColor state] == NSOnState)
-    {
+    if ([blkColor state] == NSOnState) {
         [self installColorPlist:@"4d1ede05-38c7-4a6a-9cc6-4bcca8b38c14:DefaultBackgroundColor=%00%00%00"];
     }
-    if ([gryColor state] == NSOnState)
-    {
+    if ([gryColor state] == NSOnState) {
         [self installColorPlist:@"4d1ede05-38c7-4a6a-9cc6-4bcca8b38c14:DefaultBackgroundColor=%99%99%99"];
     }
-    if ([clrColor state] == NSOnState)
-    {
+    if ([clrColor state] == NSOnState) {
         if ([self currentBackgroundColor] != bootColorWell.color) {
-            NSLog(@"Boot Color : %@", bootColorWell.color);
             NSString *bootColor = [self hexStringForColor:bootColorWell.color];
-            NSLog(@"%@", bootColor);
             NSString *bootARG = [NSString stringWithFormat:@"4d1ede05-38c7-4a6a-9cc6-4bcca8b38c14:DefaultBackgroundColor=%@", bootColor];
             [self installColorPlist:bootARG];
         }
@@ -450,6 +452,10 @@ enum BXErrorCode
                 [bootImageView setImage:aimage];
         }
     }];
+}
+
+- (IBAction)showFeedbackDialog:(id)sender {
+    [DevMateKit showFeedbackDialog:nil inMode:DMFeedbackIndependentMode];
 }
 
 - (void)reportIssue {
