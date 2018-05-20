@@ -13,10 +13,19 @@
 		28D089B611A5DCBE001B092C /* InstallBootImage in CopyFiles */ = {isa = PBXBuildFile; fileRef = 28D089AC11A5DC3C001B092C /* InstallBootImage */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		28D08A2411A5E54D001B092C /* InstallBootImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 285AC1F10CDF6C2C008AF706 /* InstallBootImage.m */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		FB1120A620B0F797005263B5 /* apple.png in Resources */ = {isa = PBXBuildFile; fileRef = FB1120A520B0F797005263B5 /* apple.png */; };
+		FB1120A920B105F4005263B5 /* AYProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = FB1120A820B105F4005263B5 /* AYProgressIndicator.m */; };
+		FB1120AE20B109C6005263B5 /* SIMBLManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB1120AC20B10977005263B5 /* SIMBLManager.framework */; };
+		FB1120AF20B109C6005263B5 /* SIMBLManager.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FB1120AC20B10977005263B5 /* SIMBLManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		FB1187121DE63A16008BBBF1 /* github.png in Resources */ = {isa = PBXBuildFile; fileRef = FB1187111DE63A16008BBBF1 /* github.png */; };
 		FB1187161DE63A30008BBBF1 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FB1187131DE63A30008BBBF1 /* Credits.rtf */; };
 		FB1187171DE63A30008BBBF1 /* EULA.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FB1187141DE63A30008BBBF1 /* EULA.rtf */; };
 		FB1187181DE63A30008BBBF1 /* Changelog.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FB1187151DE63A30008BBBF1 /* Changelog.rtf */; };
+		FB4501FF20B0DF2000BB77CB /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB4501FE20B0DF2000BB77CB /* AppKit.framework */; };
+		FB45020120B0DF2000BB77CB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB45020020B0DF2000BB77CB /* Foundation.framework */; };
+		FB45020820B0DF2000BB77CB /* DBLoginWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = FB45020720B0DF2000BB77CB /* DBLoginWindow.m */; };
+		FB45020C20B0DF2000BB77CB /* ZKSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = FB45020B20B0DF2000BB77CB /* ZKSwizzle.m */; };
+		FB45020E20B0DF2000BB77CB /* PrefixHeader.pch in Resources */ = {isa = PBXBuildFile; fileRef = FB45020D20B0DF2000BB77CB /* PrefixHeader.pch */; };
 		FB5464E11CB9A8D900508447 /* com.dabrain13.darkboot.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB5464E01CB9A8D900508447 /* com.dabrain13.darkboot.plist */; };
 		FB84A9981E47D642002CFA4D /* LetsMove.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB84A9971E47D642002CFA4D /* LetsMove.framework */; };
 		FB84A99A1E47D683002CFA4D /* LetsMove.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = FB84A9971E47D642002CFA4D /* LetsMove.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -54,6 +63,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				FB1120AF20B109C6005263B5 /* SIMBLManager.framework in CopyFiles */,
 				FB84A99E1E48023C002CFA4D /* DevMateKit.framework in CopyFiles */,
 				FB84A99A1E47D683002CFA4D /* LetsMove.framework in CopyFiles */,
 			);
@@ -72,13 +82,26 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Classes/main.m; sourceTree = SOURCE_ROOT; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = SOURCE_ROOT; };
 		8D1107320486CEB800E47090 /* Dark Boot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dark Boot.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB1120A520B0F797005263B5 /* apple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = apple.png; sourceTree = "<group>"; };
+		FB1120A720B105F4005263B5 /* AYProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AYProgressIndicator.h; sourceTree = "<group>"; };
+		FB1120A820B105F4005263B5 /* AYProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AYProgressIndicator.m; sourceTree = "<group>"; };
+		FB1120AC20B10977005263B5 /* SIMBLManager.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = SIMBLManager.framework; sourceTree = "<group>"; };
 		FB1187111DE63A16008BBBF1 /* github.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = github.png; path = Resources/Images/github.png; sourceTree = SOURCE_ROOT; };
 		FB1187131DE63A30008BBBF1 /* Credits.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = Credits.rtf; path = Resources/Info/Credits.rtf; sourceTree = SOURCE_ROOT; };
 		FB1187141DE63A30008BBBF1 /* EULA.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = EULA.rtf; path = Resources/Info/EULA.rtf; sourceTree = SOURCE_ROOT; };
 		FB1187151DE63A30008BBBF1 /* Changelog.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = Changelog.rtf; path = Resources/Info/Changelog.rtf; sourceTree = SOURCE_ROOT; };
+		FB4501FD20B0DF2000BB77CB /* DBLoginWindow.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DBLoginWindow.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB4501FE20B0DF2000BB77CB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
+		FB45020020B0DF2000BB77CB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		FB45020420B0DF2000BB77CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FB45020620B0DF2000BB77CB /* DBLoginWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBLoginWindow.h; sourceTree = "<group>"; };
+		FB45020720B0DF2000BB77CB /* DBLoginWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBLoginWindow.m; sourceTree = "<group>"; };
+		FB45020A20B0DF2000BB77CB /* ZKSwizzle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZKSwizzle.h; path = ZKSwizzle/ZKSwizzle.h; sourceTree = "<group>"; };
+		FB45020B20B0DF2000BB77CB /* ZKSwizzle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZKSwizzle.m; path = ZKSwizzle/ZKSwizzle.m; sourceTree = "<group>"; };
+		FB45020D20B0DF2000BB77CB /* PrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = PrefixHeader.pch; sourceTree = "<group>"; };
 		FB5464E01CB9A8D900508447 /* com.dabrain13.darkboot.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = com.dabrain13.darkboot.plist; path = Resources/com.dabrain13.darkboot.plist; sourceTree = SOURCE_ROOT; };
-		FB84A9971E47D642002CFA4D /* LetsMove.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = LetsMove.framework; sourceTree = "<group>"; };
-		FB84A99B1E480235002CFA4D /* DevMateKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = DevMateKit.framework; sourceTree = "<group>"; };
+		FB84A9971E47D642002CFA4D /* LetsMove.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LetsMove.framework; path = Frameworks/LetsMove.framework; sourceTree = "<group>"; };
+		FB84A99B1E480235002CFA4D /* DevMateKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DevMateKit.framework; path = Frameworks/DevMateKit.framework; sourceTree = "<group>"; };
 		FBC129BD1DEA2E4000B0D6D5 /* MainMenu.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = MainMenu.xib; path = Resources/MainMenu.xib; sourceTree = "<group>"; };
 		FBC129BF1DEA2E4F00B0D6D5 /* Dark Boot.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = "Dark Boot.icns"; path = "Resources/Dark Boot.icns"; sourceTree = "<group>"; };
 		FBF3F2F61CCBC5CB00B1B8CA /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = Resources/dsa_pub.pem; sourceTree = SOURCE_ROOT; };
@@ -96,8 +119,18 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB84A9981E47D642002CFA4D /* LetsMove.framework in Frameworks */,
+				FB1120AE20B109C6005263B5 /* SIMBLManager.framework in Frameworks */,
 				FB84A99D1E48023C002CFA4D /* DevMateKit.framework in Frameworks */,
+				FB84A9981E47D642002CFA4D /* LetsMove.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FB4501FA20B0DF2000BB77CB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB4501FF20B0DF2000BB77CB /* AppKit.framework in Frameworks */,
+				FB45020120B0DF2000BB77CB /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -120,6 +153,7 @@
 			children = (
 				8D1107320486CEB800E47090 /* Dark Boot.app */,
 				28D089AC11A5DC3C001B092C /* InstallBootImage */,
+				FB4501FD20B0DF2000BB77CB /* DBLoginWindow.bundle */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -128,21 +162,21 @@
 			isa = PBXGroup;
 			children = (
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
-				080E96DDFE201D6D7F000001 /* Classes */,
-				29B97315FDCFA39411CA2CEA /* Other Sources */,
-				29B97317FDCFA39411CA2CEA /* Resources */,
+				FB45020220B0DF2000BB77CB /* DBLoginWindow */,
+				29B97315FDCFA39411CA2CEA /* InstallBootImage */,
+				FB45021220B0E01700BB77CB /* Dark Boot */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
 			name = BootXChanger;
 			sourceTree = "<group>";
 		};
-		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
+		29B97315FDCFA39411CA2CEA /* InstallBootImage */ = {
 			isa = PBXGroup;
 			children = (
 				285AC1F10CDF6C2C008AF706 /* InstallBootImage.m */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
-			name = "Other Sources";
+			name = InstallBootImage;
 			sourceTree = "<group>";
 		};
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
@@ -152,8 +186,6 @@
 				8D1107310486CEB800E47090 /* Info.plist */,
 				FB5464E01CB9A8D900508447 /* com.dabrain13.darkboot.plist */,
 				FBF3F2F61CCBC5CB00B1B8CA /* dsa_pub.pem */,
-				FB1187101DE639F5008BBBF1 /* info */,
-				FB11870F1DE639E3008BBBF1 /* images */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -161,30 +193,76 @@
 		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				FB1120AC20B10977005263B5 /* SIMBLManager.framework */,
 				FB84A99B1E480235002CFA4D /* DevMateKit.framework */,
 				FB84A9971E47D642002CFA4D /* LetsMove.framework */,
+				FB4501FE20B0DF2000BB77CB /* AppKit.framework */,
+				FB45020020B0DF2000BB77CB /* Foundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		FB11870F1DE639E3008BBBF1 /* images */ = {
+		FB11870F1DE639E3008BBBF1 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				FB1120A520B0F797005263B5 /* apple.png */,
 				284A5C9D11A59F9100EAC012 /* default.png */,
 				FB1187111DE63A16008BBBF1 /* github.png */,
 				FBC129BF1DEA2E4F00B0D6D5 /* Dark Boot.icns */,
 			);
-			name = images;
+			name = Images;
 			sourceTree = "<group>";
 		};
-		FB1187101DE639F5008BBBF1 /* info */ = {
+		FB1187101DE639F5008BBBF1 /* Info */ = {
 			isa = PBXGroup;
 			children = (
 				FB1187131DE63A30008BBBF1 /* Credits.rtf */,
 				FB1187141DE63A30008BBBF1 /* EULA.rtf */,
 				FB1187151DE63A30008BBBF1 /* Changelog.rtf */,
 			);
-			name = info;
+			name = Info;
+			sourceTree = "<group>";
+		};
+		FB45020220B0DF2000BB77CB /* DBLoginWindow */ = {
+			isa = PBXGroup;
+			children = (
+				FB45020620B0DF2000BB77CB /* DBLoginWindow.h */,
+				FB45020720B0DF2000BB77CB /* DBLoginWindow.m */,
+				FB45020920B0DF2000BB77CB /* ZKSwizzle */,
+				FB45020320B0DF2000BB77CB /* Supporting Files */,
+			);
+			path = DBLoginWindow;
+			sourceTree = "<group>";
+		};
+		FB45020320B0DF2000BB77CB /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				FB45020420B0DF2000BB77CB /* Info.plist */,
+				FB45020D20B0DF2000BB77CB /* PrefixHeader.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		FB45020920B0DF2000BB77CB /* ZKSwizzle */ = {
+			isa = PBXGroup;
+			children = (
+				FB45020A20B0DF2000BB77CB /* ZKSwizzle.h */,
+				FB45020B20B0DF2000BB77CB /* ZKSwizzle.m */,
+			);
+			name = ZKSwizzle;
+			sourceTree = "<group>";
+		};
+		FB45021220B0E01700BB77CB /* Dark Boot */ = {
+			isa = PBXGroup;
+			children = (
+				FB1120A720B105F4005263B5 /* AYProgressIndicator.h */,
+				FB1120A820B105F4005263B5 /* AYProgressIndicator.m */,
+				FB11870F1DE639E3008BBBF1 /* Images */,
+				FB1187101DE639F5008BBBF1 /* Info */,
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+			);
+			name = "Dark Boot";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -227,13 +305,30 @@
 			productReference = 8D1107320486CEB800E47090 /* Dark Boot.app */;
 			productType = "com.apple.product-type.application";
 		};
+		FB4501FC20B0DF2000BB77CB /* DBLoginWindow */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FB45021120B0DF2000BB77CB /* Build configuration list for PBXNativeTarget "DBLoginWindow" */;
+			buildPhases = (
+				FB4501F920B0DF2000BB77CB /* Sources */,
+				FB4501FA20B0DF2000BB77CB /* Frameworks */,
+				FB4501FB20B0DF2000BB77CB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DBLoginWindow;
+			productName = DBLoginWindow;
+			productReference = FB4501FD20B0DF2000BB77CB /* DBLoginWindow.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0810;
+				LastUpgradeCheck = 0900;
 				TargetAttributes = {
 					28D089AB11A5DC3C001B092C = {
 						DevelopmentTeam = EX596BNL45;
@@ -242,6 +337,11 @@
 					8D1107260486CEB800E47090 = {
 						DevelopmentTeam = EX596BNL45;
 						ProvisioningStyle = Manual;
+					};
+					FB4501FC20B0DF2000BB77CB = {
+						CreatedOnToolsVersion = 9.0.1;
+						DevelopmentTeam = EX596BNL45;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -270,6 +370,7 @@
 			targets = (
 				8D1107260486CEB800E47090 /* Dark Boot */,
 				28D089AB11A5DC3C001B092C /* InstallBootImage */,
+				FB4501FC20B0DF2000BB77CB /* DBLoginWindow */,
 			);
 		};
 /* End PBXProject section */
@@ -284,10 +385,19 @@
 				FBF3F2F71CCBC5CB00B1B8CA /* dsa_pub.pem in Resources */,
 				FB5464E11CB9A8D900508447 /* com.dabrain13.darkboot.plist in Resources */,
 				284A5C9E11A59F9100EAC012 /* default.png in Resources */,
+				FB1120A620B0F797005263B5 /* apple.png in Resources */,
 				FB1187181DE63A30008BBBF1 /* Changelog.rtf in Resources */,
 				FBC129C01DEA2E4F00B0D6D5 /* Dark Boot.icns in Resources */,
 				FB1187161DE63A30008BBBF1 /* Credits.rtf in Resources */,
 				FBC129BE1DEA2E4000B0D6D5 /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FB4501FB20B0DF2000BB77CB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB45020E20B0DF2000BB77CB /* PrefixHeader.pch in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,9 +416,19 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FB1120A920B105F4005263B5 /* AYProgressIndicator.m in Sources */,
 				8D11072D0486CEB800E47090 /* main.m in Sources */,
 				286CC41C0CDCD61F00ACA824 /* BXBootImageView.m in Sources */,
 				284A5CAE11A5A07500EAC012 /* DBApplication.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FB4501F920B0DF2000BB77CB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB45020820B0DF2000BB77CB /* DBLoginWindow.m in Sources */,
+				FB45020C20B0DF2000BB77CB /* ZKSwizzle.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -389,7 +509,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Frameworks",
-					"$(PROJECT_DIR)/Frameworks/DevMateKit/DevMateKit.framework/Frameworks",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)\"";
 				GCC_DYNAMIC_NO_PIC = NO;
@@ -423,7 +542,6 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/Frameworks",
-					"$(PROJECT_DIR)/Frameworks/DevMateKit/DevMateKit.framework/Frameworks",
 				);
 				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
 				GCC_CHAR_IS_UNSIGNED_CHAR = YES;
@@ -471,6 +589,129 @@
 			};
 			name = Release;
 		};
+		FB45020F20B0DF2000BB77CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEPLOYMENT_LOCATION = YES;
+				DEVELOPMENT_TEAM = EX596BNL45;
+				DSTROOT = /;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = DBLoginWindow/PrefixHeader.pch;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = DBLoginWindow/Info.plist;
+				INSTALL_PATH = "/Library/Application Support/SIMBL/Plugins";
+				MACH_O_TYPE = mh_dylib;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.w0lf.DBLoginWindow;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		FB45021020B0DF2000BB77CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEPLOYMENT_LOCATION = YES;
+				DEVELOPMENT_TEAM = EX596BNL45;
+				DSTROOT = /;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = DBLoginWindow/PrefixHeader.pch;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = DBLoginWindow/Info.plist;
+				INSTALL_PATH = "/Library/Application Support/SIMBL/Plugins";
+				MACH_O_TYPE = mh_dylib;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = org.w0lf.DBLoginWindow;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -497,6 +738,15 @@
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,
 				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FB45021120B0DF2000BB77CB /* Build configuration list for PBXNativeTarget "DBLoginWindow" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FB45020F20B0DF2000BB77CB /* Debug */,
+				FB45021020B0DF2000BB77CB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

@@ -1,0 +1,16 @@
+//
+//  PrefixHeader.pch
+//  Dark Boot
+//
+//  Created by Wolfgang Baird on 5/19/18.
+//
+//
+
+#ifndef DBLoginWindow_PrefixHeader_pch
+#define DBLoginWindow_PrefixHeader_pch
+
+#import <Cocoa/Cocoa.h>
+#import "ZKSwizzle.h"
+
+#endif
+

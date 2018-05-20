@@ -4,6 +4,8 @@
 //
 
 @import LetsMove;
+@import CoreImage;
+@import SIMBLManager;
 
 #import "DBApplication.h"
 #import <DevMateKit/DevMateKit.h>
@@ -16,7 +18,6 @@
 static NSString *path_bootImagePlist    = @"/Library/Preferences/SystemConfiguration/com.apple.Boot.plist";
 static NSString *path_bootColorPlist    = @"/Library/LaunchDaemons/com.dabrain13.darkboot.plist";
 static NSString *path_loginImage        = @"/Library/Caches/com.apple.desktop.admin.png";
-
 static NSString *DBErrorDomain          = @"Dark Boot";
 
 NSArray *tabViewButtons;
@@ -33,19 +34,29 @@ enum BXErrorCode
 
 - (void)awakeFromNib {
 	[self showCurrentImage:self];
+    [self showCurrentLock:self];
     [self showCurrentLogin:self];
+    [self showCurrentBootColor:self];
 	[self setDelegate:(id)self];
 }
 
 - (void)applicationWillFinishLaunching:(NSNotification *)aNotification {
+    lockImagePath = nil;
+    
     [DevMateKit sendTrackingReport:nil delegate:nil];
     [DevMateKit setupIssuesController:nil reportingUnhandledIssues:YES];
     
     PFMoveToApplicationsFolderIfNecessary();
 
     [mainWindow setMovableByWindowBackground:YES];
+    [mainWindow setTitle:@""];
     
-    if ([[NSProcessInfo processInfo] operatingSystemVersion].minorVersion < 10)
+    int osx_ver = 9;
+    
+    if ([[NSProcessInfo processInfo] respondsToSelector:@selector(operatingSystemVersion)])
+        osx_ver = [[NSProcessInfo processInfo] operatingSystemVersion].minorVersion;
+    
+    if (osx_ver < 10)
     {
         //        _window.centerTrafficLightButtons = false;
         //        _window.showsBaselineSeparator = false;
@@ -53,9 +64,9 @@ enum BXErrorCode
     } else {
         [mainWindow setTitlebarAppearsTransparent:true];
         mainWindow.styleMask |= NSFullSizeContentViewWindowMask;
-        NSRect frame = mainWindow.frame;
-        frame.size.height += 22;
-        [mainWindow setFrame:frame display:true];
+//        NSRect frame = mainWindow.frame;
+//        frame.size.height += 22;
+//        [mainWindow setFrame:frame display:true];
     }
     
     NSDictionary* infoDict = [[NSBundle mainBundle] infoDictionary];
@@ -83,28 +94,30 @@ enum BXErrorCode
     [sourceButton setAction:@selector(visitSource)];
     [webButton setAction:@selector(visitWebsite)];
     
-    tabViewButtons = [NSArray arrayWithObjects:viewBootColor, viewBootImage, viewLoginImage, viewAbout, viewPreferences, nil];
-    for (NSButton *btn in tabViewButtons) {
-        [btn setWantsLayer:YES];
-        [btn setTarget:self];
-        [btn setAction:@selector(selectView:)];
-    }
+    [self tabs_sideBar];
     
-    [donateButton setWantsLayer:YES];
-    [reportButton setWantsLayer:YES];
-    [feedbackButton setWantsLayer:YES];
-    [feedbackButton.layer setBackgroundColor:[NSColor colorWithCalibratedRed:0.438f green:0.121f blue:0.199f alpha:0.258f].CGColor];
-    [donateButton.layer setBackgroundColor:[NSColor colorWithCalibratedRed:0.438f green:0.121f blue:0.199f alpha:0.258f].CGColor];
-    [reportButton.layer setBackgroundColor:[NSColor colorWithCalibratedRed:0.438f green:0.121f blue:0.199f alpha:0.258f].CGColor];
-    
-    tabViews = [NSArray arrayWithObjects:tabBootColor, tabBootImage, tabLoginImage, tabAbout, tabPreferences, nil];
+    tabViews = [NSArray arrayWithObjects:tabBootColor, tabBootImage, tabBootOptions, tabLoginScreen, tabLockScreen, tabAbout, tabPreferences, nil];
     
     [self selectView:viewBootColor];
     
+    bootColorIndicator = [[AYProgressIndicator alloc] initWithFrame:NSMakeRect(92, 148, 100, 4)
+                                        progressColor:[NSColor whiteColor]
+                                           emptyColor:[NSColor blackColor]
+                                             minValue:0
+                                             maxValue:100
+                                         currentValue:0];
+    [bootColorIndicator setDoubleValue:33];
+    [bootColorIndicator setEmptyColor:[NSColor whiteColor]];
+    [bootColorIndicator setProgressColor:[NSColor blackColor]];
+    [bootColorIndicator setHidden:NO];
+    [bootColorIndicator setWantsLayer:YES];
+    [bootColorIndicator.layer setCornerRadius:2];
+    [tabBootColor addSubview:bootColorIndicator];
 
     NSColor *bk = [self currentBackgroundColor];
     if (bk != nil) {
         [bootColorWell setColor:[self currentBackgroundColor]];
+        [bootColorView setColor:[[self currentBackgroundColor] colorUsingColorSpaceName:NSCalibratedRGBColorSpace]];
         NSString *bgs = [self currentBackgroundString];
         if ([bgs isEqualToString:@"4d1ede05-38c7-4a6a-9cc6-4bcca8b38c14:DefaultBackgroundColor=%00%00%00"]) {
             [blkColor setState:NSOnState];
@@ -115,6 +128,7 @@ enum BXErrorCode
         }
         [bootColorWell setColor:bk];
     } else {
+        [bootColorView setColor:[[NSColor grayColor] colorUsingColorSpaceName:NSCalibratedRGBColorSpace]];
         [bootColorWell setColor:[NSColor grayColor]];
         [defColor setState:NSOnState];
     }
@@ -129,6 +143,67 @@ enum BXErrorCode
 	return NSTerminateNow;
 }
 
+- (void)tabs_sideBar {
+    NSInteger height = viewBootColor.frame.size.height;
+    
+    tabViewButtons = [NSArray arrayWithObjects:viewBootColor, viewBootImage, viewBootOptions, viewLoginScreen, viewLockScreen, viewAbout, viewPreferences, nil];
+    NSArray *topButtons = [NSArray arrayWithObjects:viewBootColor, viewBootImage, viewBootOptions, viewLoginScreen, viewLockScreen, viewAbout, viewPreferences, nil];
+    NSUInteger yLoc = mainWindow.frame.size.height - 22 - height;
+    for (NSButton *btn in topButtons) {
+        NSRect newFrame = [btn frame];
+        newFrame.origin.x = 0;
+        newFrame.origin.y = yLoc;
+        yLoc -= (height - 1);
+        [btn setFrame:newFrame];
+        
+        if (!(btn.tag == 1234)) {
+            NSBox *line = [[NSBox alloc] initWithFrame:CGRectMake(0, 0, btn.frame.size.width, 1)];
+            [line setBoxType:NSBoxSeparator];
+            [btn addSubview:line];
+            NSBox *btm = [[NSBox alloc] initWithFrame:CGRectMake(0, btn.frame.size.height - 1, btn.frame.size.width, 1)];
+            [btm setBoxType:NSBoxSeparator];
+            [btn addSubview:btm];
+            [btn setTag:1234];
+        }
+        
+        [btn setWantsLayer:YES];
+        [btn setTarget:self];
+    }
+    
+    for (NSButton *btn in tabViewButtons)
+        [btn setAction:@selector(selectView:)];
+    
+    NSArray *bottomButtons = [NSArray arrayWithObjects:applyButton, donateButton, adButton, feedbackButton, reportButton, nil];
+    NSMutableArray *visibleButons = [[NSMutableArray alloc] init];
+    for (NSButton *btn in bottomButtons)
+        if (![btn isHidden])
+            [visibleButons addObject:btn];
+    bottomButtons = [visibleButons copy];
+    
+    yLoc = ([bottomButtons count] - 1) * (height - 1);
+    for (NSButton *btn in bottomButtons) {
+        NSRect newFrame = [btn frame];
+        newFrame.origin.x = 0;
+        newFrame.origin.y = yLoc;
+        yLoc -= (height - 1);
+        [btn setFrame:newFrame];
+        
+        if (!(btn.tag == 1234)) {
+            NSBox *line = [[NSBox alloc] initWithFrame:CGRectMake(0, 0, btn.frame.size.width, 1)];
+            [line setBoxType:NSBoxSeparator];
+            [btn addSubview:line];
+            NSBox *btm = [[NSBox alloc] initWithFrame:CGRectMake(0, btn.frame.size.height - 1, btn.frame.size.width, 1)];
+            [btm setBoxType:NSBoxSeparator];
+            [btn addSubview:btm];
+            [btn setTag:1234];
+        }
+        
+        [btn setWantsLayer:YES];
+        //        [btn.layer setBackgroundColor:[NSColor colorWithCalibratedRed:80/255.0 green:80/255.0 blue:150/255.0 alpha:0.25f].CGColor];
+        //        [btn.layer setBackgroundColor:[NSColor colorWithCalibratedRed:0.1f green:0.1f blue:0.1f alpha:0.25f].CGColor];
+    }
+}
+
 - (NSString *)currentBackgroundString {
     NSString* result = nil;
     if ([[NSFileManager defaultManager] fileExistsAtPath:path_bootColorPlist]) {
@@ -139,10 +214,18 @@ enum BXErrorCode
     return result;
 }
 
+- (NSImage *)currentLockImage {
+    // get image
+    NSImage *img = [[NSImage alloc] initWithContentsOfFile:@"/Users/w0lf/Desktop/0.gif"];
+    if (img == nil) return [self defaultBootImage];
+    lockImageView.path = @"/Users/w0lf/Desktop/0.gif";
+    return img;
+}
+
 - (NSImage *)currentLoginImage {
     // get image
     NSImage *img = [[NSImage alloc] initWithContentsOfFile:path_loginImage];
-    if (img == nil) return [self defaultBootImage];
+    if (img == nil) return [self defaultLoginImage];
     return img;
 }
 
@@ -204,6 +287,10 @@ enum BXErrorCode
 	return [NSColor colorWithDeviceRed:191.0/255.0 green:191.0/255.0 blue:191.0/255.0 alpha:1.0];
 }
 
+- (IBAction)showCurrentBootColor:(id)sender {
+    [bootColorView setColor:[[self currentBackgroundColor] colorUsingColorSpaceName:NSCalibratedRGBColorSpace]];
+}
+
 - (IBAction)showDefaultImage:(id)sender {
 	bootImageView.image = [self defaultBootImage];
 	bgColorWell.color = [self defaultBootColor];
@@ -215,16 +302,62 @@ enum BXErrorCode
 }
 
 - (IBAction)showDefaultLogin:(id)sender {
-    loginImageView.image = [self defaultLoginImage];
+    NSImage *theImage = [self defaultLoginImage];
+    [theImage setSize: NSMakeSize(loginImageView.frame.size.width, loginImageView.frame.size.height)];
+    loginImageView.image = theImage;
 }
 
 - (IBAction)showCurrentLogin:(id)sender {
-    loginImageView.image = [self currentLoginImage];
+    NSImage *theImage = [self currentLoginImage];
+    [theImage setSize: NSMakeSize(loginImageView.frame.size.width, loginImageView.frame.size.height)];
+    loginImageView.image = theImage;
+    loginImageView.animates = YES;
+    loginImageView.canDrawSubviewsIntoLayer = YES;
+}
+
+- (IBAction)showDefaultLock:(id)sender {
+    NSImage *theImage = [self defaultLoginImage];
+    
+    CIImage *imageToBlur = [CIImage imageWithData:[theImage TIFFRepresentation]];
+    CIFilter *gaussianBlurFilter = [CIFilter filterWithName: @"CIGaussianBlur"];
+    [gaussianBlurFilter setValue:imageToBlur forKey:kCIInputImageKey];
+    [gaussianBlurFilter setValue:[NSNumber numberWithFloat: 25.0] forKey: @"inputRadius"];
+    
+    NSCIImageRep *rep = [NSCIImageRep imageRepWithCIImage:[gaussianBlurFilter valueForKey:kCIOutputImageKey]];
+    NSImage *nsImage = [[NSImage alloc] initWithSize:rep.size];
+    [nsImage addRepresentation:rep];
+    theImage = nsImage;
+    
+    [theImage setSize: NSMakeSize(loginImageView.frame.size.width, loginImageView.frame.size.height)];
+    lockImageView.image = theImage;
+}
+
+- (IBAction)showCurrentLock:(id)sender {
+    NSImage *theImage = [self currentLockImage];
+    [theImage setSize: NSMakeSize(lockImageView.frame.size.width, lockImageView.frame.size.height)];
+    lockImageView.image = theImage;
+    lockImageView.animates = YES;
+    lockImageView.canDrawSubviewsIntoLayer = YES;
+}
+
+- (IBAction)saveLockScreen:(id)sender {
+    [self installLockImage:lockImageView.image];
+}
+
+- (IBAction)saveLoginScreen:(id)sender {
+    [self installLoginImage:loginImageView.image];
+}
+
+- (IBAction)saveBootScreen:(id)sender {
+    BOOL success = [self installBootImage:bootImageView.image withBackgroundColor:bgColorWell.color error:NULL];
+    [self setupDarkBoot];
+    if (!success) { [self showCurrentImage:self]; }
 }
 
 - (IBAction)saveChanges:(id)sender {
 	BOOL success = [self installBootImage:bootImageView.image withBackgroundColor:bgColorWell.color error:NULL];
     [self installLoginImage:loginImageView.image];
+    [self installLockImage:lockImageView.image];
     [self setupDarkBoot];
 	if (!success) { [self showCurrentImage:self]; }
 }
@@ -280,6 +413,34 @@ enum BXErrorCode
     
     system("launchctl unload /Library/LaunchDaemons/com.dabrain13.darkboot.plist");
     system("launchctl load /Library/LaunchDaemons/com.dabrain13.darkboot.plist");
+}
+
+- (void)installLockImage:(NSImage*)img {
+    NSData *imageData = [img TIFFRepresentation];
+    NSData *loginData = [[self defaultLoginImage] TIFFRepresentation];
+    
+    if ([imageData isEqualToData:loginData]) {
+        [[NSFileManager defaultManager] removeItemAtPath:@"/Users/w0lf/Desktop/0.gif" error:nil];
+    } else {
+        if ([[NSFileManager defaultManager] isReadableFileAtPath:lockImageView.path]) {
+            [[NSFileManager defaultManager] removeItemAtPath:@"/Users/w0lf/Desktop/0.gif" error:nil];
+            NSError *err;
+            [[NSFileManager defaultManager] copyItemAtURL:[NSURL fileURLWithPath:lockImageView.path] toURL:[NSURL fileURLWithPath:@"/Users/w0lf/Desktop/0.gif"] error:&err];
+            if (err != nil)
+                NSLog(@"%@", err);
+        } else {
+            NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithData:[img TIFFRepresentation]];
+            NSNumber *frames = [rep valueForProperty:@"NSImageFrameCount"];
+            NSData *imgData2;;
+            if (frames != nil) {   // bitmapRep is a Gif imageRep
+                imgData2 = [rep representationUsingType:NSGIFFileType properties:[[NSDictionary alloc] init]];
+            } else {
+                imgData2 = [rep representationUsingType:NSPNGFileType properties:[[NSDictionary alloc] init]];
+            }
+            
+            [imgData2 writeToFile:@"/Users/w0lf/Desktop/0.gif" atomically: NO];
+        }
+    }
 }
 
 - (void)installLoginImage:(NSImage*)img {
@@ -442,7 +603,14 @@ enum BXErrorCode
     NSOpenPanel* openDlg = [NSOpenPanel openPanel];
     [openDlg setAllowsMultipleSelection:NO];
     [openDlg setCanChooseFiles:YES];
-    [openDlg setAllowedFileTypes:@[@"png"]];
+    
+    if ([sender isEqual:sellogin])
+        [openDlg setAllowedFileTypes:@[@"png", @"jpg"]];
+    if ([sender isEqual:selboot])
+        [openDlg setAllowedFileTypes:@[@"png"]];
+    if ([sender isEqual:sellock])
+        [openDlg setAllowedFileTypes:@[@"png", @"jpg", @"gif"]];
+
     [openDlg beginWithCompletionHandler:^(NSInteger result) {
         if(result==NSFileHandlingPanelOKButton) {
             NSImage * aimage = [[NSImage alloc] initWithContentsOfURL:[openDlg.URLs objectAtIndex:0]];
@@ -450,6 +618,10 @@ enum BXErrorCode
                 [loginImageView setImage:aimage];
             if ([sender isEqual:selboot])
                 [bootImageView setImage:aimage];
+            if ([sender isEqual:sellock]) {
+                [lockImageView setImage:aimage];
+                lockImageView.path = openDlg.URLs.firstObject.path;
+            }
         }
     }];
 }

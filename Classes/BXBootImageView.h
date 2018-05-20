@@ -10,6 +10,8 @@
 #import <Cocoa/Cocoa.h>
 
 @interface BXBootImageView : NSImageView {
-	
+    
 }
+@property (retain) NSString *path;
+
 @end

@@ -8,16 +8,22 @@
 
 #import <Cocoa/Cocoa.h>
 #import <Security/Security.h>
+#import "AYProgressIndicator.h"
+#import "BXBootImageView.h"
 
 @interface DBApplication : NSApplication {
     // Tab bar items
     IBOutlet NSButton *viewBootColor;
     IBOutlet NSButton *viewBootImage;
-    IBOutlet NSButton *viewLoginImage;
+    IBOutlet NSButton *viewBootOptions;
+    IBOutlet NSButton *viewLoginScreen;
+    IBOutlet NSButton *viewLockScreen;
     
     IBOutlet NSButton *viewAbout;
     IBOutlet NSButton *viewPreferences;
     
+    IBOutlet NSButton *applyButton;
+    IBOutlet NSButton *adButton;
     IBOutlet NSButton *feedbackButton;
     IBOutlet NSButton *reportButton;
     IBOutlet NSButton *donateButton;
@@ -28,7 +34,10 @@
     
     IBOutlet NSView *tabBootColor;
     IBOutlet NSView *tabBootImage;
-    IBOutlet NSView *tabLoginImage;
+    IBOutlet NSView *tabBootOptions;
+
+    IBOutlet NSView *tabLoginScreen;
+    IBOutlet NSView *tabLockScreen;
     
     IBOutlet NSView *tabAbout;
     IBOutlet NSView *tabPreferences;
@@ -50,8 +59,12 @@
     
     // Other items
     IBOutlet NSWindow *mainWindow;
-	IBOutlet NSImageView *bootImageView;
-    IBOutlet NSImageView *loginImageView;
+    IBOutlet AYProgressIndicator *bootColorIndicator;
+    IBOutlet NSImageView *bootColorApple;
+    IBOutlet NSColorWell *bootColorView;
+	IBOutlet BXBootImageView *bootImageView;
+    IBOutlet BXBootImageView *loginImageView;
+    IBOutlet BXBootImageView *lockImageView;
 	IBOutlet NSColorWell *bgColorWell;
     IBOutlet NSColorWell *bootColorWell;
     
@@ -63,6 +76,9 @@
     IBOutlet NSButton *defboot;
     IBOutlet NSButton *selboot;
     
+    IBOutlet NSButton *sellock;
+
+    
     IBOutlet NSButton *applyChanges;
     IBOutlet NSButton *defColor;
     IBOutlet NSButton *blkColor;
@@ -70,6 +86,8 @@
     IBOutlet NSButton *clrColor;
     
 	AuthorizationRef	auth;
+    
+    NSURL *lockImagePath;
 }
 
 //- (IBAction)setupBXPlist:(id)sender;
