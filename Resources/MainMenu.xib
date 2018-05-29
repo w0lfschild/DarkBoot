@@ -472,6 +472,9 @@
                         <color key="textColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
+                    <connections>
+                        <action selector="lockTextTextEdit:" target="-3" id="LoZ-r6-aso"/>
+                    </connections>
                 </textField>
                 <textField verticalHuggingPriority="750" misplaced="YES" id="Eat-7p-RTL">
                     <rect key="frame" x="174" y="162" width="126" height="14"/>

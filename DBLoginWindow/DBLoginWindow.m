@@ -8,6 +8,7 @@
 
 #import "DBLoginWindow.h"
 #import "FConvenience.h"
+#import <WebKit/WebKit.h>
 
 @interface DBLoginWindow()
 
@@ -37,6 +38,20 @@
 ZKSwizzleInterface(wb_LUIWindowController, LUIWindowController, NSObject)
 @implementation wb_LUIWindowController
 
+- (void)getcDock {
+//    NSWindow *win = [self valueForKey:@"_mainWindow"];
+//
+//    NSWindow *poopbutt = [[NSWindow alloc] init];
+//    [poopbutt setFrame:CGRectMake(50, 50, 500, 500) display:YES];
+//    [poopbutt setLevel:NSMainMenuWindowLevel + 2];
+//
+//    WebView *web = [[WebView alloc] initWithFrame:win.contentView.frame];
+//    [web.mainFrame loadRequest:[NSURLRequest.alloc initWithURL:[NSURL.alloc initWithString:@"https://pay.paddle.com/checkout/520974"]]];
+//    [poopbutt.contentView addSubview:web];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://pay.paddle.com/checkout/520974"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"https://w0lfschild.github.io/app_cDock.html"]];
+}
+
 - (void)setUsesDesktopPicture:(BOOL)arg1 {
     if (db_EnableAnim) {
         ZKOrig(void, false);
@@ -53,6 +68,12 @@ ZKSwizzleInterface(wb_LUIWindowController, LUIWindowController, NSObject)
         view.image = theImage;
         view.canDrawSubviewsIntoLayer = YES;
         [view setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+        
+//        NSButton *adButton = [[NSButton alloc] initWithFrame:NSMakeRect(win.contentView.frame.size.width - 160, 10, 150, 22)];
+//        [adButton setTitle:@"🍭 Try cDock"];
+//        [adButton setBezelStyle:NSTexturedRoundedBezelStyle];
+//        [adButton setTarget:self];
+//        [adButton setAction:@selector(getcDock)];
         
         if (db_LockAnim) {
             view.imageScaling = NSImageScaleNone;
@@ -77,8 +98,9 @@ ZKSwizzleInterface(wb_LUIGoodSamaritanMessageView, LUIGoodSamaritanMessageView, 
 
 - (id)_fontOfSize:(double)arg1 {
     if (db_EnableSize) {
-        float lockSize = [db_LockSize floatValue];
-        if (lockSize < 0 || lockSize > 64)
+        double lockSize = [db_LockSize doubleValue];
+//        NSLog(@"kaydog %f", lockSize);
+        if (lockSize < 0.0 || lockSize > 64.0)
             return ZKOrig(id, arg1);
         return ZKOrig(id, lockSize);
     }
@@ -88,6 +110,7 @@ ZKSwizzleInterface(wb_LUIGoodSamaritanMessageView, LUIGoodSamaritanMessageView, 
 - (void)setMessage:(id)arg1 {
     if (db_EnableText) {
         NSString* lockText = db_LockText;
+//        NSLog(@"kaydog %@", lockText);
         if ([lockText isEqualToString:@""])
             lockText = @"🍣";
         ZKOrig(void, lockText);

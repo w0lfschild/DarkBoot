@@ -100,6 +100,8 @@
 @property (readwrite, nonatomic) NSArray* adArray;
 @property (readwrite, nonatomic) NSInteger lastAD;
 
+@property Boolean* needsSIMBL;
+
 //- (IBAction)setupBXPlist:(id)sender;
 - (NSColor*)currentBackgroundColor;
 

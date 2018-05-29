@@ -56,6 +56,7 @@ FOUNDATION_EXPORT const unsigned char SIMBLManagerVersionString[];
 - (IBAction)iconfirm:(id)sender;
 - (IBAction)confirmQuit:(id)sender;
 - (void)displayInWindow:(NSWindow*)window;
+- (void)addtoView:(NSView*)parentView;
 
 @end
 
@@ -63,11 +64,12 @@ FOUNDATION_EXPORT const unsigned char SIMBLManagerVersionString[];
 
 @property (weak) IBOutlet NSButton *cancel;
 @property (weak) IBOutlet NSButton *accept;
-@property (weak) IBOutlet NSTextField *tv;
+@property IBOutlet NSTextField *tv;
     
 - (IBAction)install:(id)sender;
 - (IBAction)cancel:(id)sender;
 - (void)displayInWindow:(NSWindow*)window;
-    
+- (void)addtoView:(NSView*)parentView;
+
 @end
 

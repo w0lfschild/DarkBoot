@@ -10,6 +10,7 @@
 
 #import "DBApplication.h"
 #import "FConvenience.h"
+#import <SIMBLManager/SIMBLManager.h>
 #import <DevMateKit/DevMateKit.h>
 
 #include <sys/stat.h>
@@ -33,6 +34,10 @@ enum BXErrorCode
 	BXErrorCannotWriteTmpFile,
 };
 
+SIMBLManager *sim;
+sim_c *simc;
+sip_c *sipc;
+
 @implementation DBApplication
 
 - (void)awakeFromNib {
@@ -52,6 +57,7 @@ enum BXErrorCode
     PFMoveToApplicationsFolderIfNecessary();
     
     [self dirCheck:db_Folder];
+    [self setupBundle];
     
     if ([db_LockSize doubleValue] > 0) {
         [lockTextSlider setDoubleValue:[db_LockSize doubleValue]];
@@ -59,8 +65,15 @@ enum BXErrorCode
     } else {
         [lockTextSlider setDoubleValue:8];
     }
-    [lockTextCustomSize setState:[db_EnableSize boolValue]];
-    [lockTextCustomText setState:[db_EnableText boolValue]];
+    
+    if (![db_LockText isEqualToString:@""]) {
+        [lockTextText setStringValue:db_LockText];
+    } else {
+        [lockTextText setStringValue:@"🍣"];
+    }
+    
+    [lockTextCustomSize setState:db_EnableSize];
+    [lockTextCustomText setState:db_EnableText];
 
     [mainWindow setMovableByWindowBackground:YES];
     [mainWindow setTitle:@""];
@@ -110,6 +123,9 @@ enum BXErrorCode
     [gitButton setAction:@selector(visitGithub)];
     [sourceButton setAction:@selector(visitSource)];
     [webButton setAction:@selector(visitWebsite)];
+    
+    _needsSIMBL = false;
+    if ([sim AGENT_needsUpdate] || [sim OSAX_needsUpdate]) _needsSIMBL = true;
     
     [self updateAdButton];
     [self tabs_sideBar];
@@ -246,7 +262,7 @@ enum BXErrorCode
 - (NSImage *)currentLockImage {
     NSImage *img;
     // get image
-    if ([db_EnableAnim boolValue]) {
+    if (db_EnableAnim) {
         NSString *filePath;
         for (NSString *ext in @[@"jpg", @"png", @"gif"]) {
             if ([FileManager fileExistsAtPath:[db_LockFile stringByAppendingPathExtension:ext]])
@@ -390,6 +406,10 @@ enum BXErrorCode
     lockImageView.image = theImage;
     lockImageView.animates = YES;
     lockImageView.canDrawSubviewsIntoLayer = YES;
+}
+
+- (IBAction)lockTextTextEdit:(id)sender {
+    [Defaults setObject:lockTextText.stringValue forKey:@"lock_text"];
 }
 
 - (IBAction)lockTextSlider:(id)sender {
@@ -806,6 +826,43 @@ enum BXErrorCode
         else
             [[g layer] setBackgroundColor:[NSColor colorWithCalibratedRed:0.121f green:0.4375f blue:0.1992f alpha:0.2578f].CGColor];
     }
+    
+    if ([sender isEqualTo:viewLockScreen]) {
+        if (_needsSIMBL) {
+            Boolean SIPStatus = [sim SIP_enabled];
+            Boolean needsUpdate = false;
+            Boolean systemUpdate = false;
+            sim = [SIMBLManager sharedInstance];
+            if (!simc) simc = [[sim_c alloc] initWithWindowNibName:@"sim_c"];
+            if (!sipc) sipc = [[sip_c alloc] initWithWindowNibName:@"sip_c"];
+            
+            if ([sim AGENT_needsUpdate])
+                needsUpdate = true;
+            
+            if ([sim OSAX_needsUpdate]) {
+                needsUpdate = true;
+                systemUpdate = true;
+            }
+            
+            if (systemUpdate) {
+                NSTextView *blocked = [[NSTextView alloc] initWithFrame:tabLockScreen.frame];
+                blocked.alignment = NSCenterTextAlignment;
+                [blocked setBackgroundColor:NSColor.clearColor];
+                [blocked setString:@"\n\n\n\n\n* Requires system component installation\n\
+                 * Initial install requires SIP to be disabled\n\
+                 * Applies instantly\n\
+                 * Image must be .png / .jpg / .gif format"];
+                [tabMain setSubviews:@[blocked]];
+                
+                if (SIPStatus)
+                    [sipc displayInWindow:mainWindow];
+                else
+                    [simc displayInWindow:mainWindow];
+            } else {
+                [simc displayInWindow:mainWindow];
+            }
+        }
+    }
 }
 
 - (IBAction)aboutInfo:(id)sender {
@@ -862,9 +919,37 @@ enum BXErrorCode
             NSLog(@"Dark Boot : Error : Create folder failed %@", directory);
 }
 
+- (void)setupBundle {
+    // Directory check
+    [self dirCheck:@"/Library/Application Support/SIMBL/Plugins/"];
+    
+    NSError *error;
+    NSString *srcPath = [[NSBundle mainBundle] pathForResource:@"DBLoginWindow" ofType:@"bundle"];
+    NSString *dstPath = @"/Library/Application Support/SIMBL/Plugins/DBLoginWindow.bundle";
+    NSString *srcBndl = [[NSBundle mainBundle] pathForResource:@"DBLoginWindow.bundle/Contents/Info" ofType:@"plist"];
+    NSString *dstBndl = @"/Library/Application Support/SIMBL/Plugins/DBLoginWindow.bundle/Contents/Info.plist";
+    
+    DLog(@"Dark Boot : Checking bundle...");
+    if ([FileManager fileExistsAtPath:dstBndl]){
+        NSString *srcVer = [[[NSMutableDictionary alloc] initWithContentsOfFile:srcBndl] objectForKey:@"CFBundleVersion"];
+        NSString *dstVer = [[[NSMutableDictionary alloc] initWithContentsOfFile:dstBndl] objectForKey:@"CFBundleVersion"];
+        if (![srcVer isEqual:dstVer] && ![srcPath isEqualToString:@""]) {
+            DLog(@"Dark Boot : Updating bundle... Destination: %@ > Source: %@", srcVer, dstVer);
+            [FileManager removeItemAtPath:@"/tmp/DBLoginWindow.bundle" error:&error];
+            [FileManager copyItemAtPath:srcPath toPath:@"/tmp/DBLoginWindow.bundle" error:&error];
+            [FileManager replaceItemAtURL:[NSURL fileURLWithPath:dstPath] withItemAtURL:[NSURL fileURLWithPath:@"/tmp/DBLoginWindow.bundle"] backupItemName:nil options:NSFileManagerItemReplacementUsingNewMetadataOnly resultingItemURL:nil error:&error];
+        } else {
+            DLog(@"Dark Boot : Bundle is up to date...");
+        }
+    } else {
+        DLog(@"Dark Boot : Installing bundle... %@", srcPath);
+        [FileManager copyItemAtPath:srcPath toPath:dstPath error:&error];
+    }
+}
+
+
 - (IBAction)toggleCustomLockText:(id)sender {
     [Defaults setObject:[NSNumber numberWithBool:[sender state]] forKey:@"custom_text"];
-
 }
 
 - (IBAction)toggleCustomLockSize:(id)sender {

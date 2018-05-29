@@ -14,11 +14,11 @@
 		</data>
 		<key>Resources/SIMBL.osax/Contents/MacOS/SIMBL</key>
 		<data>
-		YWTTILjK/saSTsMRCEKeGqhJZ+g=
+		iQ6YJe7JZyobOtfHUKsWZVTg14g=
 		</data>
 		<key>Resources/SIMBL.osax/Contents/Resources/SIMBL.rsrc</key>
 		<data>
-		3626rrWuSaDi9lB/ea+jdjODvjI=
+		aA1L9BSC5GFTfMl47+NBzOMqZrM=
 		</data>
 		<key>Resources/SIMBL.osax/Contents/Resources/SIMBL.sdef</key>
 		<data>
@@ -26,7 +26,7 @@
 		</data>
 		<key>Resources/SIMBL.osax/Contents/_CodeSignature/CodeResources</key>
 		<data>
-		O1Ogiwic7ng7xEcdB7FHLqHCpQM=
+		RzQZ2yrhL+2b9NotP2zxs2iFtIU=
 		</data>
 		<key>Resources/SIMBLAgent.app/Contents/Info.plist</key>
 		<data>
@@ -99,11 +99,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			qb0WSlapwVa44aDqHjByEKyaGUs=
+			uOsF3rfqqkDcMpVHKEM4cYr6cdA=
 			</data>
 			<key>hash2</key>
 			<data>
-			oz5AHN7zye8VUPbJDtSaYIpO6HEo56our8xcDSNDrqI=
+			dxJYgUQ45a3aMMvmxLbkksFGd/w0ImauXsoaX7a43+o=
 			</data>
 		</dict>
 		<key>Modules/module.modulemap</key>
@@ -143,22 +143,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			YWTTILjK/saSTsMRCEKeGqhJZ+g=
+			iQ6YJe7JZyobOtfHUKsWZVTg14g=
 			</data>
 			<key>hash2</key>
 			<data>
-			JEEZFzkR8xDGLbNTQkTpLl0YzvowQTNLUecq23h94Wc=
+			+Gh8US11gMsJLdcwyXWfC8qjRjppbvxRTVLC3KY4F7A=
 			</data>
 		</dict>
 		<key>Resources/SIMBL.osax/Contents/Resources/SIMBL.rsrc</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			3626rrWuSaDi9lB/ea+jdjODvjI=
+			aA1L9BSC5GFTfMl47+NBzOMqZrM=
 			</data>
 			<key>hash2</key>
 			<data>
-			pANa9I6zD2VTbWaUOec9U5op283zdvWKUzPRFsHuNx0=
+			xrOeEpjfHFHInc47Uo0Cx/mBjM8bUORZbvlsmXgbByw=
 			</data>
 		</dict>
 		<key>Resources/SIMBL.osax/Contents/Resources/SIMBL.sdef</key>
@@ -176,11 +176,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			O1Ogiwic7ng7xEcdB7FHLqHCpQM=
+			RzQZ2yrhL+2b9NotP2zxs2iFtIU=
 			</data>
 			<key>hash2</key>
 			<data>
-			GNQukwTzqkRDo14Zyy7HU3yXuRoSFg2SzJtHjIoo91o=
+			Uy28Pp9+xbAstNuEZt/DMsCepvZhIEDzebxapGFnYIQ=
 			</data>
 		</dict>
 		<key>Resources/SIMBLAgent.app/Contents/Info.plist</key>

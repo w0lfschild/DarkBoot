@@ -13,6 +13,7 @@
 		28D089B611A5DCBE001B092C /* InstallBootImage in CopyFiles */ = {isa = PBXBuildFile; fileRef = 28D089AC11A5DC3C001B092C /* InstallBootImage */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		28D08A2411A5E54D001B092C /* InstallBootImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 285AC1F10CDF6C2C008AF706 /* InstallBootImage.m */; };
 		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		FB0493F220BD1DBF00D54F51 /* DBLoginWindow.bundle in Resources */ = {isa = PBXBuildFile; fileRef = FB0493F120BD1DBF00D54F51 /* DBLoginWindow.bundle */; };
 		FB1120A620B0F797005263B5 /* apple.png in Resources */ = {isa = PBXBuildFile; fileRef = FB1120A520B0F797005263B5 /* apple.png */; };
 		FB1120A920B105F4005263B5 /* AYProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = FB1120A820B105F4005263B5 /* AYProgressIndicator.m */; };
 		FB1120AE20B109C6005263B5 /* SIMBLManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB1120AC20B10977005263B5 /* SIMBLManager.framework */; };
@@ -25,8 +26,6 @@
 		FB26E48120BCE91900F31F08 /* DBLoginWindowDYLIB.m in Sources */ = {isa = PBXBuildFile; fileRef = FB26E48020BCE91900F31F08 /* DBLoginWindowDYLIB.m */; };
 		FB26E48520BCE98A00F31F08 /* ZKSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = FB45020B20B0DF2000BB77CB /* ZKSwizzle.m */; };
 		FB3FF93720BD03CF00657B9E /* ads.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB3FF93620BD03CF00657B9E /* ads.plist */; };
-		FB4501FF20B0DF2000BB77CB /* AppKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB4501FE20B0DF2000BB77CB /* AppKit.framework */; };
-		FB45020120B0DF2000BB77CB /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB45020020B0DF2000BB77CB /* Foundation.framework */; };
 		FB45020820B0DF2000BB77CB /* DBLoginWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = FB45020720B0DF2000BB77CB /* DBLoginWindow.m */; };
 		FB45020C20B0DF2000BB77CB /* ZKSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = FB45020B20B0DF2000BB77CB /* ZKSwizzle.m */; };
 		FB45020E20B0DF2000BB77CB /* PrefixHeader.pch in Resources */ = {isa = PBXBuildFile; fileRef = FB45020D20B0DF2000BB77CB /* PrefixHeader.pch */; };
@@ -87,6 +86,7 @@
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Classes/main.m; sourceTree = SOURCE_ROOT; };
 		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = SOURCE_ROOT; };
 		8D1107320486CEB800E47090 /* Dark Boot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dark Boot.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB0493F120BD1DBF00D54F51 /* DBLoginWindow.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = DBLoginWindow.bundle; sourceTree = "<group>"; };
 		FB0A272720BCA1DD0066C021 /* FConvenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FConvenience.h; sourceTree = "<group>"; };
 		FB1120A520B0F797005263B5 /* apple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = apple.png; sourceTree = "<group>"; };
 		FB1120A720B105F4005263B5 /* AYProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AYProgressIndicator.h; sourceTree = "<group>"; };
@@ -101,8 +101,6 @@
 		FB26E48020BCE91900F31F08 /* DBLoginWindowDYLIB.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBLoginWindowDYLIB.m; sourceTree = "<group>"; };
 		FB3FF93620BD03CF00657B9E /* ads.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ads.plist; sourceTree = "<group>"; };
 		FB4501FD20B0DF2000BB77CB /* DBLoginWindow.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DBLoginWindow.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
-		FB4501FE20B0DF2000BB77CB /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
-		FB45020020B0DF2000BB77CB /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		FB45020420B0DF2000BB77CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FB45020620B0DF2000BB77CB /* DBLoginWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBLoginWindow.h; sourceTree = "<group>"; };
 		FB45020720B0DF2000BB77CB /* DBLoginWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBLoginWindow.m; sourceTree = "<group>"; };
@@ -147,8 +145,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB4501FF20B0DF2000BB77CB /* AppKit.framework in Frameworks */,
-				FB45020120B0DF2000BB77CB /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -205,8 +201,9 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				FB3FF93620BD03CF00657B9E /* ads.plist */,
+				FB0493F120BD1DBF00D54F51 /* DBLoginWindow.bundle */,
 				FBC129BD1DEA2E4000B0D6D5 /* MainMenu.xib */,
+				FB3FF93620BD03CF00657B9E /* ads.plist */,
 				8D1107310486CEB800E47090 /* Info.plist */,
 				FB5464E01CB9A8D900508447 /* com.dabrain13.darkboot.plist */,
 				FBF3F2F61CCBC5CB00B1B8CA /* dsa_pub.pem */,
@@ -220,8 +217,6 @@
 				FB1120AC20B10977005263B5 /* SIMBLManager.framework */,
 				FB84A99B1E480235002CFA4D /* DevMateKit.framework */,
 				FB84A9971E47D642002CFA4D /* LetsMove.framework */,
-				FB4501FE20B0DF2000BB77CB /* AppKit.framework */,
-				FB45020020B0DF2000BB77CB /* Foundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -455,6 +450,7 @@
 				FB1120A620B0F797005263B5 /* apple.png in Resources */,
 				FB1187181DE63A30008BBBF1 /* Changelog.rtf in Resources */,
 				FBC129C01DEA2E4F00B0D6D5 /* Dark Boot.icns in Resources */,
+				FB0493F220BD1DBF00D54F51 /* DBLoginWindow.bundle in Resources */,
 				FB1187161DE63A30008BBBF1 /* Credits.rtf in Resources */,
 				FBC129BE1DEA2E4000B0D6D5 /* MainMenu.xib in Resources */,
 				FB3FF93720BD03CF00657B9E /* ads.plist in Resources */,
