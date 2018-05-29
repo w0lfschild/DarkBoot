@@ -68,6 +68,11 @@
 	IBOutlet NSColorWell *bgColorWell;
     IBOutlet NSColorWell *bootColorWell;
     
+    IBOutlet NSButton *lockTextCustomSize;
+    IBOutlet NSButton *lockTextCustomText;
+    IBOutlet NSSlider *lockTextSlider;
+    IBOutlet NSTextField *lockTextText;
+    
     IBOutlet NSButton *curlogin;
     IBOutlet NSButton *deflogin;
     IBOutlet NSButton *sellogin;
@@ -90,6 +95,11 @@
     NSURL *lockImagePath;
 }
 
+// ADs URL
+@property (readwrite, nonatomic) NSString* adURL;
+@property (readwrite, nonatomic) NSArray* adArray;
+@property (readwrite, nonatomic) NSInteger lastAD;
+
 //- (IBAction)setupBXPlist:(id)sender;
 - (NSColor*)currentBackgroundColor;
 
@@ -107,6 +117,9 @@
 
 - (BOOL)installBootImage:(NSImage*)img withBackgroundColor:(NSColor*)bgColor error:(NSError**)err;
 
+- (void)dirCheck:(NSString *)directory;
+- (NSImage*)imageFromCGImageRef:(CGImageRef)image;
 - (BOOL)authorize;
 - (void)deauthorize;
+
 @end

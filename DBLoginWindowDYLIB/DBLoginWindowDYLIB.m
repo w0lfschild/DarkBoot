@@ -1,22 +1,47 @@
 //
-//  DBLoginWindow.m
-//  DBLoginWindow
+//  DBLoginWindowDYLIB.m
+//  DBLoginWindowDYLIB
 //
-//  Created by Wolfgang Baird on 5/19/18.
-//
+//  Created by Wolfgang Baird on 5/28/18.
 //
 
-#import "DBLoginWindow.h"
+@import AppKit;
 #import "FConvenience.h"
+#import "DBLoginWindowDYLIB.h"
+#import "ZKSwizzle.h"
 
-@interface DBLoginWindow()
+void install(void) __attribute__ ((constructor));
+
+void redirectConsoleLogToDocumentFolder() {
+    NSString *logPath = [@"/Volumes/Macintosh HD/Users/w0lf/Desktop/" stringByAppendingPathComponent:@"console.txt"];
+    freopen([logPath fileSystemRepresentation],"a+",stderr);
+}
+
+void install() {
+    redirectConsoleLogToDocumentFolder();
+    
+    NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
+    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+    // or @"yyyy-MM-dd hh:mm:ss a" if you prefer the time with AM/PM
+    NSLog(@"%@",[dateFormatter stringFromDate:[NSDate date]]);
+
+    
+    ZKSwizzle(wb_LUIWindowController, LUIWindowController);
+    ZKSwizzle(wb_LUIGoodSamaritanMessageView, LUIGoodSamaritanMessageView);
+    ZKSwizzle(wb_Login1, Login1);
+    ZKSwizzle(wb_DTDisplay, DTDisplay);
+}
+
+
+
+@interface DBLoginWindowDYLIB()
 
 @end
 
-@implementation DBLoginWindow
+@implementation DBLoginWindowDYLIB
 
 + (instancetype)sharedInstance {
-    static DBLoginWindow *plugin = nil;
+    static DBLoginWindowDYLIB *plugin = nil;
     @synchronized(self) {
         if (!plugin) {
             plugin = [[self alloc] init];
@@ -26,7 +51,7 @@
 }
 
 + (void)load {
-//    DBLoginWindow *plugin = [DBLoginWindow sharedInstance];
+    //    DBLoginWindow *plugin = [DBLoginWindow sharedInstance];
     NSUInteger osx_ver = [[NSProcessInfo processInfo] operatingSystemVersion].minorVersion;
     NSLog(@"%@ loaded into %@ on macOS 10.%ld", [self class], [[NSBundle mainBundle] bundleIdentifier], (long)osx_ver);
 }
@@ -34,7 +59,45 @@
 
 @end
 
-ZKSwizzleInterface(wb_LUIWindowController, LUIWindowController, NSObject)
+@interface wb_DTDisplay : NSObject
+@end
+
+@implementation wb_DTDisplay
+
+- (void)updateDisplay:(unsigned int)arg1 {
+    NSLog(@"loginwindow Hookers updateDisplay:%ul", arg1);
+    ZKOrig(void, arg1);
+}
+
+- (void)transition {
+    NSLog(@"loginwindow Hookers transition");
+    ZKOrig(void);
+}
+
+@end
+
+@interface wb_Login1 : NSObject
+@end
+
+@implementation wb_Login1
+
+- (void)do_autologin_check {
+    NSLog(@"loginwindow Hookers do_autologin_check");
+    ZKOrig(void);
+}
+
+- (BOOL)isDarkInstall {
+    NSLog(@"loginwindow Hookers isDarkInstall");
+    return NO;
+}
+
+@end
+
+
+//ZKSwizzleInterface(wb_LUIWindowController, LUIWindowController, NSObject)
+@interface wb_LUIWindowController : NSObject
+@end
+
 @implementation wb_LUIWindowController
 
 - (void)setUsesDesktopPicture:(BOOL)arg1 {
@@ -72,7 +135,10 @@ ZKSwizzleInterface(wb_LUIWindowController, LUIWindowController, NSObject)
 
 @end
 
-ZKSwizzleInterface(wb_LUIGoodSamaritanMessageView, LUIGoodSamaritanMessageView, NSView)
+//ZKSwizzleInterface(wb_LUIGoodSamaritanMessageView, LUIGoodSamaritanMessageView, NSView)
+@interface wb_LUIGoodSamaritanMessageView : NSView
+@end
+
 @implementation wb_LUIGoodSamaritanMessageView
 
 - (id)_fontOfSize:(double)arg1 {

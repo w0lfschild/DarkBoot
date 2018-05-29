@@ -63,7 +63,7 @@ FOUNDATION_EXPORT const unsigned char SIMBLManagerVersionString[];
 
 @property (weak) IBOutlet NSButton *cancel;
 @property (weak) IBOutlet NSButton *accept;
-@property IBOutlet NSTextField *tv;
+@property (weak) IBOutlet NSTextField *tv;
     
 - (IBAction)install:(id)sender;
 - (IBAction)cancel:(id)sender;

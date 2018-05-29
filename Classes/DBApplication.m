@@ -6,12 +6,15 @@
 @import LetsMove;
 @import CoreImage;
 @import SIMBLManager;
+@import CoreGraphics;
 
 #import "DBApplication.h"
+#import "FConvenience.h"
 #import <DevMateKit/DevMateKit.h>
 
 #include <sys/stat.h>
 #include <unistd.h>
+#include <sys/mount.h>
 
 @import AppKit;
 
@@ -47,6 +50,17 @@ enum BXErrorCode
     [DevMateKit setupIssuesController:nil reportingUnhandledIssues:YES];
     
     PFMoveToApplicationsFolderIfNecessary();
+    
+    [self dirCheck:db_Folder];
+    
+    if ([db_LockSize doubleValue] > 0) {
+        [lockTextSlider setDoubleValue:[db_LockSize doubleValue]];
+        [self lockTextSlider:lockTextSlider];
+    } else {
+        [lockTextSlider setDoubleValue:8];
+    }
+    [lockTextCustomSize setState:[db_EnableSize boolValue]];
+    [lockTextCustomText setState:[db_EnableText boolValue]];
 
     [mainWindow setMovableByWindowBackground:YES];
     [mainWindow setTitle:@""];
@@ -74,7 +88,10 @@ enum BXErrorCode
     [appVersion setStringValue:[NSString stringWithFormat:@"Version %@ (%@)",
                                  [infoDict objectForKey:@"CFBundleShortVersionString"],
                                  [infoDict objectForKey:@"CFBundleVersion"]]];
-    [appCopyright setStringValue:@"Copyright © 2015 - 2016 Wolfgang Baird"];
+    NSDateComponents *components = [[NSCalendar currentCalendar] components:NSCalendarUnitDay | NSCalendarUnitMonth | NSCalendarUnitYear fromDate:[NSDate date]];
+    NSInteger year = [components year];
+
+    [appCopyright setStringValue:[NSString stringWithFormat:@"Copyright © 2015 - %ld Wolfgang Baird", (long)year]];
     [[changeLog textStorage] setAttributedString:[[NSAttributedString alloc] initWithPath:[[NSBundle mainBundle] pathForResource:@"Changelog" ofType:@"rtf"] documentAttributes:nil]];
     
     Class vibrantClass=NSClassFromString(@"NSVisualEffectView");
@@ -94,11 +111,20 @@ enum BXErrorCode
     [sourceButton setAction:@selector(visitSource)];
     [webButton setAction:@selector(visitWebsite)];
     
+    [self updateAdButton];
     [self tabs_sideBar];
+    
+    struct statfs output;
+    statfs("/", &output);
+    if ([[NSString stringWithFormat:@"%s", output.f_fstypename] isEqualToString:@"apfs"]) {
+        [viewBootImage setEnabled:NO];
+        [viewBootImage setToolTip:@"Requires HFS/HFS+ boot partition"];
+    }
     
     tabViews = [NSArray arrayWithObjects:tabBootColor, tabBootImage, tabBootOptions, tabLoginScreen, tabLockScreen, tabAbout, tabPreferences, nil];
     
     [self selectView:viewBootColor];
+    [viewBootColor setState:NSOnState];
     
     bootColorIndicator = [[AYProgressIndicator alloc] initWithFrame:NSMakeRect(92, 148, 100, 4)
                                         progressColor:[NSColor whiteColor]
@@ -132,6 +158,9 @@ enum BXErrorCode
         [bootColorWell setColor:[NSColor grayColor]];
         [defColor setState:NSOnState];
     }
+    
+    [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(keepThoseAdsFresh) userInfo:nil repeats:YES];
+    [NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(bootPreviewAnimate) userInfo:nil repeats:YES];
 }
 
 - (BOOL)applicationShouldTerminateAfterLastWindowClosed:(NSApplication *)theApplication {
@@ -206,7 +235,7 @@ enum BXErrorCode
 
 - (NSString *)currentBackgroundString {
     NSString* result = nil;
-    if ([[NSFileManager defaultManager] fileExistsAtPath:path_bootColorPlist]) {
+    if ([FileManager fileExistsAtPath:path_bootColorPlist]) {
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithContentsOfFile:path_bootColorPlist];
         NSArray* args = [dict objectForKey:@"ProgramArguments"];
         result = [args objectAtIndex:1];
@@ -215,10 +244,20 @@ enum BXErrorCode
 }
 
 - (NSImage *)currentLockImage {
+    NSImage *img;
     // get image
-    NSImage *img = [[NSImage alloc] initWithContentsOfFile:@"/Users/w0lf/Desktop/0.gif"];
-    if (img == nil) return [self defaultBootImage];
-    lockImageView.path = @"/Users/w0lf/Desktop/0.gif";
+    if ([db_EnableAnim boolValue]) {
+        NSString *filePath;
+        for (NSString *ext in @[@"jpg", @"png", @"gif"]) {
+            if ([FileManager fileExistsAtPath:[db_LockFile stringByAppendingPathExtension:ext]])
+                filePath = [db_LockFile stringByAppendingPathExtension:ext];
+        }
+        img = [[NSImage alloc] initWithContentsOfFile:filePath];
+        lockImageView.path = filePath;
+        if (img == nil) return [self blurImage:[self defaultLoginImage] :25.0];
+    } else {
+        img = [self blurImage:[self defaultLoginImage] :25.0];
+    }
     return img;
 }
 
@@ -303,6 +342,7 @@ enum BXErrorCode
 
 - (IBAction)showDefaultLogin:(id)sender {
     NSImage *theImage = [self defaultLoginImage];
+    theImage = [self blurImage:theImage :25.0];
     [theImage setSize: NSMakeSize(loginImageView.frame.size.width, loginImageView.frame.size.height)];
     loginImageView.image = theImage;
 }
@@ -315,18 +355,30 @@ enum BXErrorCode
     loginImageView.canDrawSubviewsIntoLayer = YES;
 }
 
-- (IBAction)showDefaultLock:(id)sender {
-    NSImage *theImage = [self defaultLoginImage];
-    
-    CIImage *imageToBlur = [CIImage imageWithData:[theImage TIFFRepresentation]];
+- (NSImage*)blurImage:(NSImage*)input :(float)radius {
+    CIImage *imageToBlur = [CIImage imageWithData:[input TIFFRepresentation]];
     CIFilter *gaussianBlurFilter = [CIFilter filterWithName: @"CIGaussianBlur"];
     [gaussianBlurFilter setValue:imageToBlur forKey:kCIInputImageKey];
-    [gaussianBlurFilter setValue:[NSNumber numberWithFloat: 25.0] forKey: @"inputRadius"];
+    [gaussianBlurFilter setValue:[NSNumber numberWithFloat:radius] forKey: @"inputRadius"];
     
     NSCIImageRep *rep = [NSCIImageRep imageRepWithCIImage:[gaussianBlurFilter valueForKey:kCIOutputImageKey]];
     NSImage *nsImage = [[NSImage alloc] initWithSize:rep.size];
     [nsImage addRepresentation:rep];
-    theImage = nsImage;
+    return nsImage;
+}
+
+- (IBAction)showDefaultLock:(id)sender {
+    NSImage *theImage = [self defaultLoginImage];
+    theImage = [self blurImage:theImage :25.0];
+//    CIImage *imageToBlur = [CIImage imageWithData:[theImage TIFFRepresentation]];
+//    CIFilter *gaussianBlurFilter = [CIFilter filterWithName: @"CIGaussianBlur"];
+//    [gaussianBlurFilter setValue:imageToBlur forKey:kCIInputImageKey];
+//    [gaussianBlurFilter setValue:[NSNumber numberWithFloat: 25.0] forKey: @"inputRadius"];
+//
+//    NSCIImageRep *rep = [NSCIImageRep imageRepWithCIImage:[gaussianBlurFilter valueForKey:kCIOutputImageKey]];
+//    NSImage *nsImage = [[NSImage alloc] initWithSize:rep.size];
+//    [nsImage addRepresentation:rep];
+//    theImage = nsImage;
     
     [theImage setSize: NSMakeSize(loginImageView.frame.size.width, loginImageView.frame.size.height)];
     lockImageView.image = theImage;
@@ -340,6 +392,13 @@ enum BXErrorCode
     lockImageView.canDrawSubviewsIntoLayer = YES;
 }
 
+- (IBAction)lockTextSlider:(id)sender {
+    NSSlider *s = sender;
+    NSFont *f = [NSFont fontWithName:lockTextText.font.fontName size:s.doubleValue/2];
+    [lockTextText setFont:f];
+    [Defaults setObject:[NSNumber numberWithDouble:s.doubleValue] forKey:@"lock_size"];
+}
+
 - (IBAction)saveLockScreen:(id)sender {
     [self installLockImage:lockImageView.image];
 }
@@ -348,9 +407,12 @@ enum BXErrorCode
     [self installLoginImage:loginImageView.image];
 }
 
-- (IBAction)saveBootScreen:(id)sender {
-    BOOL success = [self installBootImage:bootImageView.image withBackgroundColor:bgColorWell.color error:NULL];
+- (IBAction)saveBootColor:(id)sender {
     [self setupDarkBoot];
+}
+
+- (IBAction)saveBootImage:(id)sender {
+    BOOL success = [self installBootImage:bootImageView.image withBackgroundColor:bgColorWell.color error:NULL];
     if (!success) { [self showCurrentImage:self]; }
 }
 
@@ -364,7 +426,7 @@ enum BXErrorCode
 
 - (NSColor *)currentBackgroundColor {
     NSColor* result = nil;
-    if ([[NSFileManager defaultManager] fileExistsAtPath:path_bootColorPlist]) {
+    if ([FileManager fileExistsAtPath:path_bootColorPlist]) {
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithContentsOfFile:path_bootColorPlist];
         NSArray* args = [dict objectForKey:@"ProgramArguments"];
         if (args.count > 1) {
@@ -374,7 +436,7 @@ enum BXErrorCode
             long g = strtol([[foo objectAtIndex: 2] UTF8String], NULL, 16);
             long r = strtol([[foo objectAtIndex: 3] UTF8String], NULL, 16); // b
             result = [NSColor colorWithDeviceRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:1.0];
-            NSLog(@"r%ld g%ld b%ld", r, g, b);
+//            NSLog(@"r%ld g%ld b%ld", r, g, b);
         }
     }
     return result;
@@ -417,15 +479,26 @@ enum BXErrorCode
 
 - (void)installLockImage:(NSImage*)img {
     NSData *imageData = [img TIFFRepresentation];
-    NSData *loginData = [[self defaultLoginImage] TIFFRepresentation];
+    NSData *loginData = [[self blurImage:[self defaultLoginImage] :25.0] TIFFRepresentation];
     
     if ([imageData isEqualToData:loginData]) {
-        [[NSFileManager defaultManager] removeItemAtPath:@"/Users/w0lf/Desktop/0.gif" error:nil];
+        [Defaults setObject:[NSNumber numberWithBool:false] forKey:@"custom_anim"];
     } else {
-        if ([[NSFileManager defaultManager] isReadableFileAtPath:lockImageView.path]) {
-            [[NSFileManager defaultManager] removeItemAtPath:@"/Users/w0lf/Desktop/0.gif" error:nil];
+        [Defaults setObject:[NSNumber numberWithBool:true] forKey:@"custom_anim"];
+
+        if ([FileManager isReadableFileAtPath:lockImageView.path]) {
+            NSString *ext = lockImageView.path.pathExtension;
+
+            for (NSString *ext in @[@"jpg", @"png", @"gif"]) {
+                if ([FileManager fileExistsAtPath:[db_LockFile stringByAppendingPathExtension:ext]])
+                    [FileManager removeItemAtPath:[db_LockFile stringByAppendingPathExtension:ext]
+                                                               error:nil];
+            }
+            
             NSError *err;
-            [[NSFileManager defaultManager] copyItemAtURL:[NSURL fileURLWithPath:lockImageView.path] toURL:[NSURL fileURLWithPath:@"/Users/w0lf/Desktop/0.gif"] error:&err];
+            [FileManager copyItemAtURL:[NSURL fileURLWithPath:lockImageView.path]
+                                                    toURL:[NSURL fileURLWithPath:[db_LockFile stringByAppendingPathExtension:ext]]
+                                                    error:&err];
             if (err != nil)
                 NSLog(@"%@", err);
         } else {
@@ -433,26 +506,55 @@ enum BXErrorCode
             NSNumber *frames = [rep valueForProperty:@"NSImageFrameCount"];
             NSData *imgData2;;
             if (frames != nil) {   // bitmapRep is a Gif imageRep
-                imgData2 = [rep representationUsingType:NSGIFFileType properties:[[NSDictionary alloc] init]];
+                imgData2 = [rep representationUsingType:NSGIFFileType
+                                             properties:[[NSDictionary alloc] init]];
+                [imgData2 writeToFile:[db_LockFile stringByAppendingPathComponent:@"gif"] atomically:NO];
             } else {
-                imgData2 = [rep representationUsingType:NSPNGFileType properties:[[NSDictionary alloc] init]];
+                imgData2 = [rep representationUsingType:NSPNGFileType
+                                             properties:[[NSDictionary alloc] init]];
+                [imgData2 writeToFile:[db_LockFile stringByAppendingPathComponent:@"png"] atomically:NO];
             }
-            
-            [imgData2 writeToFile:@"/Users/w0lf/Desktop/0.gif" atomically: NO];
         }
     }
+}
+
+- (NSImage*)imageFromCGImageRef:(CGImageRef)image {
+    NSRect imageRect = NSMakeRect(0.0, 0.0, 0.0, 0.0);
+    CGContextRef imageContext = nil;
+    NSImage* newImage = nil; // Get the image dimensions.
+    imageRect.size.height = CGImageGetHeight(image);
+    imageRect.size.width = CGImageGetWidth(image);
+    
+    // Create a new image to receive the Quartz image data.
+    newImage = [[NSImage alloc] initWithSize:imageRect.size];
+    [newImage lockFocus];
+    
+    // Get the Quartz context and draw.
+    imageContext = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
+    CGContextDrawImage(imageContext, *(CGRect*)&imageRect, image); [newImage unlockFocus];
+    return newImage;
 }
 
 - (void)installLoginImage:(NSImage*)img {
     chflags([path_loginImage UTF8String], 0);
     
+    CGColorSpaceRef CGColorSpaceCreateDeviceRGB();
+    
+    CGImageSourceRef source;
+    source = CGImageSourceCreateWithData((CFDataRef)[img TIFFRepresentation], NULL);
+    CGImageRef maskRef =  CGImageSourceCreateImageAtIndex(source, 0, NULL);
+    CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
+    CGImageRef alter = CGImageCreateCopyWithColorSpace(maskRef, colorspace);
+    NSImage *alterED = [self imageFromCGImageRef:alter];
+        
     NSData *imageData = [img TIFFRepresentation];
     NSData *loginData = [[self defaultLoginImage] TIFFRepresentation];
     
     if ([imageData isEqualToData:loginData]) {
-        [[NSFileManager defaultManager] removeItemAtPath:path_loginImage error:nil];
+        [FileManager removeItemAtPath:path_loginImage error:nil];
     } else {
-        NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithData:[img TIFFRepresentation]];
+//        NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithData:[img TIFFRepresentation]];
+        NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithData:[alterED TIFFRepresentation]];
         NSData *imgData2 = [rep representationUsingType:NSPNGFileType properties:[[NSDictionary alloc] init]];
         [imgData2 writeToFile:path_loginImage atomically: NO];
         chflags([path_loginImage UTF8String], UF_IMMUTABLE);
@@ -478,17 +580,30 @@ enum BXErrorCode
         [img drawAtPoint:NSZeroPoint fromRect:NSZeroRect operation:NSCompositeSourceOver fraction:1.0];
         [img2 unlockFocus];
         
-        // get png data
-        NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithData:[img2 TIFFRepresentation]];
-        [rep setProperty:NSImageColorSyncProfileData withValue:nil];
-        NSData *pngData = [rep representationUsingType:NSPNGFileType properties:[[NSDictionary alloc] init]];
-        if (pngData == nil) {
-            // could not get PNG representation
-            if (err) *err = [NSError errorWithDomain:DBErrorDomain code:BXErrorCannotGetPNG userInfo:nil];
-            return NO;
-        }
+        // change colorspace
+        CGColorSpaceRef CGColorSpaceCreateDeviceRGB();
+        CGImageSourceRef source;
+        source = CGImageSourceCreateWithData((CFDataRef)[img2 TIFFRepresentation], NULL);
+        CGImageRef maskRef =  CGImageSourceCreateImageAtIndex(source, 0, NULL);
+        CGColorSpaceRef colorspace = CGColorSpaceCreateDeviceRGB();
+        CGImageRef alter = CGImageCreateCopyWithColorSpace(maskRef, colorspace);
+        NSImage *alterED = [self imageFromCGImageRef:alter];
         
-        // write to file
+        NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithData:[alterED TIFFRepresentation]];
+        NSData *pngData = [rep representationUsingType:NSPNGFileType properties:[[NSDictionary alloc] init]];
+        [pngData writeToFile:@"/Library/Caches/BootLogo.png" atomically: NO];
+        
+//        // get png data
+//        NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithData:[alterED TIFFRepresentation]];
+//        [rep setProperty:NSImageColorSyncProfileData withValue:nil];
+//        NSData *pngData = [rep representationUsingType:NSPNGFileType properties:[[NSDictionary alloc] init]];
+//        if (pngData == nil) {
+//            // could not get PNG representation
+//            if (err) *err = [NSError errorWithDomain:DBErrorDomain code:BXErrorCannotGetPNG userInfo:nil];
+//            return NO;
+//        }
+
+//        // write to file
         if (![pngData writeToFile:tmpPath atomically:NO]) {
             // could not write temporary file
             if (err) *err = [NSError errorWithDomain:DBErrorDomain code:BXErrorCannotWriteTmpFile userInfo:nil];
@@ -501,7 +616,7 @@ enum BXErrorCode
     char colorStr[32];
     int colorInt = ((int)([bgColor redComponent]*255) << 16) | ((int)([bgColor greenComponent]*255) << 8) | ((int)([bgColor blueComponent]*255));
     sprintf(colorStr, "%d", colorInt);
-    
+
     // install
     [self authorize];
     char *toolArgs[3] = {colorStr, (char*)[tmpPath fileSystemRepresentation], NULL};
@@ -520,13 +635,127 @@ enum BXErrorCode
     [bootColorWell setColor:[NSColor grayColor]];
 }
 
+- (void)bootPreviewAnimate {
+    if (viewBootColor.state == NSOnState) {
+        double displayNum = bootColorIndicator.doubleValue;
+        if (displayNum < 100.0) {
+            displayNum += ((double)rand() / RAND_MAX) * 2;
+            [bootColorIndicator setDoubleValue:displayNum - 2];
+        } else {
+            displayNum = 0;
+        }
+        [bootColorIndicator setDoubleValue:displayNum];
+    }
+//    [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context){
+//        [context setDuration:1.25];
+//        [[bootColorIndicator animator] setDoubleValue:displayNum];
+//    } completionHandler:^{
+//    }];
+}
+
+- (void)updateBootColorPreview {
+    NSColor *activeColor = nil;
+    if (clrColor.state == NSOnState)
+        activeColor = [bootColorWell.color colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+    
+    if (defColor.state == NSOnState)
+        activeColor = [[self defaultBootColor] colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+    
+    if (gryColor.state == NSOnState)
+        activeColor = [NSColor.grayColor colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+    
+    if (blkColor.state == NSOnState)
+        activeColor = [NSColor.blackColor colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+    
+    [bootColorView setColor:activeColor];
+
+    NSImage *drawnImage = nil;
+    if ([self useDarkColors:activeColor]) {
+        drawnImage = [self imageTintedWithColor:bootColorApple.image :[NSColor whiteColor]];
+        [bootColorIndicator setEmptyColor:[NSColor blackColor]];
+        [bootColorIndicator setProgressColor:[NSColor whiteColor]];
+    } else {
+        drawnImage = [self imageTintedWithColor:bootColorApple.image :[NSColor blackColor]];
+        [bootColorIndicator setEmptyColor:[NSColor whiteColor]];
+        [bootColorIndicator setProgressColor:[NSColor blackColor]];
+    }
+    
+    if (clrColor.state == NSOnState) {
+        if ([self colorCompare:bootColorWell.color :NSColor.blackColor]) {
+            [bootColorIndicator setEmptyColor:[NSColor grayColor]];
+            [bootColorIndicator setProgressColor:[NSColor whiteColor]];
+        }
+        
+        if ([self colorCompare:bootColorWell.color :NSColor.whiteColor]) {
+            [bootColorIndicator setEmptyColor:[NSColor blackColor]];
+            [bootColorIndicator setProgressColor:[NSColor grayColor]];
+        }
+    }
+    
+    if (blkColor.state == NSOnState) {
+        [bootColorIndicator setEmptyColor:[NSColor grayColor]];
+        [bootColorIndicator setProgressColor:[NSColor whiteColor]];
+    }
+    
+    if (activeColor)
+    
+    [bootColorApple setImage:drawnImage];
+}
+
+- (Boolean*)colorCompare:(NSColor*)a :(NSColor*)b {
+    Boolean *result = false;
+    int similarities = 0;
+    NSColor *normalizedA =  [a colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+    NSColor *normalizedB =  [b colorUsingColorSpaceName:NSCalibratedRGBColorSpace];
+    
+    if (normalizedA.redComponent * 255 > normalizedB.redComponent * 255 - 10 && normalizedA.redComponent * 255 < normalizedB.redComponent * 255 + 10)
+        similarities++;
+    
+    if (normalizedA.greenComponent * 255 > normalizedB.greenComponent * 255 - 10 && normalizedA.greenComponent * 255 < normalizedB.greenComponent * 255 + 10)
+        similarities++;
+    
+    if (normalizedA.blueComponent * 255 > normalizedB.blueComponent * 255 - 10 && normalizedA.blueComponent * 255 < normalizedB.blueComponent * 255 + 10)
+        similarities++;
+    
+    if (similarities >= 3)
+        result = true;
+    
+    return result;
+}
+
+- (IBAction)colorPickerChanged:(id)sender {
+    [self updateBootColorPreview];
+}
+
+- (NSImage *)imageTintedWithColor:(NSImage *)img :(NSColor *)tint {
+    NSImage *image = [img copy];
+    if (tint) {
+        [image lockFocus];
+        [tint set];
+        NSRect imageRect = {NSZeroPoint, [image size]};
+        NSRectFillUsingOperation(imageRect, NSCompositeSourceAtop);
+        [image unlockFocus];
+    }
+    return image;
+}
+
+- (Boolean)useDarkColors:(NSColor*)backGround {
+    Boolean result = true;
+    double a = 1 - ( 0.299 * backGround.redComponent * 255 + 0.587 * backGround.greenComponent * 255 + 0.114 * backGround.blueComponent * 255)/255;
+    if (a < 0.5)
+        result = false; // bright colors - black font
+    else
+        result = true; // dark colors - white font
+    return result;
+}
+
 - (IBAction)colorRadioButton:(id)sender {
-    //    NSLog(@"%@", sender);
+    [self updateBootColorPreview];
 }
 
 - (void)setupDarkBoot {
     if ([defColor state] == NSOnState) {
-        if ([[NSFileManager defaultManager] fileExistsAtPath:path_bootColorPlist])
+        if ([FileManager fileExistsAtPath:path_bootColorPlist])
             [self removeBXPlist:nil];
     }
     if ([blkColor state] == NSOnState) {
@@ -626,8 +855,118 @@ enum BXErrorCode
     }];
 }
 
+- (void)dirCheck:(NSString *)directory {
+    BOOL isDir;
+    if(![FileManager fileExistsAtPath:directory isDirectory:&isDir])
+        if(![FileManager createDirectoryAtPath:directory withIntermediateDirectories:YES attributes:nil error:NULL])
+            NSLog(@"Dark Boot : Error : Create folder failed %@", directory);
+}
+
+- (IBAction)toggleCustomLockText:(id)sender {
+    [Defaults setObject:[NSNumber numberWithBool:[sender state]] forKey:@"custom_text"];
+
+}
+
+- (IBAction)toggleCustomLockSize:(id)sender {
+    [Defaults setObject:[NSNumber numberWithBool:[sender state]] forKey:@"custom_size"];
+}
+
 - (IBAction)showFeedbackDialog:(id)sender {
     [DevMateKit showFeedbackDialog:nil inMode:DMFeedbackIndependentMode];
+}
+
+- (void)keepThoseAdsFresh {
+    if (_adArray != nil) {
+        if (!adButton.hidden) {
+            NSInteger arraySize = _adArray.count;
+            NSInteger displayNum = (NSInteger)arc4random_uniform((int)[_adArray count]);
+            if (displayNum == _lastAD) {
+                displayNum++;
+                if (displayNum >= arraySize)
+                    displayNum -= 2;
+                if (displayNum < 0)
+                    displayNum = 0;
+            }
+            _lastAD = displayNum;
+            NSDictionary *dic = [_adArray objectAtIndex:displayNum];
+            NSString *name = [dic objectForKey:@"name"];
+            name = [NSString stringWithFormat:@"%@", name];
+            NSString *url = [dic objectForKey:@"homepage"];
+            [NSAnimationContext runAnimationGroup:^(NSAnimationContext *context){
+                [context setDuration:1.25];
+                [[adButton animator] setTitle:name];
+            } completionHandler:^{
+            }];
+            if (url)
+                _adURL = url;
+            else
+                _adURL = @"https://w0lfschild.github.io/app_cDock.html";
+        }
+    }
+}
+
+- (void)updateAdButton {
+    // Local ads
+    NSArray *dict = [[NSArray alloc] initWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"ads" ofType:@"plist"]];
+    NSInteger displayNum = (NSInteger)arc4random_uniform((int)[dict count]);
+    NSDictionary *dic = [dict objectAtIndex:displayNum];
+    NSString *name = [dic objectForKey:@"name"];
+    name = [NSString stringWithFormat:@"%@", name];
+    NSString *url = [dic objectForKey:@"homepage"];
+    
+    [adButton setTitle:name];
+    if (url)
+        _adURL = url;
+    else
+        _adURL = @"https://w0lfschild.github.io/app_cDock.html";
+    
+    _adArray = dict;
+    _lastAD = displayNum;
+    
+    // Check web for new ads
+    dispatch_queue_t queue = dispatch_queue_create("com.yourdomain.yourappname", NULL);
+    dispatch_async(queue, ^{
+        //code to be executed in the background
+        
+        NSURL *installURL = [NSURL URLWithString:@"https://github.com/w0lfschild/app_updates/raw/master/DarkBoot/ads.plist"];
+        NSURLRequest *request = [NSURLRequest requestWithURL:installURL];
+        NSError *error;
+        NSURLResponse *response;
+        NSData *result = [NSURLConnection sendSynchronousRequest:request returningResponse:&response error:&error];
+        
+        if (!result) {
+            // Download failed
+            DLog(@"Dark Boot : Error");
+        } else {
+            NSPropertyListFormat format;
+            NSError *err;
+            NSArray *dict = (NSArray*)[NSPropertyListSerialization propertyListWithData:result
+                                                                                options:NSPropertyListMutableContainersAndLeaves
+                                                                                 format:&format
+                                                                                  error:&err];
+            DLog(@"Dark Boot : %@", dict);
+            if (dict) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    //code to be executed on the main thread when background task is finished
+                    
+                    NSInteger displayNum = (NSInteger)arc4random_uniform((int)[dict count]);
+                    NSDictionary *dic = [dict objectAtIndex:displayNum];
+                    NSString *name = [dic objectForKey:@"name"];
+                    name = [NSString stringWithFormat:@"%@", name];
+                    NSString *url = [dic objectForKey:@"homepage"];
+                    
+                    [adButton setTitle:name];
+                    if (url)
+                        _adURL = url;
+                    else
+                        _adURL = @"https://w0lfschild.github.io/app_cDock.html";
+                    
+                    _adArray = dict;
+                    _lastAD = displayNum;
+                });
+            }
+        }
+    });
 }
 
 - (void)reportIssue {
@@ -654,4 +993,5 @@ enum BXErrorCode
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://w0lfschild.github.io/app_dBoot.html"]];
 }
 
-@end
+    @end
+    

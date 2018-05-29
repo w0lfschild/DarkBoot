@@ -17,6 +17,7 @@
                 <outlet property="applyButton" destination="u6N-UB-VUY" id="GKG-Po-U3s"/>
                 <outlet property="bgColorWell" destination="485" id="486"/>
                 <outlet property="blkColor" destination="tVH-78-sXa" id="Dax-SH-ylg"/>
+                <outlet property="bootColorApple" destination="OSB-In-uyg" id="EpY-n5-8fH"/>
                 <outlet property="bootColorView" destination="WDT-uB-qTN" id="QTb-J3-PXA"/>
                 <outlet property="bootColorWell" destination="B3h-gj-ok6" id="Ol7-xF-VCy"/>
                 <outlet property="bootImageView" destination="376" id="tya-0A-rn4"/>
@@ -29,6 +30,10 @@
                 <outlet property="gitButton" destination="jRx-fB-6bw" id="OHd-6u-Dfv"/>
                 <outlet property="gryColor" destination="zOr-ZN-fHq" id="eqj-mQ-d4Z"/>
                 <outlet property="lockImageView" destination="USZ-Uf-bC5" id="QuG-Bh-3rd"/>
+                <outlet property="lockTextCustomSize" destination="E09-sG-1fw" id="7dp-Eu-KYQ"/>
+                <outlet property="lockTextCustomText" destination="M5M-Bh-tbC" id="WRu-2U-EA4"/>
+                <outlet property="lockTextSlider" destination="amx-2b-ZUc" id="qcL-50-KTQ"/>
+                <outlet property="lockTextText" destination="IHs-O8-pVq" id="dDT-PM-eAp"/>
                 <outlet property="loginImageView" destination="P2G-8y-rEx" id="0jn-y4-Fw8"/>
                 <outlet property="mainWindow" destination="371" id="5rj-En-Oxg"/>
                 <outlet property="reportButton" destination="0YG-XJ-nBG" id="Su5-yQ-oNO"/>
@@ -403,7 +408,7 @@
                     <imageCell key="cell" selectable="YES" editable="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="SfB-i5-W2F"/>
                 </imageView>
                 <button verticalHuggingPriority="750" misplaced="YES" id="jG7-ql-yNy">
-                    <rect key="frame" x="14" y="12" width="81" height="32"/>
+                    <rect key="frame" x="14" y="13" width="81" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="push" title="Current" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="a5Z-4s-aGG">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -414,7 +419,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" misplaced="YES" id="wDQ-4p-1Ri">
-                    <rect key="frame" x="95" y="12" width="81" height="32"/>
+                    <rect key="frame" x="95" y="13" width="81" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="push" title="Default" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Ceh-Vg-PBI">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -425,7 +430,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" misplaced="YES" id="Rpb-ac-IlF">
-                    <rect key="frame" x="176" y="12" width="81" height="32"/>
+                    <rect key="frame" x="176" y="13" width="81" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="push" title="Select" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="wd6-id-ELG">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
@@ -441,13 +446,13 @@
                     <buttonCell key="cell" type="push" title="Apply" bezelStyle="rounded" alignment="center" borderStyle="border" inset="2" id="dXU-r0-UJv">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
+                        <connections>
+                            <action selector="saveLockScreen:" target="-3" id="iXS-py-EI8"/>
+                        </connections>
                     </buttonCell>
-                    <connections>
-                        <action selector="saveLockScreenImage:" target="-3" id="z5U-Yo-o2A"/>
-                    </connections>
                 </button>
                 <textField verticalHuggingPriority="750" misplaced="YES" id="gxI-IY-cu3">
-                    <rect key="frame" x="18" y="290" width="439" height="52"/>
+                    <rect key="frame" x="18" y="290" width="224" height="52"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" alignment="left" id="2Ov-Gh-hP9">
                         <font key="font" metaFont="label"/>
@@ -459,6 +464,59 @@
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <textField verticalHuggingPriority="750" misplaced="YES" id="IHs-O8-pVq">
+                    <rect key="frame" x="111" y="90" width="252" height="40"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" alignment="center" placeholderString="🍣" id="pLJ-Z6-NJQ">
+                        <font key="font" metaFont="system" size="30"/>
+                        <color key="textColor" name="highlightColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <textField verticalHuggingPriority="750" misplaced="YES" id="Eat-7p-RTL">
+                    <rect key="frame" x="174" y="162" width="126" height="14"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" state="on" alignment="center" title="Enter password" id="QMh-qZ-uTa">
+                        <font key="font" metaFont="miniSystem"/>
+                        <color key="textColor" red="0.99999600649999998" green="1" blue="1" alpha="0.7504126320422535" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+                <imageView horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" id="Pz1-BP-N2p">
+                    <rect key="frame" x="225" y="184" width="24" height="24"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="LogOut" id="SNf-YO-ic0"/>
+                </imageView>
+                <slider verticalHuggingPriority="750" misplaced="YES" id="amx-2b-ZUc">
+                    <rect key="frame" x="269" y="290" width="188" height="17"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <sliderCell key="cell" state="on" alignment="left" minValue="1" maxValue="64" doubleValue="10" tickMarkPosition="above" sliderType="linear" id="gtw-qD-85G"/>
+                    <connections>
+                        <action selector="lockTextSlider:" target="-3" id="dCq-0S-Liv"/>
+                    </connections>
+                </slider>
+                <button misplaced="YES" id="E09-sG-1fw">
+                    <rect key="frame" x="269" y="309" width="188" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Custom Lock Message font size" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="HnJ-BZ-ncj">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="label"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="toggleCustomLockSize:" target="-3" id="hZ6-az-ml1"/>
+                    </connections>
+                </button>
+                <button misplaced="YES" id="M5M-Bh-tbC">
+                    <rect key="frame" x="269" y="326" width="188" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Custom Lock Message" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Wls-Bm-FV1">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="label"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="toggleCustomLockText:" target="-3" id="Axj-b0-lvI"/>
+                    </connections>
+                </button>
             </subviews>
             <point key="canvasLocation" x="1524.5" y="448"/>
         </customView>
@@ -479,7 +537,7 @@
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="saveBootScreen:" target="-3" id="xym-E2-vRr"/>
+                        <action selector="saveBootColor:" target="-3" id="Ibd-qu-BV9"/>
                     </connections>
                 </button>
                 <button misplaced="YES" id="msK-N8-KU1">
@@ -530,6 +588,9 @@
                     <rect key="frame" x="321" y="128" width="134" height="25"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
                     <color key="color" red="0.74901960779999999" green="0.74901960779999999" blue="0.74901960779999999" alpha="1" colorSpace="calibratedRGB"/>
+                    <connections>
+                        <action selector="colorPickerChanged:" target="-3" id="qmp-0H-X7Z"/>
+                    </connections>
                 </colorWell>
                 <colorWell misplaced="YES" bordered="NO" enabled="NO" id="WDT-uB-qTN">
                     <rect key="frame" x="20" y="76" width="244" height="219"/>
@@ -633,7 +694,7 @@
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="saveBootScreen:" target="-3" id="RoA-Bm-Yiw"/>
+                        <action selector="saveBootImage:" target="-3" id="cKr-CH-KDE"/>
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" allowsCharacterPickerTouchBarItem="YES" id="yhS-KN-9oB">
@@ -650,11 +711,10 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" alignment="left" id="VMo-EF-iOE">
                         <font key="font" metaFont="label"/>
-                        <string key="title">* Does not work on macOS 10.13 +
+                        <string key="title">* Does not work on APFS
 * Requires reboot to apply
 * Requires admin password to change
-* Image must be .png / .jpg format * Image should be square 90 x 90
-</string>
+* Image must be .png / .jpg format * Image should be small</string>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -671,7 +731,7 @@
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </box>
                 <imageView misplaced="YES" id="P2G-8y-rEx" customClass="BXBootImageView">
-                    <rect key="frame" x="17" y="66" width="441" height="226"/>
+                    <rect key="frame" x="17" y="66" width="441" height="258"/>
                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                     <imageCell key="cell" selectable="YES" editable="YES" alignment="left" imageScaling="proportionallyDown" imageFrameStyle="grayBezel" id="YGX-4h-5mi"/>
                 </imageView>
@@ -716,7 +776,7 @@
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="saveLoginScreen:" target="-3" id="k9L-EV-fNv"/>
+                        <action selector="saveLoginScreen:" target="-3" id="wbV-rH-U6n"/>
                     </connections>
                 </button>
                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" allowsCharacterPickerTouchBarItem="YES" id="KYv-4a-rn2">
@@ -729,13 +789,10 @@
                     </textFieldCell>
                 </textField>
                 <textField verticalHuggingPriority="750" misplaced="YES" id="Io3-wZ-jzc">
-                    <rect key="frame" x="18" y="297" width="439" height="45"/>
+                    <rect key="frame" x="18" y="329" width="439" height="13"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" alignment="left" id="zsi-50-SQF">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" alignment="left" title="* Requires log out to apply" id="zsi-50-SQF">
                         <font key="font" metaFont="label"/>
-                        <string key="title">* Requires reboot to apply
-* Requires admin password to change
-* Image must be .png / .jpg format</string>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
@@ -970,6 +1027,7 @@
         </customView>
     </objects>
     <resources>
+        <image name="LogOut" width="56" height="56"/>
         <image name="NSApplicationIcon" width="128" height="128"/>
         <image name="NSComputer" width="32" height="32"/>
         <image name="NSUserAccounts" width="32" height="32"/>

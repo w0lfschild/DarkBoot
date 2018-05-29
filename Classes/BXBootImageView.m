@@ -24,14 +24,14 @@
 
 @implementation BXBootImageView
 
-//- (void)setImage:(NSImage *)newImage {
-//    if (newImage == nil) {
-//        [(DBApplication*)NSApp showDefaultImage:self];
-//        return;
-//    }
-//
-//    [super setImage:newImage];
-//}
+- (void)setImage:(NSImage *)newImage {
+    [self setImageScaling:NSImageScaleAxesIndependently];
+    if (newImage == nil) {
+        [(DBApplication*)NSApp showDefaultImage:self];
+        return;
+    }
+    [super setImage:newImage];
+}
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender {
     /*------------------------------------------------------
