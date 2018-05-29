@@ -157,7 +157,7 @@ sip_c *sipc;
     [tabBootColor addSubview:bootColorIndicator];
 
     NSColor *bk = [self currentBackgroundColor];
-    if (bk != nil) {
+    if (bk != [[NSColor alloc] init]) {
         [bootColorWell setColor:[self currentBackgroundColor]];
         [bootColorView setColor:[[self currentBackgroundColor] colorUsingColorSpaceName:NSCalibratedRGBColorSpace]];
         NSString *bgs = [self currentBackgroundString];
@@ -174,6 +174,8 @@ sip_c *sipc;
         [bootColorWell setColor:[NSColor grayColor]];
         [defColor setState:NSOnState];
     }
+    
+    [self updateBootColorPreview];
     
     [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(keepThoseAdsFresh) userInfo:nil repeats:YES];
     [NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(bootPreviewAnimate) userInfo:nil repeats:YES];
@@ -445,7 +447,7 @@ sip_c *sipc;
 }
 
 - (NSColor *)currentBackgroundColor {
-    NSColor* result = nil;
+    NSColor* result = [[NSColor alloc] init];
     if ([FileManager fileExistsAtPath:path_bootColorPlist]) {
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithContentsOfFile:path_bootColorPlist];
         NSArray* args = [dict objectForKey:@"ProgramArguments"];
@@ -484,6 +486,8 @@ sip_c *sipc;
     [bargs setObject:colorString atIndexedSubscript:1];
     [dict setObject:bargs forKey:@"ProgramArguments"];
     [dict writeToFile:@"/tmp/BXplist.plist" atomically:YES];
+    
+    [self authorize];
     
     char *tool = "/bin/mv";
     char *args0[] = { "-f", "/tmp/BXplist.plist", (char*)[path_bootColorPlist UTF8String], nil };
@@ -778,12 +782,15 @@ sip_c *sipc;
         if ([FileManager fileExistsAtPath:path_bootColorPlist])
             [self removeBXPlist:nil];
     }
+    
     if ([blkColor state] == NSOnState) {
         [self installColorPlist:@"4d1ede05-38c7-4a6a-9cc6-4bcca8b38c14:DefaultBackgroundColor=%00%00%00"];
     }
+    
     if ([gryColor state] == NSOnState) {
         [self installColorPlist:@"4d1ede05-38c7-4a6a-9cc6-4bcca8b38c14:DefaultBackgroundColor=%99%99%99"];
     }
+    
     if ([clrColor state] == NSOnState) {
         if ([self currentBackgroundColor] != bootColorWell.color) {
             NSString *bootColor = [self hexStringForColor:bootColorWell.color];
