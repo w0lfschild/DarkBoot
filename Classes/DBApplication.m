@@ -70,7 +70,7 @@ sip_c *sipc;
         [lockTextSlider setDoubleValue:8];
     }
     
-    if (![db_LockText isEqualToString:@""]) {
+    if (db_LockText) {
         [lockTextText setStringValue:db_LockText];
     } else {
         [lockTextText setStringValue:@"🍣"];
