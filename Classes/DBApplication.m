@@ -56,6 +56,10 @@ sip_c *sipc;
     
     PFMoveToApplicationsFolderIfNecessary();
     
+    sim = [SIMBLManager sharedInstance];
+    if (!simc) simc = [[sim_c alloc] initWithWindowNibName:@"sim_c"];
+    if (!sipc) sipc = [[sip_c alloc] initWithWindowNibName:@"sip_c"];
+    
     [self dirCheck:db_Folder];
     [self setupBundle];
     
@@ -157,7 +161,7 @@ sip_c *sipc;
     [tabBootColor addSubview:bootColorIndicator];
 
     NSColor *bk = [self currentBackgroundColor];
-    if (bk != [[NSColor alloc] init]) {
+    if (![bk isEqual:NSColor.clearColor]) {
         [bootColorWell setColor:[self currentBackgroundColor]];
         [bootColorView setColor:[[self currentBackgroundColor] colorUsingColorSpaceName:NSCalibratedRGBColorSpace]];
         NSString *bgs = [self currentBackgroundString];
@@ -345,7 +349,11 @@ sip_c *sipc;
 }
 
 - (IBAction)showCurrentBootColor:(id)sender {
-    [bootColorView setColor:[[self currentBackgroundColor] colorUsingColorSpaceName:NSCalibratedRGBColorSpace]];
+    if (![[self currentBackgroundColor] isEqual:NSColor.clearColor]) {
+        [bootColorView setColor:[[self currentBackgroundColor] colorUsingColorSpaceName:NSCalibratedRGBColorSpace]];
+    } else {
+        [bootColorView setColor:[self defaultBootColor]];
+    }
 }
 
 - (IBAction)showDefaultImage:(id)sender {
@@ -447,7 +455,7 @@ sip_c *sipc;
 }
 
 - (NSColor *)currentBackgroundColor {
-    NSColor* result = [[NSColor alloc] init];
+    NSColor* result = NSColor.clearColor;
     if ([FileManager fileExistsAtPath:path_bootColorPlist]) {
         NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithContentsOfFile:path_bootColorPlist];
         NSArray* args = [dict objectForKey:@"ProgramArguments"];
@@ -616,7 +624,7 @@ sip_c *sipc;
         NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithData:[alterED TIFFRepresentation]];
         NSData *pngData = [rep representationUsingType:NSPNGFileType properties:[[NSDictionary alloc] init]];
         [pngData writeToFile:@"/Library/Caches/BootLogo.png" atomically: NO];
-        
+                
 //        // get png data
 //        NSBitmapImageRep *rep = [[NSBitmapImageRep alloc] initWithData:[alterED TIFFRepresentation]];
 //        [rep setProperty:NSImageColorSyncProfileData withValue:nil];
@@ -652,9 +660,19 @@ sip_c *sipc;
 
 - (IBAction)removeBXPlist:(id)sener {
     // Run the tool using the authorization reference
+    [self authorize];
+    
+    char *tool1 = "/usr/sbin/chmod";
+    char *args1[] = { "755", (char*)[path_bootColorPlist UTF8String], nil };
+    [self runAuthorization:tool1 :args1];
+    
+    char *tool0 = "/bin/mv";
+    char *args0[] = { "-f", (char*)[path_bootColorPlist UTF8String], "/tmp/BXplist.plist", nil };
+    [self runAuthorization:tool0 :args0];
+    
     char *tool = "/bin/rm";
-    char *args0[] = { "-f", (char)[path_bootColorPlist UTF8String], nil };
-    [self runAuthorization:tool :args0];
+    char *args[] = { "-f", "/tmp/BXplist.plist", nil };
+    [self runAuthorization:tool :args];
     system("launchctl unload /Library/LaunchDaemons/com.dabrain13.darkboot.plist");
     [bootColorWell setColor:[NSColor grayColor]];
 }
@@ -834,14 +852,23 @@ sip_c *sipc;
             [[g layer] setBackgroundColor:[NSColor colorWithCalibratedRed:0.121f green:0.4375f blue:0.1992f alpha:0.2578f].CGColor];
     }
     
+    if ([sender isEqualTo:viewBootImage]) {
+        Boolean SIPStatus = [sim SIP_enabled];
+        if (SIPStatus) {
+            NSTextView *blocked = [[NSTextView alloc] initWithFrame:tabLockScreen.frame];
+            blocked.alignment = NSCenterTextAlignment;
+            [blocked setBackgroundColor:NSColor.clearColor];
+            [blocked setString:@"\n\n\n\n\n⚠️ Editing this requires System Integrity Protection to be disabled! ⚠️"];
+            [tabMain setSubviews:@[blocked]];
+            [sipc displayInWindow:mainWindow];
+        }
+    }
+    
     if ([sender isEqualTo:viewLockScreen]) {
         if (_needsSIMBL) {
             Boolean SIPStatus = [sim SIP_enabled];
             Boolean needsUpdate = false;
             Boolean systemUpdate = false;
-            sim = [SIMBLManager sharedInstance];
-            if (!simc) simc = [[sim_c alloc] initWithWindowNibName:@"sim_c"];
-            if (!sipc) sipc = [[sip_c alloc] initWithWindowNibName:@"sip_c"];
             
             if ([sim AGENT_needsUpdate])
                 needsUpdate = true;
