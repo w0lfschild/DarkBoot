@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="13196" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="13196"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.12"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,10 +17,17 @@
                 <outlet property="applyButton" destination="u6N-UB-VUY" id="GKG-Po-U3s"/>
                 <outlet property="bgColorWell" destination="485" id="486"/>
                 <outlet property="blkColor" destination="tVH-78-sXa" id="Dax-SH-ylg"/>
+                <outlet property="bootAMFI" destination="PQS-O4-Zec" id="Feb-2M-jJ8"/>
+                <outlet property="bootAudio" destination="hwM-75-Pjc" id="jDu-2I-LSR"/>
+                <outlet property="bootAuto" destination="GFT-QG-JH6" id="wVq-bF-Yqg"/>
+                <outlet property="bootCamshell" destination="jSK-zx-Edv" id="dtm-z9-Q3y"/>
                 <outlet property="bootColorApple" destination="OSB-In-uyg" id="EpY-n5-8fH"/>
                 <outlet property="bootColorView" destination="WDT-uB-qTN" id="QTb-J3-PXA"/>
                 <outlet property="bootColorWell" destination="B3h-gj-ok6" id="Ol7-xF-VCy"/>
                 <outlet property="bootImageView" destination="376" id="tya-0A-rn4"/>
+                <outlet property="bootSafe" destination="e9Z-tb-4wI" id="qij-Hn-wkh"/>
+                <outlet property="bootSingle" destination="0Bf-jD-RwZ" id="UA9-sR-gmE"/>
+                <outlet property="bootVerbose" destination="cvU-YZ-7Y9" id="Fbb-U9-rR9"/>
                 <outlet property="changeLog" destination="I3a-dO-YcZ" id="lvW-nr-yR5"/>
                 <outlet property="clrColor" destination="W8i-bc-jp6" id="vwz-7n-5fu"/>
                 <outlet property="defColor" destination="msK-N8-KU1" id="HZr-2k-UF5"/>
@@ -259,7 +266,7 @@
             </items>
             <point key="canvasLocation" x="834" y="-174"/>
         </menu>
-        <window title="Dark Boot" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" showsToolbarButton="NO" animationBehavior="default" id="371">
+        <window title="Dark Boot" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" animationBehavior="default" id="371">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES"/>
             <windowPositionMask key="initialPositionMask" leftStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="139" y="479" width="600" height="400"/>
@@ -329,7 +336,7 @@
                     <button verticalHuggingPriority="750" misplaced="YES" id="l0O-wg-kJs">
                         <rect key="frame" x="0.0" y="318" width="125" height="24"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                        <buttonCell key="cell" type="smallSquare" title="🖥 Boot Options" bezelStyle="smallSquare" alignment="left" enabled="NO" imageScaling="proportionallyDown" inset="2" id="WDY-1z-4rW">
+                        <buttonCell key="cell" type="smallSquare" title="🖥 Boot Options" bezelStyle="smallSquare" alignment="left" imageScaling="proportionallyDown" inset="2" id="WDY-1z-4rW">
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
@@ -368,6 +375,9 @@
                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES" changeBackground="YES" changeGray="YES"/>
                             <font key="font" metaFont="system"/>
                         </buttonCell>
+                        <connections>
+                            <action selector="visit_ad:" target="-3" id="3fH-ge-CZF"/>
+                        </connections>
                     </button>
                     <button verticalHuggingPriority="750" misplaced="YES" id="u6N-UB-VUY">
                         <rect key="frame" x="0.0" y="21" width="125" height="24"/>
@@ -627,7 +637,7 @@
                     <imageCell key="cell" refusesFirstResponder="YES" alignment="left" imageScaling="proportionallyDown" image="apple" id="92H-6X-wuM"/>
                 </imageView>
             </subviews>
-            <point key="canvasLocation" x="965.5" y="448"/>
+            <point key="canvasLocation" x="967" y="448"/>
         </customView>
         <customView misplaced="YES" id="kOE-cS-T1Z" userLabel="Tab Boot Image">
             <rect key="frame" x="0.0" y="0.0" width="475" height="400"/>
@@ -909,19 +919,19 @@
                             <textView editable="NO" drawsBackground="NO" importsGraphics="NO" verticallyResizable="YES" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" spellingCorrection="YES" smartInsertDelete="YES" id="I3a-dO-YcZ">
                                 <rect key="frame" x="0.0" y="0.0" width="450" height="200"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <size key="minSize" width="450" height="200"/>
                                 <size key="maxSize" width="624" height="10000000"/>
                                 <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                             </textView>
                         </subviews>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </clipView>
-                    <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="sHc-sV-3W8">
+                    <scroller key="horizontalScroller" hidden="YES" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="sHc-sV-3W8">
                         <rect key="frame" x="-100" y="-100" width="87" height="18"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
-                    <scroller key="verticalScroller" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="caY-5a-PU4">
+                    <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="NO" id="caY-5a-PU4">
                         <rect key="frame" x="434" y="0.0" width="16" height="200"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
@@ -970,39 +980,6 @@
                     <rect key="frame" x="0.0" y="58" width="475" height="5"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                 </box>
-                <button verticalHuggingPriority="750" id="D3m-B5-fNM">
-                    <rect key="frame" x="14" y="12" width="81" height="32"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="push" title="Current" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="A5R-dn-x7R">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="showCurrentLogin:" target="-3" id="TA4-U4-Yuf"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" id="IEf-kb-tSu">
-                    <rect key="frame" x="95" y="12" width="81" height="32"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="push" title="Default" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="GQl-Ez-A6q">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="showDefaultLogin:" target="-3" id="8td-Se-w9T"/>
-                    </connections>
-                </button>
-                <button verticalHuggingPriority="750" id="2gk-2K-UUM">
-                    <rect key="frame" x="176" y="12" width="81" height="32"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="push" title="Select" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="ArC-lx-hFf">
-                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <font key="font" metaFont="system"/>
-                    </buttonCell>
-                    <connections>
-                        <action selector="selectImage:" target="-3" id="BXq-sF-dNY"/>
-                    </connections>
-                </button>
                 <button toolTip="Saves the Boot Image" verticalHuggingPriority="750" id="doz-0j-2fe">
                     <rect key="frame" x="265" y="13" width="196" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxY="YES"/>
@@ -1011,22 +988,87 @@
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="saveChanges:" target="-3" id="pkf-zA-YCi"/>
+                        <action selector="applyBootOptions:" target="-3" id="eIw-eW-Nvx"/>
                     </connections>
                 </button>
                 <textField verticalHuggingPriority="750" id="l5r-Oo-Ie2">
                     <rect key="frame" x="18" y="316" width="439" height="26"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" alignment="left" id="zWD-NR-zcn">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" sendsActionOnEndEditing="YES" state="on" alignment="left" title="* Applies next boot * Requires admin password to change" id="zWD-NR-zcn">
                         <font key="font" metaFont="label"/>
-                        <string key="title">* Applies instantly
-* Image must be .png / .jpg / .gif format</string>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                         <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
                     </textFieldCell>
                 </textField>
+                <button verticalHuggingPriority="750" misplaced="YES" id="PQS-O4-Zec">
+                    <rect key="frame" x="18" y="292" width="439" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Disable Apple Mobile File Integrity" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Wf0-5E-QV5">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <button verticalHuggingPriority="750" misplaced="YES" id="cvU-YZ-7Y9">
+                    <rect key="frame" x="18" y="272" width="439" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Verbose Boot" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="878-2x-Z6m">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <button verticalHuggingPriority="750" misplaced="YES" id="e9Z-tb-4wI">
+                    <rect key="frame" x="18" y="252" width="439" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Safe Mode Boot" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="k3N-0P-dEn">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <button verticalHuggingPriority="750" misplaced="YES" id="0Bf-jD-RwZ">
+                    <rect key="frame" x="18" y="232" width="439" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Single User mode" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="CKJ-iQ-GlG">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <button verticalHuggingPriority="750" misplaced="YES" id="jSK-zx-Edv">
+                    <rect key="frame" x="18" y="212" width="439" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Clamshell mode" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="26z-Cu-OO9">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <button verticalHuggingPriority="750" misplaced="YES" id="hwM-75-Pjc">
+                    <rect key="frame" x="18" y="192" width="439" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Boot Sound" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="dHj-x2-0k8">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <button verticalHuggingPriority="750" misplaced="YES" id="GFT-QG-JH6">
+                    <rect key="frame" x="18" y="172" width="439" height="18"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="check" title="Auto Boot (MacBook)" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Olm-yN-B5q">
+                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                </button>
+                <button verticalHuggingPriority="750" misplaced="YES" id="IEf-kb-tSu">
+                    <rect key="frame" x="14" y="13" width="81" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Default" bezelStyle="rounded" alignment="center" enabled="NO" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="GQl-Ez-A6q">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                    </buttonCell>
+                    <connections>
+                        <action selector="showDefaultLogin:" target="-3" id="8td-Se-w9T"/>
+                    </connections>
+                </button>
             </subviews>
-            <point key="canvasLocation" x="1525" y="920"/>
+            <point key="canvasLocation" x="1524.5" y="912"/>
         </customView>
     </objects>
     <resources>

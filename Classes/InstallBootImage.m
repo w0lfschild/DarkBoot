@@ -48,11 +48,10 @@ BOOL InstallBootImage(int color, NSString *path) {
 	// read property list
 	NSData *plistData = [NSData dataWithContentsOfFile:bootPlistPath];
 	if (plistData == nil) return NO;
-	NSString *err = nil;
-	NSMutableDictionary *bootPlist = [NSPropertyListSerialization propertyListFromData:plistData mutabilityOption:NSPropertyListMutableContainersAndLeaves format:NULL errorDescription:&err];
+    NSError *err;
+    NSMutableDictionary *bootPlist = [NSPropertyListSerialization propertyListWithData:plistData options:NSPropertyListMutableContainersAndLeaves format:NULL error:&err];
 	if (bootPlist == nil) {
-		NSLog(@"propertyListFromData: %@", err);
-		[err release];
+		NSLog(@"propertyListFromData: %@", err.localizedDescription);
 		return NO;
 	}
 	
@@ -79,10 +78,9 @@ BOOL InstallBootImage(int color, NSString *path) {
 	}
 	
 	// write new file
-	plistData = [NSPropertyListSerialization dataFromPropertyList:bootPlist format:NSPropertyListXMLFormat_v1_0 errorDescription:&err];
+    plistData = [NSPropertyListSerialization dataWithPropertyList:bootPlist format:NSPropertyListXMLFormat_v1_0 options:NULL error:&err];
 	if (plistData == nil) {
-		NSLog(@"dataFromPropertyList: %@", err);
-		[err release];
+		NSLog(@"dataFromPropertyList: %@", err.localizedDescription);
 		return NO;
 	}
 	if (![plistData writeToFile:bootPlistPath atomically:YES]) {

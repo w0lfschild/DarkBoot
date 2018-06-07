@@ -31,17 +31,13 @@
     
     // Application views
     IBOutlet NSView *tabMain;
-    
     IBOutlet NSView *tabBootColor;
     IBOutlet NSView *tabBootImage;
     IBOutlet NSView *tabBootOptions;
-
     IBOutlet NSView *tabLoginScreen;
     IBOutlet NSView *tabLockScreen;
-    
     IBOutlet NSView *tabAbout;
     IBOutlet NSView *tabPreferences;
-    
     
     // About view
     IBOutlet NSTextField *appName;
@@ -56,7 +52,15 @@
     IBOutlet NSButton *showEULA;
     IBOutlet NSTextView *changeLog;
     
-    
+    // Boot options
+    IBOutlet NSButton *bootAMFI;
+    IBOutlet NSButton *bootAuto;
+    IBOutlet NSButton *bootAudio;
+    IBOutlet NSButton *bootSafe;
+    IBOutlet NSButton *bootVerbose;
+    IBOutlet NSButton *bootCamshell;
+    IBOutlet NSButton *bootSingle;
+
     // Other items
     IBOutlet NSWindow *mainWindow;
     IBOutlet AYProgressIndicator *bootColorIndicator;

@@ -179,9 +179,9 @@
 			isa = PBXGroup;
 			children = (
 				FB0A272720BCA1DD0066C021 /* FConvenience.h */,
-				FB26E47D20BCE91900F31F08 /* DBLoginWindowDYLIB */,
+				FB45020220B0DF2000BB77CB /* DBLoginWindowBundle */,
+				FB26E47D20BCE91900F31F08 /* DBLoginWindowDylib */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
-				FB45020220B0DF2000BB77CB /* DBLoginWindow */,
 				29B97315FDCFA39411CA2CEA /* InstallBootImage */,
 				FB45021220B0E01700BB77CB /* Dark Boot */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
@@ -243,16 +243,16 @@
 			name = Info;
 			sourceTree = "<group>";
 		};
-		FB26E47D20BCE91900F31F08 /* DBLoginWindowDYLIB */ = {
+		FB26E47D20BCE91900F31F08 /* DBLoginWindowDylib */ = {
 			isa = PBXGroup;
 			children = (
 				FB26E47E20BCE91900F31F08 /* DBLoginWindowDYLIB.h */,
 				FB26E48020BCE91900F31F08 /* DBLoginWindowDYLIB.m */,
 			);
-			path = DBLoginWindowDYLIB;
+			path = DBLoginWindowDylib;
 			sourceTree = "<group>";
 		};
-		FB45020220B0DF2000BB77CB /* DBLoginWindow */ = {
+		FB45020220B0DF2000BB77CB /* DBLoginWindowBundle */ = {
 			isa = PBXGroup;
 			children = (
 				FB45020620B0DF2000BB77CB /* DBLoginWindow.h */,
@@ -260,7 +260,7 @@
 				FB45020920B0DF2000BB77CB /* ZKSwizzle */,
 				FB45020320B0DF2000BB77CB /* Supporting Files */,
 			);
-			path = DBLoginWindow;
+			path = DBLoginWindowBundle;
 			sourceTree = "<group>";
 		};
 		FB45020320B0DF2000BB77CB /* Supporting Files */ = {
@@ -383,7 +383,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0900;
+				LastUpgradeCheck = 1000;
 				TargetAttributes = {
 					28D089AB11A5DC3C001B092C = {
 						DevelopmentTeam = EX596BNL45;
@@ -396,7 +396,7 @@
 					FB26E47B20BCE91900F31F08 = {
 						CreatedOnToolsVersion = 9.0.1;
 						DevelopmentTeam = EX596BNL45;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					FB4501FC20B0DF2000BB77CB = {
 						CreatedOnToolsVersion = 9.0.1;
@@ -520,6 +520,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COPY_PHASE_STRIP = NO;
 				DEVELOPMENT_TEAM = EX596BNL45;
@@ -547,6 +548,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_WEAK = YES;
 				CODE_SIGN_IDENTITY = "Developer ID Application";
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -691,8 +693,8 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = EX596BNL45;
@@ -717,6 +719,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 			};
 			name = Debug;
@@ -750,8 +753,8 @@
 				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "Mac Developer";
-				CODE_SIGN_STYLE = Automatic;
+				CODE_SIGN_IDENTITY = "Developer ID Application";
+				CODE_SIGN_STYLE = Manual;
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = EX596BNL45;
@@ -771,6 +774,7 @@
 				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SDKROOT = macosx;
 			};
 			name = Release;

@@ -40,6 +40,26 @@ sip_c *sipc;
 
 @implementation DBApplication
 
+- (NSString*)runCommand:(NSString*)command {
+    NSTask *task = [[NSTask alloc] init];
+    [task setLaunchPath:@"/bin/sh"];
+    
+    NSArray *arguments = [NSArray arrayWithObjects:@"-c", [NSString stringWithFormat:@"%@", command], nil];
+    [task setArguments:arguments];
+    
+    NSPipe *pipe = [NSPipe pipe];
+    [task setStandardOutput:pipe];
+    
+    NSFileHandle *file = [pipe fileHandleForReading];
+    
+    [task launch];
+    
+    NSData *data = [file readDataToEndOfFile];
+    
+    NSString *output = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    return output;
+}
+
 - (void)awakeFromNib {
 	[self showCurrentImage:self];
     [self showCurrentLock:self];
@@ -180,6 +200,8 @@ sip_c *sipc;
     }
     
     [self updateBootColorPreview];
+    [self aboutInfo:showChanges];
+    [self getBootOptions];
     
     [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(keepThoseAdsFresh) userInfo:nil repeats:YES];
     [NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(bootPreviewAnimate) userInfo:nil repeats:YES];
@@ -519,14 +541,17 @@ sip_c *sipc;
         [Defaults setObject:[NSNumber numberWithBool:true] forKey:@"custom_anim"];
 
         if ([FileManager isReadableFileAtPath:lockImageView.path]) {
+            
+            NSLog(@"%@", lockImageView.path);
+            
             NSString *ext = lockImageView.path.pathExtension;
 
             for (NSString *ext in @[@"jpg", @"png", @"gif"]) {
                 if ([FileManager fileExistsAtPath:[db_LockFile stringByAppendingPathExtension:ext]])
-                    [FileManager removeItemAtPath:[db_LockFile stringByAppendingPathExtension:ext]
-                                                               error:nil];
+                    if (![[db_LockFile stringByAppendingPathExtension:ext] isEqualToString:lockImageView.path])
+                        [FileManager removeItemAtPath:[db_LockFile stringByAppendingPathExtension:ext] error:nil];
             }
-            
+
             NSError *err;
             [FileManager copyItemAtURL:[NSURL fileURLWithPath:lockImageView.path]
                                                     toURL:[NSURL fileURLWithPath:[db_LockFile stringByAppendingPathExtension:ext]]
@@ -900,23 +925,182 @@ sip_c *sipc;
 }
 
 - (IBAction)aboutInfo:(id)sender {
-    NSString *rsc = @"";
-    if ([sender isEqualTo:showChanges]) rsc=@"Changelog";
-    if ([sender isEqualTo:showCredits]) rsc=@"Credits";
-    if ([sender isEqualTo:showEULA]) rsc=@"EULA";
-    [changeLog setEditable:true];
-    [[changeLog textStorage] setAttributedString:[[NSAttributedString alloc] initWithPath:[[NSBundle mainBundle] pathForResource:rsc ofType:@"rtf"] documentAttributes:nil]];
-    [changeLog selectAll:self];
-    [changeLog alignLeft:nil];
-    if ([sender isEqualTo:showCredits]) [changeLog alignCenter:nil];
-    [changeLog setSelectedRange:NSMakeRange(0,0)];
-    [changeLog setEditable:false];
-    [NSAnimationContext beginGrouping];
-    NSClipView* clipView = [[changeLog enclosingScrollView] contentView];
-    NSPoint newOrigin = [clipView bounds].origin;
-    newOrigin.y = 0;
-    [[clipView animator] setBoundsOrigin:newOrigin];
-    [NSAnimationContext endGrouping];
+    if ([sender isEqualTo:showChanges]) {
+        [changeLog setEditable:true];
+        [[changeLog textStorage] setAttributedString:[[NSAttributedString alloc] initWithPath:[[NSBundle mainBundle] pathForResource:@"Changelog" ofType:@"rtf"] documentAttributes:nil]];
+        [changeLog selectAll:self];
+        [changeLog alignLeft:nil];
+        [changeLog setSelectedRange:NSMakeRange(0,0)];
+        [changeLog setEditable:false];
+        
+        [NSAnimationContext beginGrouping];
+        NSClipView* clipView = [[changeLog enclosingScrollView] contentView];
+        NSPoint newOrigin = [clipView bounds].origin;
+        newOrigin.y = 0;
+        [[clipView animator] setBoundsOrigin:newOrigin];
+        [NSAnimationContext endGrouping];
+    }
+    if ([sender isEqualTo:showCredits]) {
+        [changeLog setEditable:true];
+        [[changeLog textStorage] setAttributedString:[[NSAttributedString alloc] initWithPath:[[NSBundle mainBundle] pathForResource:@"Credits" ofType:@"rtf"] documentAttributes:nil]];
+        [changeLog selectAll:self];
+        [changeLog alignCenter:nil];
+        [changeLog setSelectedRange:NSMakeRange(0,0)];
+        [changeLog setEditable:false];
+    }
+    if ([sender isEqualTo:showEULA]) {
+        NSMutableAttributedString *mutableAttString = [[NSMutableAttributedString alloc] init];
+//        NSArray *licenseFiles = [[NSArray alloc] initWithObjects:@"", nil];
+//
+        NSAttributedString *newAttString = nil;
+//
+//        for (NSString *str in licenseFiles) {
+//            NSString *fileName = [NSString stringWithFormat:@"%@_LICENSE", str];
+//            newAttString = [[NSAttributedString alloc] initWithPath:[[NSBundle mainBundle] pathForResource:fileName ofType:@"txt"] documentAttributes:nil];
+//            [mutableAttString appendAttributedString:newAttString];
+//        }
+        
+        newAttString = [[NSAttributedString alloc] initWithPath:[[NSBundle mainBundle] pathForResource:@"EULA" ofType:@"rtf"] documentAttributes:nil];
+        [mutableAttString appendAttributedString:newAttString];
+        
+        [[changeLog textStorage] setAttributedString:mutableAttString];
+        
+        [NSAnimationContext beginGrouping];
+        NSClipView* clipView = [[changeLog enclosingScrollView] contentView];
+        NSPoint newOrigin = [clipView bounds].origin;
+        newOrigin.y = 0;
+        [[clipView animator] setBoundsOrigin:newOrigin];
+        [NSAnimationContext endGrouping];
+    }
+    NSString *osxMode = [[NSUserDefaults standardUserDefaults] stringForKey:@"AppleInterfaceStyle"];
+    if (![mainWindow.appearance.name isEqualToString:NSAppearanceNameAqua]) {
+        if ([osxMode isEqualToString:@"Dark"]) {
+            [changeLog setTextColor:[NSColor whiteColor]];
+        } else {
+            [changeLog setTextColor:[NSColor blackColor]];
+        }
+    }
+}
+
+- (void)getBootOptions {
+    NSString *bootArgs = [self runCommand:@"nvram -p | grep boot-args"];
+    bootArgs = [bootArgs stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    if (bootArgs.length > 10) bootArgs = [bootArgs substringFromIndex:10];
+    NSLog(@"%@", bootArgs);
+    bootAMFI.state = [bootArgs containsString:@"amfi_get_out_of_my_way=1"];
+    bootCamshell.state = [bootArgs containsString:@"iog=0x0"];
+    bootVerbose.state = [bootArgs containsString:@"-v"];
+    bootSingle.state = [bootArgs containsString:@"-s"];
+    bootSafe.state = [bootArgs containsString:@"-x"];
+    
+    bootArgs = [self runCommand:@"nvram -p | grep AutoBoot"];
+    bootAudio.state = [bootArgs containsString:@"%03"];
+    
+    bootArgs = [self runCommand:@"nvram -p | grep BootAudio"];
+    bootAuto.state = [bootArgs containsString:@"%01"];
+}
+
+- (IBAction)applyBootOptions:(id)sender {
+    [self authorize];
+    char *tool = "/usr/sbin/nvram";
+    
+    NSString *bootArgs = [self runCommand:@"nvram -p | grep boot-args"];
+    bootArgs = [bootArgs stringByReplacingOccurrencesOfString:@"\n" withString:@""];
+    if (bootArgs.length > 10)
+        bootArgs = [bootArgs substringFromIndex:10];
+    else
+        bootArgs = @"";
+    NSLog(@"%@", bootArgs);
+    
+    Boolean *currentArg = false;
+    
+    // AMFI
+    currentArg = [bootArgs containsString:@"amfi_get_out_of_my_way=1"];
+    if (bootAMFI.state == NSOnState) {
+        if (!currentArg) bootArgs = [NSString stringWithFormat:@"%@ amfi_get_out_of_my_way=1", bootArgs];
+    } else {
+        if (currentArg) bootArgs = [bootArgs stringByReplacingOccurrencesOfString:@"amfi_get_out_of_my_way=1" withString:@""];
+    }
+    
+    // CamShell
+    currentArg = [bootArgs containsString:@"iog=0x0"];
+    if (bootCamshell.state == NSOnState) {
+        if (!currentArg) bootArgs = [NSString stringWithFormat:@"%@ iog=0x0", bootArgs];
+    } else {
+        if (currentArg) bootArgs = [bootArgs stringByReplacingOccurrencesOfString:@"iog=0x0" withString:@""];
+    }
+    
+    // Verbose
+    currentArg = [bootArgs containsString:@"-v"];
+    if (bootVerbose.state == NSOnState) {
+        if (!currentArg) bootArgs = [NSString stringWithFormat:@"%@ -v", bootArgs];
+    } else {
+        if (currentArg) bootArgs = [bootArgs stringByReplacingOccurrencesOfString:@"-v" withString:@""];
+    }
+    
+    // Single
+    currentArg = [bootArgs containsString:@"-s"];
+    if (bootSingle.state == NSOnState) {
+        if (!currentArg) bootArgs = [NSString stringWithFormat:@"%@ -s", bootArgs];
+    } else {
+        if (currentArg) bootArgs = [bootArgs stringByReplacingOccurrencesOfString:@"-s" withString:@""];
+    }
+    
+    // Safe
+    currentArg = [bootArgs containsString:@"-x"];
+    if (bootSafe.state == NSOnState) {
+        if (!currentArg) bootArgs = [NSString stringWithFormat:@"%@ -x", bootArgs];
+    } else {
+        if (currentArg) bootArgs = [bootArgs stringByReplacingOccurrencesOfString:@"-x" withString:@""];
+    }
+    
+    // Remove extra spaces
+    NSError *error = nil;
+    NSRegularExpression *regex = [NSRegularExpression regularExpressionWithPattern:@"  +" options:NSRegularExpressionCaseInsensitive error:&error];
+    bootArgs = [regex stringByReplacingMatchesInString:bootArgs options:0 range:NSMakeRange(0, [bootArgs length]) withTemplate:@" "];
+    bootArgs = [NSString stringWithFormat:@"boot-args=%@", bootArgs];
+    char *args00[] = { (char*)[bootArgs UTF8String], nil };
+    [self runAuthorization:tool :args00];
+    NSLog(@"%@", bootArgs);
+    
+    // Auto
+    bootArgs = [self runCommand:@"nvram -p | grep AutoBoot"];
+    if (bootAuto.state == NSOnState) {
+        bootArgs = @"AutoBoot=%03";
+    } else {
+        bootArgs = @"AutoBoot=%00";
+    }
+    char *args01[] = { (char*)[bootArgs UTF8String], nil };
+    [self runAuthorization:tool :args01];
+    NSLog(@"%@", bootArgs);
+
+    
+    // Audio
+    bootArgs = [self runCommand:@"nvram -p | grep BootAudio"];
+    currentArg = [bootArgs containsString:@"%01"];
+    if (bootAudio.state == NSOnState) {
+        bootArgs = @"BootAudio=%01";
+    } else {
+        bootArgs = @"BootAudio=%00";
+    }
+    char *args02[] = { (char*)[bootArgs UTF8String], nil };
+    [self runAuthorization:tool :args02];
+    NSLog(@"%@", bootArgs);
+    
+    /*
+     sudo nvram AutoBoot=%00    no auto
+     sudo nvram AutoBoot=%03
+     
+     sudo nvram BootAudio=%00   no audio
+     sudo nvram BootAudio=%01
+     
+     sudo nvram boot-args="-v"  verbose
+     
+     sudo nvram boot-args="-x"  safe
+     
+     sudo nvram boot-args="-s"  single
+     */
+    
 }
 
 - (IBAction)selectImage:(id)sender {
@@ -1086,6 +1270,10 @@ sip_c *sipc;
             }
         }
     });
+}
+
+- (IBAction)visit_ad:(id)sender {
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:_adURL]];
 }
 
 - (void)reportIssue {
