@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>Label</key>
-	<string>com.dabrain13.darkboot</string>
+	<string>com.w0lf.dbcolor</string>
 	<key>ProgramArguments</key>
 	<array>
 		<string>/usr/sbin/nvram</string>

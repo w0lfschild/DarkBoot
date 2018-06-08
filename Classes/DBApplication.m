@@ -7,6 +7,7 @@
 @import CoreImage;
 @import SIMBLManager;
 @import CoreGraphics;
+@import MachO;
 
 #import "DBApplication.h"
 #import "FConvenience.h"
@@ -20,7 +21,9 @@
 @import AppKit;
 
 static NSString *path_bootImagePlist    = @"/Library/Preferences/SystemConfiguration/com.apple.Boot.plist";
-static NSString *path_bootColorPlist    = @"/Library/LaunchDaemons/com.dabrain13.darkboot.plist";
+static NSString *path_bootColorPlist    = @"/Library/LaunchDaemons/com.w0lf.dbcolor.plist";
+static NSString *path__injectorPlist    = @"/Library/LaunchDaemons/com.w0lf.dblockinjector.plist";
+static NSString *path__osxinj           = @"/Library/Caches/DarkBoot/osxinj";
 static NSString *path_loginImage        = @"/Library/Caches/com.apple.desktop.admin.png";
 static NSString *DBErrorDomain          = @"Dark Boot";
 
@@ -82,6 +85,7 @@ sip_c *sipc;
     
     [self dirCheck:db_Folder];
     [self setupBundle];
+    [self setupDylib];
     
     if ([db_LockSize doubleValue] > 0) {
         [lockTextSlider setDoubleValue:[db_LockSize doubleValue]];
@@ -509,7 +513,7 @@ sip_c *sipc;
 }
 
 - (void)installColorPlist:(NSString*)colorString {
-    NSString* BXPlist = [[NSBundle mainBundle] pathForResource:@"com.dabrain13.darkboot" ofType:@"plist"];
+    NSString* BXPlist = [[NSBundle mainBundle] pathForResource:@"com.w0lf.dbcolor" ofType:@"plist"];
     
     NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithContentsOfFile:BXPlist];
     NSMutableArray* bargs = [dict objectForKey:@"ProgramArguments"];
@@ -527,8 +531,8 @@ sip_c *sipc;
     char *args1[] = { "root:admin", (char*)[path_bootColorPlist UTF8String], nil };
     [self runAuthorization:tool :args1];
     
-    system("launchctl unload /Library/LaunchDaemons/com.dabrain13.darkboot.plist");
-    system("launchctl load /Library/LaunchDaemons/com.dabrain13.darkboot.plist");
+    system("launchctl unload /Library/LaunchDaemons/com.w0lf.dbcolor.plist");
+    system("launchctl load /Library/LaunchDaemons/com.w0lf.dbcolor.plist");
 }
 
 - (void)installLockImage:(NSImage*)img {
@@ -698,7 +702,7 @@ sip_c *sipc;
     char *tool = "/bin/rm";
     char *args[] = { "-f", "/tmp/BXplist.plist", nil };
     [self runAuthorization:tool :args];
-    system("launchctl unload /Library/LaunchDaemons/com.dabrain13.darkboot.plist");
+    system("launchctl unload /Library/LaunchDaemons/com.w0lf.dbcolor.plist");
     [bootColorWell setColor:[NSColor grayColor]];
 }
 
@@ -1137,32 +1141,103 @@ sip_c *sipc;
             NSLog(@"Dark Boot : Error : Create folder failed %@", directory);
 }
 
-- (void)setupBundle {
-    // Directory check
-    [self dirCheck:@"/Library/Application Support/SIMBL/Plugins/"];
+- (void)mergeContentsOfPath:(NSString *)srcDir intoPath:(NSString *)dstDir error:(NSError**)err {
+    
+    NSLog(@"- mergeContentsOfPath: %@\n intoPath: %@", srcDir, dstDir);
+    
+    NSFileManager *fm = [NSFileManager defaultManager];
+    NSDirectoryEnumerator *srcDirEnum = [fm enumeratorAtPath:srcDir];
+    NSString *subPath;
+    while ((subPath = [srcDirEnum nextObject])) {
+        
+        NSLog(@" subPath: %@", subPath);
+        NSString *srcFullPath =  [srcDir stringByAppendingPathComponent:subPath];
+        NSString *potentialDstPath = [dstDir stringByAppendingPathComponent:subPath];
+        
+        // Need to also check if file exists because if it doesn't, value of `isDirectory` is undefined.
+        BOOL isDirectory = ([[NSFileManager defaultManager] fileExistsAtPath:srcFullPath isDirectory:&isDirectory] && isDirectory);
+        
+        // Create directory, or delete existing file and move file to destination
+        if (isDirectory) {
+            NSLog(@"   create directory");
+            [fm createDirectoryAtPath:potentialDstPath withIntermediateDirectories:YES attributes:nil error:err];
+            if (err && *err) {
+                NSLog(@"ERROR: %@", *err);
+                return;
+            }
+        }
+        else {
+            if ([fm fileExistsAtPath:potentialDstPath]) {
+                NSLog(@"   removeItemAtPath");
+                [fm removeItemAtPath:potentialDstPath error:err];
+                if (err && *err) {
+                    NSLog(@"ERROR: %@", *err);
+                    return;
+                }
+            }
+            
+            NSLog(@"   copyItemAtPath");
+//            [fm moveItemAtPath:srcFullPath toPath:potentialDstPath error:err];
+            [fm copyItemAtPath:srcFullPath toPath:potentialDstPath error:err];
+            if (err && *err) {
+                NSLog(@"ERROR: %@", *err);
+                return;
+            }
+        }
+    }
+}
+
+- (void)setupDylib {
+    [self dirCheck:@"/Library/Caches/DarkBoot"];
+    
+    if (![FileManager fileExistsAtPath:path__injectorPlist]) {
+        NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"com.w0lf.dblockinjector"
+                                                                                                                      ofType:@"plist"]];
+        [dict writeToFile:@"/tmp/com.w0lf.dblockinjector.plist" atomically:YES];
+        [self authorize];
+        
+        char *tool = "/bin/mv";
+        char *args0[] = { "-f", "/tmp/com.w0lf.dblockinjector.plist", (char*)[path__injectorPlist UTF8String], nil };
+        [self runAuthorization:tool :args0];
+        
+        tool = "/usr/sbin/chown";
+        char *args1[] = { "root:admin", (char*)[path__injectorPlist UTF8String], nil };
+        [self runAuthorization:tool :args1];
+        
+        system("launchctl unload /Library/LaunchDaemons/com.w0lf.dblockinjector.plist");
+        system("launchctl load /Library/LaunchDaemons/com.w0lf.dblockinjector.plist");
+    }
     
     NSError *error;
-    NSString *srcPath = [[NSBundle mainBundle] pathForResource:@"DBLoginWindow" ofType:@"bundle"];
-    NSString *dstPath = @"/Library/Application Support/SIMBL/Plugins/DBLoginWindow.bundle";
-    NSString *srcBndl = [[NSBundle mainBundle] pathForResource:@"DBLoginWindow.bundle/Contents/Info" ofType:@"plist"];
-    NSString *dstBndl = @"/Library/Application Support/SIMBL/Plugins/DBLoginWindow.bundle/Contents/Info.plist";
-    
-    DLog(@"Dark Boot : Checking bundle...");
-    if ([FileManager fileExistsAtPath:dstBndl]){
-        NSString *srcVer = [[[NSMutableDictionary alloc] initWithContentsOfFile:srcBndl] objectForKey:@"CFBundleVersion"];
-        NSString *dstVer = [[[NSMutableDictionary alloc] initWithContentsOfFile:dstBndl] objectForKey:@"CFBundleVersion"];
-        if (![srcVer isEqual:dstVer] && ![srcPath isEqualToString:@""]) {
-            DLog(@"Dark Boot : Updating bundle... Destination: %@ > Source: %@", srcVer, dstVer);
-            [FileManager removeItemAtPath:@"/tmp/DBLoginWindow.bundle" error:&error];
-            [FileManager copyItemAtPath:srcPath toPath:@"/tmp/DBLoginWindow.bundle" error:&error];
-            [FileManager replaceItemAtURL:[NSURL fileURLWithPath:dstPath] withItemAtURL:[NSURL fileURLWithPath:@"/tmp/DBLoginWindow.bundle"] backupItemName:nil options:NSFileManagerItemReplacementUsingNewMetadataOnly resultingItemURL:nil error:&error];
-        } else {
-            DLog(@"Dark Boot : Bundle is up to date...");
-        }
-    } else {
-        DLog(@"Dark Boot : Installing bundle... %@", srcPath);
-        [FileManager copyItemAtPath:srcPath toPath:dstPath error:&error];
-    }
+    [self mergeContentsOfPath:[[NSBundle mainBundle] pathForResource:@"osxinj" ofType:@""] intoPath:@"/Library/Caches/DarkBoot" error:&error];
+}
+
+- (void)setupBundle {
+    // Directory check
+//    [self dirCheck:@"/Library/Application Support/SIMBL/Plugins/"];
+//    
+//    NSError *error;
+//    NSString *srcPath = [[NSBundle mainBundle] pathForResource:@"DBLoginWindow" ofType:@"bundle"];
+//    NSString *dstPath = @"/Library/Application Support/SIMBL/Plugins/DBLoginWindow.bundle";
+//    NSString *srcBndl = [[NSBundle mainBundle] pathForResource:@"DBLoginWindow.bundle/Contents/Info" ofType:@"plist"];
+//    NSString *dstBndl = @"/Library/Application Support/SIMBL/Plugins/DBLoginWindow.bundle/Contents/Info.plist";
+//    
+//    DLog(@"Dark Boot : Checking bundle...");
+//    if ([FileManager fileExistsAtPath:dstBndl]){
+//        NSString *srcVer = [[[NSMutableDictionary alloc] initWithContentsOfFile:srcBndl] objectForKey:@"CFBundleVersion"];
+//        NSString *dstVer = [[[NSMutableDictionary alloc] initWithContentsOfFile:dstBndl] objectForKey:@"CFBundleVersion"];
+//        if (![srcVer isEqual:dstVer] && ![srcPath isEqualToString:@""]) {
+//            DLog(@"Dark Boot : Updating bundle... Destination: %@ > Source: %@", srcVer, dstVer);
+//            [FileManager removeItemAtPath:@"/tmp/DBLoginWindow.bundle" error:&error];
+//            [FileManager copyItemAtPath:srcPath toPath:@"/tmp/DBLoginWindow.bundle" error:&error];
+//            [FileManager replaceItemAtURL:[NSURL fileURLWithPath:dstPath] withItemAtURL:[NSURL fileURLWithPath:@"/tmp/DBLoginWindow.bundle"] backupItemName:nil options:NSFileManagerItemReplacementUsingNewMetadataOnly resultingItemURL:nil error:&error];
+//        } else {
+//            DLog(@"Dark Boot : Bundle is up to date...");
+//        }
+//    } else {
+//        DLog(@"Dark Boot : Installing bundle... %@", srcPath);
+//        [FileManager copyItemAtPath:srcPath toPath:dstPath error:&error];
+//    }
 }
 
 
