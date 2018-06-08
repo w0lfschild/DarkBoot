@@ -14,8 +14,8 @@
 void install(void) __attribute__ ((constructor));
 
 void redirectConsoleLogToDocumentFolder() {
-    NSString *logPath = [@"/Volumes/Macintosh HD/Users/w0lf/Desktop/" stringByAppendingPathComponent:@"console.txt"];
-    freopen([logPath fileSystemRepresentation],"a+",stderr);
+    system("touch /tmp/BDLoginWindow.log");
+    freopen([@"/tmp/BDLoginWindow.log" fileSystemRepresentation],"a+",stderr);
 }
 
 void install() {
@@ -23,22 +23,23 @@ void install() {
     
     NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
     [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    // or @"yyyy-MM-dd hh:mm:ss a" if you prefer the time with AM/PM
     NSLog(@"%@",[dateFormatter stringFromDate:[NSDate date]]);
 
-    NSUInteger osx_ver = NSProcessInfo.processInfo.operatingSystemVersion.minorVersion;
-    if (osx_ver < 14) {
-        ZKSwizzle(wb_LUIWindowController, LUIWindowController);
-        ZKSwizzle(wb_LUIGoodSamaritanMessageView, LUIGoodSamaritanMessageView);
-    } else {
-        ZKSwizzle(wb_LUI2Window, LUI2Window);
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        NSUInteger osx_ver = NSProcessInfo.processInfo.operatingSystemVersion.minorVersion;
+        if (osx_ver < 14) {
+            ZKSwizzle(wb_LUIWindowController, LUIWindowController);
+            ZKSwizzle(wb_LUIGoodSamaritanMessageView, LUIGoodSamaritanMessageView);
+        } else {
+            ZKSwizzle(wb_LUI2Window, LUI2Window);
+            ZKSwizzle(wb_LUI2MessageViewController, LUI2MessageViewController);
+        }
 //        ZKSwizzle(wb_LUI2TextField, LUI2TextField);
-        ZKSwizzle(wb_LUI2MessageViewController, LUI2MessageViewController);
 //        ZKSwizzle(wb_NSTextView, NSTextView);
-    }
-    
-    ZKSwizzle(wb_Login1, Login1);
-    ZKSwizzle(wb_DTDisplay, DTDisplay);
+//        ZKSwizzle(wb_Login1, Login1);
+//        ZKSwizzle(wb_DTDisplay, DTDisplay);
+    });
 }
 
 @interface NSObject (logProperties)
@@ -46,7 +47,6 @@ void install() {
 @end
 
 @implementation NSObject (logProperties)
-
 - (void)logProperties {
     
     NSLog(@"----------------------------------------------- Properties for object %@", self);
@@ -71,11 +71,9 @@ void install() {
     }
     NSLog(@"-----------------------------------------------");
 }
-
 @end
 
 @interface DBLoginWindowDYLIB()
-
 @end
 
 @implementation DBLoginWindowDYLIB
@@ -92,7 +90,6 @@ void install() {
 }
 
 + (void)load {
-    //    DBLoginWindow *plugin = [DBLoginWindow sharedInstance];
     install();
     NSUInteger osx_ver = [[NSProcessInfo processInfo] operatingSystemVersion].minorVersion;
     NSLog(@"%@ loaded into %@ on macOS 10.%ld", [self class], [[NSBundle mainBundle] bundleIdentifier], (long)osx_ver);
@@ -126,14 +123,131 @@ void install() {
 
 @end
 
+// 10.14
 
-@interface wb_LWDefaultScreenLockUI : NSObject
+@interface wb_LUI2Window : NSWindow
 @end
 
-@implementation wb_LWDefaultScreenLockUI
+@implementation wb_LUI2Window
+
+- (void)_setupContentView {
+    if (db_EnableAnim) {
+        ZKOrig(void);
+        [[DBLoginWindowDYLIB sharedInstance] setupLockBG:self];
+    } else {
+        ZKOrig(void);
+    }
+}
 
 @end
 
+@interface wb_LUI2MessageViewController : NSViewController
+@end
+
+@implementation wb_LUI2MessageViewController
+
+- (void)viewDidAppear {
+    ZKOrig(void);
+    NSTextView *tv = [self valueForKey:@"messageTextView"];
+    
+    if (db_EnableSize) {
+        double lockSize = [db_LockSize doubleValue];
+        if (lockSize < 0.0 || lockSize > 64.0) {
+            // For some reason we need to call this twice?
+            [tv setFont:[NSFont fontWithDescriptor:tv.font.fontDescriptor size:lockSize]];
+            [tv setFont:[NSFont fontWithDescriptor:tv.font.fontDescriptor size:lockSize]];
+        }
+    }
+    
+    if (db_EnableText) {
+        NSString* lockText = db_LockText;
+        if ([lockText isEqualToString:@""])
+            lockText = @"🍣";
+        tv.string = lockText;
+    }
+}
+
+@end
+
+// 10.10 - 10.13
+
+@interface wb_LUIWindowController : NSObject
+@end
+
+@implementation wb_LUIWindowController
+
+- (void)setUsesDesktopPicture:(BOOL)arg1 {
+    if (db_EnableAnim) {
+        ZKOrig(void, false);
+        [[DBLoginWindowDYLIB sharedInstance] setupLockBG:[self valueForKey:@"_mainWindow"]];
+    } else {
+        ZKOrig(void, arg1);
+    }
+}
+
+@end
+
+@interface wb_LUIGoodSamaritanMessageView : NSView
+@end
+
+@implementation wb_LUIGoodSamaritanMessageView
+
+- (id)_fontOfSize:(double)arg1 {
+    if (db_EnableSize) {
+        double lockSize = [db_LockSize doubleValue];
+        if (lockSize < 0.0 || lockSize > 64.0)
+            return ZKOrig(id, arg1);
+        return ZKOrig(id, lockSize);
+    }
+    return ZKOrig(id, arg1);
+}
+
+- (void)setMessage:(id)arg1 {
+    if (db_EnableText) {
+        NSString* lockText = db_LockText;
+        if ([lockText isEqualToString:@""])
+            lockText = @"🍣";
+        ZKOrig(void, lockText);
+    } else {
+        ZKOrig(void, arg1);
+    }
+}
+
+@end
+
+// Testing
+
+/*
+
+@interface wb_LUI2TextField : NSTextField
+@end
+
+@implementation wb_LUI2TextField
+
+- (void)setStringValue:(NSString *)stringValue {
+    NSString *result = stringValue;
+    //    if (db_EnableText) {
+    //        NSString* lockText = db_LockText;
+    //        NSLog(@"poop kaydog %@", lockText);
+    //        if ([lockText isEqualToString:@""])
+    //            lockText = @"🍣";
+    //        result = lockText;
+    //    }
+    ZKOrig(void, result);
+}
+
+- (void)setFont:(NSFont *)font {
+    NSFont *result = font;
+    //    if (db_EnableSize) {
+    //        double lockSize = [db_LockSize doubleValue];
+    //        NSLog(@"poop kaydog %f", lockSize);
+    //        if (lockSize < 0.0 || lockSize > 64.0)
+    //            result = [NSFont fontWithDescriptor:[self.font fontDescriptor] size:lockSize * 2.];
+    //    }
+    ZKOrig(void, result);
+}
+
+@end
 
 @interface wb_NSWindowController : NSWindowController
 @end
@@ -142,13 +256,11 @@ void install() {
 
 - (void)showWindow:(id)sender {
     ZKOrig(void, sender);
-    
     NSLog(@"windowDidLoad %@ : %@", self.className, self.window.className);
 }
 
 - (void)windowWillLoad {
     ZKOrig(void);
-    
     NSLog(@"windowDidLoad %@ : %@", self.className, self.window.className);
 }
 
@@ -160,7 +272,7 @@ void install() {
 @implementation wb_NSViewController
 
 - (void)setMessage:(id)arg1 {
-    NSLog(@"Hookers %@ : %@", [self className], arg1);    
+    NSLog(@"Hookers %@ : %@", [self className], arg1);
     ZKOrig(void, arg1);
 }
 
@@ -199,36 +311,36 @@ void install() {
             view.canDrawSubviewsIntoLayer = YES;
             [view setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
             
-//            Boolean addView = true;
-//            for (NSView *v in self.view.subviews) {
-//                if (v.tag == 69) {
-//                    addView = false;
-//                    break;
-//                }
-//            }
-//            
-//            if (addView) {
-//                NSMutableArray *viewz = theView.subviews.mutableCopy;
-//                [view setTag:69];
-//                [viewz addObject:view];
-//                [theView setSubviews:viewz];
-//            }
+            //            Boolean addView = true;
+            //            for (NSView *v in self.view.subviews) {
+            //                if (v.tag == 69) {
+            //                    addView = false;
+            //                    break;
+            //                }
+            //            }
+            //
+            //            if (addView) {
+            //                NSMutableArray *viewz = theView.subviews.mutableCopy;
+            //                [view setTag:69];
+            //                [viewz addObject:view];
+            //                [theView setSubviews:viewz];
+            //            }
             
             if (db_LockAnim) {
                 view.imageScaling = NSImageScaleNone;
                 view.animates = YES;
-//                NSView *layerview = [[NSImageView alloc] initWithFrame:win.contentView.frame];
-//                layerview.wantsLayer = YES;
-//                [layerview addSubview:view];
-//                [layerview setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
-//                [win.contentView setSubviews:@[layerview]];
+                //                NSView *layerview = [[NSImageView alloc] initWithFrame:win.contentView.frame];
+                //                layerview.wantsLayer = YES;
+                //                [layerview addSubview:view];
+                //                [layerview setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+                //                [win.contentView setSubviews:@[layerview]];
             } else {
-//                [win.contentView setSubviews:@[view]];
+                //                [win.contentView setSubviews:@[view]];
             }
             
             NSLog(@"%@", theView.subviews);
             
-//            [theView setSubviews:@[view]];
+            //            [theView setSubviews:@[view]];
         }
     }
 }
@@ -249,13 +361,13 @@ void install() {
             
             
             
-//            NSWindow *win = [self valueForKey:@"_mainWindow"];
-//            NSImageView *view = [[NSImageView alloc] initWithFrame:win.contentView.frame];
-//            NSImage *theImage = [[NSImage alloc] initWithContentsOfFile:picturePath];
-//            [theImage setSize: NSMakeSize(theView.frame.size.width, theView.frame.size.height)];
-//            theView.image = theImage;
-//            theView.canDrawSubviewsIntoLayer = YES;
-//            [theView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+            //            NSWindow *win = [self valueForKey:@"_mainWindow"];
+            //            NSImageView *view = [[NSImageView alloc] initWithFrame:win.contentView.frame];
+            //            NSImage *theImage = [[NSImage alloc] initWithContentsOfFile:picturePath];
+            //            [theImage setSize: NSMakeSize(theView.frame.size.width, theView.frame.size.height)];
+            //            theView.image = theImage;
+            //            theView.canDrawSubviewsIntoLayer = YES;
+            //            [theView setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
             
             //        NSButton *adButton = [[NSButton alloc] initWithFrame:NSMakeRect(win.contentView.frame.size.width - 160, 10, 150, 22)];
             //        [adButton setTitle:@"🍭 Try cDock"];
@@ -263,17 +375,17 @@ void install() {
             //        [adButton setTarget:self];
             //        [adButton setAction:@selector(getcDock)];
             
-//            if (db_LockAnim) {
-//                theView.imageScaling = NSImageScaleNone;
-//                theView.animates = YES;
-////                NSView *layerview = [[NSImageView alloc] initWithFrame:win.contentView.frame];
-////                layerview.wantsLayer = YES;
-////                [layerview addSubview:view];
-////                [layerview setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
-////                [win.contentView setSubviews:@[layerview]];
-//            } else {
-////                [win.contentView setSubviews:@[view]];
-//            }
+            //            if (db_LockAnim) {
+            //                theView.imageScaling = NSImageScaleNone;
+            //                theView.animates = YES;
+            ////                NSView *layerview = [[NSImageView alloc] initWithFrame:win.contentView.frame];
+            ////                layerview.wantsLayer = YES;
+            ////                [layerview addSubview:view];
+            ////                [layerview setAutoresizingMask:NSViewWidthSizable | NSViewHeightSizable];
+            ////                [win.contentView setSubviews:@[layerview]];
+            //            } else {
+            ////                [win.contentView setSubviews:@[view]];
+            //            }
         }
     }
 }
@@ -339,41 +451,6 @@ void install() {
 
 @end
 
-@interface wb_LUI2Window : NSWindow
-@end
-
-@implementation wb_LUI2Window
-
-- (void)_setupContentView {
-//    NSLog(@"Hello sir : %@", [self className]);
-    if (db_EnableAnim) {
-        ZKOrig(void);
-        [[DBLoginWindowDYLIB sharedInstance] setupLockBG:self];
-    } else {
-        ZKOrig(void);
-    }
-}
-
-@end
-
-@interface wb_LUIWindowController : NSObject
-@end
-
-@implementation wb_LUIWindowController
-
-- (void)setUsesDesktopPicture:(BOOL)arg1 {
-//    NSLog(@"Hello sir : %@", [self className]);
-    if (db_EnableAnim) {
-        ZKOrig(void, false);
-        [[DBLoginWindowDYLIB sharedInstance] setupLockBG:[self valueForKey:@"_mainWindow"]];
-    } else {
-        ZKOrig(void, arg1);
-    }
-}
-
-@end
-
-
 @interface wb_NSTextView : NSTextView
 @end
 
@@ -398,90 +475,4 @@ void install() {
 
 @end
 
-@interface wb_LUI2MessageViewController : NSViewController
-@end
-
-@implementation wb_LUI2MessageViewController
-
-- (void)viewDidAppear {
-    ZKOrig(void);
-    NSTextView *tv = [self valueForKey:@"messageTextView"];
-    if (db_EnableSize) {
-        double lockSize = [db_LockSize doubleValue];
-        if (lockSize < 0.0 || lockSize > 64.0) {
-            [tv setFont:[NSFont fontWithDescriptor:tv.font.fontDescriptor size:lockSize]];
-            [tv setFont:[NSFont fontWithDescriptor:tv.font.fontDescriptor size:lockSize]];
-        }
-    }
-    if (db_EnableText) {
-        NSString* lockText = db_LockText;
-        if ([lockText isEqualToString:@""])
-            lockText = @"🍣";
-        tv.string = lockText;
-    }
-    
-}
-
-@end
-
-@interface wb_LUI2TextField : NSTextField
-@end
-
-@implementation wb_LUI2TextField
-
-- (void)setStringValue:(NSString *)stringValue {
-    NSString *result = stringValue;
-//    if (db_EnableText) {
-//        NSString* lockText = db_LockText;
-//        NSLog(@"poop kaydog %@", lockText);
-//        if ([lockText isEqualToString:@""])
-//            lockText = @"🍣";
-//        result = lockText;
-//    }
-    ZKOrig(void, result);
-}
-
-- (void)setFont:(NSFont *)font {
-    NSFont *result = font;
-//    if (db_EnableSize) {
-//        double lockSize = [db_LockSize doubleValue];
-//        NSLog(@"poop kaydog %f", lockSize);
-//        if (lockSize < 0.0 || lockSize > 64.0)
-//            result = [NSFont fontWithDescriptor:[self.font fontDescriptor] size:lockSize * 2.];
-//    }
-    ZKOrig(void, result);
-}
-
-@end
-
-@interface wb_LUIGoodSamaritanMessageView : NSView
-@end
-
-@implementation wb_LUIGoodSamaritanMessageView
-
-- (id)_fontOfSize:(double)arg1 {
-    NSLog(@"Hello sir : %@", [self className]);
-    if (db_EnableSize) {
-        double lockSize = [db_LockSize doubleValue];
-        //        NSLog(@"kaydog %f", lockSize);
-        if (lockSize < 0.0 || lockSize > 64.0)
-            return ZKOrig(id, arg1);
-        return ZKOrig(id, lockSize);
-    }
-    return ZKOrig(id, arg1);
-}
-
-- (void)setMessage:(id)arg1 {
-    NSLog(@"Hello sir : %@", [self className]);
-    if (db_EnableText) {
-        NSString* lockText = db_LockText;
-        //        NSLog(@"kaydog %@", lockText);
-        if ([lockText isEqualToString:@""])
-            lockText = @"🍣";
-        ZKOrig(void, lockText);
-    } else {
-        ZKOrig(void, arg1);
-    }
-}
-
-@end
+*/
