@@ -22,7 +22,6 @@
 		FB1187161DE63A30008BBBF1 /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FB1187131DE63A30008BBBF1 /* Credits.rtf */; };
 		FB1187171DE63A30008BBBF1 /* EULA.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FB1187141DE63A30008BBBF1 /* EULA.rtf */; };
 		FB1187181DE63A30008BBBF1 /* Changelog.rtf in Resources */ = {isa = PBXBuildFile; fileRef = FB1187151DE63A30008BBBF1 /* Changelog.rtf */; };
-		FB26E47F20BCE91900F31F08 /* DBLoginWindowDYLIB.h in Headers */ = {isa = PBXBuildFile; fileRef = FB26E47E20BCE91900F31F08 /* DBLoginWindowDYLIB.h */; };
 		FB26E48520BCE98A00F31F08 /* ZKSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = FB45020B20B0DF2000BB77CB /* ZKSwizzle.m */; };
 		FB3FF93720BD03CF00657B9E /* ads.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB3FF93620BD03CF00657B9E /* ads.plist */; };
 		FB45020820B0DF2000BB77CB /* DBLoginWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = FB45020720B0DF2000BB77CB /* DBLoginWindow.m */; };
@@ -109,7 +108,6 @@
 		FB1187141DE63A30008BBBF1 /* EULA.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = EULA.rtf; path = Resources/Info/EULA.rtf; sourceTree = SOURCE_ROOT; };
 		FB1187151DE63A30008BBBF1 /* Changelog.rtf */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.rtf; name = Changelog.rtf; path = Resources/Info/Changelog.rtf; sourceTree = SOURCE_ROOT; };
 		FB26E47C20BCE91900F31F08 /* libDBLoginWindowDYLIB.dylib */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.dylib"; includeInIndex = 0; path = libDBLoginWindowDYLIB.dylib; sourceTree = BUILT_PRODUCTS_DIR; };
-		FB26E47E20BCE91900F31F08 /* DBLoginWindowDYLIB.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBLoginWindowDYLIB.h; sourceTree = "<group>"; };
 		FB26E48020BCE91900F31F08 /* DBLoginWindowDYLIB.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBLoginWindowDYLIB.m; sourceTree = "<group>"; };
 		FB3FF93620BD03CF00657B9E /* ads.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = ads.plist; sourceTree = "<group>"; };
 		FB4501FD20B0DF2000BB77CB /* DBLoginWindow.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DBLoginWindow.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -274,7 +272,6 @@
 		FB26E47D20BCE91900F31F08 /* DBLoginWindowDylib */ = {
 			isa = PBXGroup;
 			children = (
-				FB26E47E20BCE91900F31F08 /* DBLoginWindowDYLIB.h */,
 				FB26E48020BCE91900F31F08 /* DBLoginWindowDYLIB.m */,
 			);
 			path = DBLoginWindowDylib;
@@ -327,7 +324,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FB26E47F20BCE91900F31F08 /* DBLoginWindowDYLIB.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -795,7 +791,7 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -850,7 +846,7 @@
 				GCC_WARN_UNDECLARED_SELECTOR = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
