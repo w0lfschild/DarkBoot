@@ -12,9 +12,16 @@
 	<key>files2</key>
 	<dict>
 		<key>Resources/archived-expanded-entitlements.xcent</key>
-		<data>
-		HczODx2VOwJmyBLpUSH9zO139Qs=
-		</data>
+		<dict>
+			<key>hash</key>
+			<data>
+			HczODx2VOwJmyBLpUSH9zO139Qs=
+			</data>
+			<key>hash2</key>
+			<data>
+			3vkKD5pIt46KqmgS7VrTVmK4NkW9JJ0FbbAK7rFMDzA=
+			</data>
+		</dict>
 	</dict>
 	<key>rules</key>
 	<dict>
@@ -33,6 +40,11 @@
 			<true/>
 			<key>weight</key>
 			<real>1100</real>
+		</dict>
+		<key>^Resources/Base\.lproj/</key>
+		<dict>
+			<key>weight</key>
+			<real>1010</real>
 		</dict>
 		<key>^version.plist$</key>
 		<true/>
@@ -92,6 +104,11 @@
 			<true/>
 			<key>weight</key>
 			<real>1100</real>
+		</dict>
+		<key>^Resources/Base\.lproj/</key>
+		<dict>
+			<key>weight</key>
+			<real>1010</real>
 		</dict>
 		<key>^[^/]+$</key>
 		<dict>

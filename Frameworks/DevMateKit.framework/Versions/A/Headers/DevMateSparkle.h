@@ -28,6 +28,7 @@
 #import <DevMateKit/SUExport.h>
 #import <DevMateKit/SUUpdater.h>
 #import <DevMateKit/SUUpdaterQueue.h>
+#import <DevMateKit/SUUpdaterDelegate.h>
 #import <DevMateKit/SUAppcast.h>
 #import <DevMateKit/SUAppcastItem.h>
 #import <DevMateKit/SUVersionComparisonProtocol.h>

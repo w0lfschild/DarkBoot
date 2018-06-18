@@ -2,7 +2,7 @@
 //  DMTrackingReporter.h
 //  DevMateTracking
 //
-//  Copyright (c) 2013-2016 DevMate Inc. All rights reserved.
+//  Copyright (c) 2013-2018 DevMate Inc. All rights reserved.
 //
 
 #import <DevMateKit/DMTrackingBase.h>
@@ -39,4 +39,3 @@
 - (void)trackingReporter:(DMTrackingReporter *)reporter didFinishSendingReportWithSuccess:(BOOL)success;
 
 @end
-

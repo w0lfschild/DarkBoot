@@ -2,7 +2,7 @@
 //  DevMateIssues.h
 //  DevMateIssues
 //
-//  Copyright (c) 2013-2016 DevMate Inc. All rights reserved.
+//  Copyright (c) 2013-2018 DevMate Inc. All rights reserved.
 //
 
 #import <Cocoa/Cocoa.h>

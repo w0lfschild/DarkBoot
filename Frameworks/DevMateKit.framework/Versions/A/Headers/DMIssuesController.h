@@ -2,7 +2,7 @@
 //  DMIssuesController.h
 //  DevMateIssues
 //
-//  Copyright 2013-2016 DevMate Inc. All rights reserved.
+//  Copyright 2013-2018 DevMate Inc. All rights reserved.
 //
 
 //! TESTING
@@ -57,7 +57,7 @@
 /*! @brief Asks delegate for permition to show reporter dialog to user right after the issue was caught.
     @discussion To send report silently return NO and call -reportUnhandledProblemsIfExists: passing NO as input param.
     @param controller Issue controller.
-    @param report Issue report that was caught.
+    @param issue Issue report that was caught.
     @return YES to start reporter dialog. In case of NO, report will be marked as unhandled and no UI will be shown.
  */
 - (BOOL)controller:(DMIssuesController *)controller shouldReportIssue:(id<DMIssue>)issue;
@@ -70,9 +70,6 @@
 
 //! DEPRECATED. Use -controller:shouldReportIssue: method instead.
 - (BOOL)shouldReportCrashProblem:(DMIssuesController *)controller;
-
-//! Additional info that will be attached to standard issue report.
-- (NSString *)additionalIssueInfoForController:(DMIssuesController *)controller;
 
 @end
 

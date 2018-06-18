@@ -6,23 +6,23 @@
 	<dict>
 		<key>Resources/DMAttachment.tiff</key>
 		<data>
-		naAz47+Eh3/ZD2YyxxlbZxcAX80=
+		N2emukImdpEGna/eDqM4y2ZNvzc=
 		</data>
 		<key>Resources/DMInfoButton.tiff</key>
 		<data>
-		F853PtptwIk2NktuOFN4ZHcPE5c=
+		s77Qkh2wqdPYUjFt9bgv89HFDMc=
 		</data>
 		<key>Resources/DevMateInfoPopoverView.nib</key>
 		<data>
-		/VJSJsj4gFV4UvnY1hZ4GTszB+I=
+		rM9jaSRpa3pF+yi0I4L6qdTThF4=
 		</data>
 		<key>Resources/DevMateIssuesWindow.nib</key>
 		<data>
-		2RM2yFebBR+ENOdXLel5HWo3bdM=
+		gYoWOvl39zalWnJnMMJJE20fcVc=
 		</data>
 		<key>Resources/Info.plist</key>
 		<data>
-		ZRF+UAC9WVt90aaRbby8xDzCn4g=
+		anwS44Op5Rp3uyOkEBmoP2VJK64=
 		</data>
 		<key>Resources/de.lproj/Reports.strings</key>
 		<dict>
@@ -139,36 +139,75 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			m9y5bj2TDit5MoEV4A9iFN/YX+g=
+			pKjnlh6ri+X5jQGusN+Zz8afr3s=
 			</data>
 			<key>requirement</key>
-			<string>identifier "coop.plausible.CrashReporter" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = S8EX82NJP6</string>
+			<string>identifier "coop.plausible.CrashReporter" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = "2M6BY8QGR8"</string>
 		</dict>
 		<key>Resources/DMAttachment.tiff</key>
-		<data>
-		naAz47+Eh3/ZD2YyxxlbZxcAX80=
-		</data>
+		<dict>
+			<key>hash</key>
+			<data>
+			N2emukImdpEGna/eDqM4y2ZNvzc=
+			</data>
+			<key>hash2</key>
+			<data>
+			eLyB7o+l+EXwmyyVaktgRlfmcp0o7wBOXBbBvhcKN+s=
+			</data>
+		</dict>
 		<key>Resources/DMInfoButton.tiff</key>
-		<data>
-		F853PtptwIk2NktuOFN4ZHcPE5c=
-		</data>
+		<dict>
+			<key>hash</key>
+			<data>
+			s77Qkh2wqdPYUjFt9bgv89HFDMc=
+			</data>
+			<key>hash2</key>
+			<data>
+			Gh1VK+qeesjzQPYJtA/Pc5p23pZ34xwzBprckqPnXHw=
+			</data>
+		</dict>
 		<key>Resources/DevMateInfoPopoverView.nib</key>
-		<data>
-		/VJSJsj4gFV4UvnY1hZ4GTszB+I=
-		</data>
+		<dict>
+			<key>hash</key>
+			<data>
+			rM9jaSRpa3pF+yi0I4L6qdTThF4=
+			</data>
+			<key>hash2</key>
+			<data>
+			cyn9rr7HcPUpH+lYjn1KwdHC3R1duFDXQk6RV1/luH8=
+			</data>
+		</dict>
 		<key>Resources/DevMateIssuesWindow.nib</key>
-		<data>
-		2RM2yFebBR+ENOdXLel5HWo3bdM=
-		</data>
+		<dict>
+			<key>hash</key>
+			<data>
+			gYoWOvl39zalWnJnMMJJE20fcVc=
+			</data>
+			<key>hash2</key>
+			<data>
+			ar9xXZyM+Iv46agiab+WOfzJI+9iHxpEfm0CTE/ivyI=
+			</data>
+		</dict>
 		<key>Resources/Info.plist</key>
-		<data>
-		ZRF+UAC9WVt90aaRbby8xDzCn4g=
-		</data>
+		<dict>
+			<key>hash</key>
+			<data>
+			anwS44Op5Rp3uyOkEBmoP2VJK64=
+			</data>
+			<key>hash2</key>
+			<data>
+			iVlEZizfFH8B5hWtoU8tJgN3crCiJ/mj1JPoS1/NYTc=
+			</data>
+		</dict>
 		<key>Resources/de.lproj/Reports.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
 			jxKBH78/+sh9yIWMOGwnhEI5DnA=
+			</data>
+			<key>hash2</key>
+			<data>
+			ZDUsG6CIkRe4Cpu+WSNcXzgi8mpyUBh6EW4QwFmICgQ=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -179,6 +218,10 @@
 			<data>
 			v2GWPB/uYKBQUtC2+SL36vBI2zA=
 			</data>
+			<key>hash2</key>
+			<data>
+			fsnwJAWxeoFBwm7bR0SmdmfJ/WXWvJXtXIsJktg08uM=
+			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
@@ -187,6 +230,10 @@
 			<key>hash</key>
 			<data>
 			+PbL+jUMTn9/IpiDohF6WwIwhSQ=
+			</data>
+			<key>hash2</key>
+			<data>
+			o5RqX5M0smFU1RO2abiUNo0G7kEhoS9uYXXFdKSNlMM=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -197,6 +244,10 @@
 			<data>
 			DYgef+uBKlAP3D2nP/SSv4gA3og=
 			</data>
+			<key>hash2</key>
+			<data>
+			tl4P03fc1en20sYt2VaATdQC/jagSVsRqnA50yEfmZc=
+			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
@@ -205,6 +256,10 @@
 			<key>hash</key>
 			<data>
 			X54GPbVBFq0dGFNg76+3OsWv/E4=
+			</data>
+			<key>hash2</key>
+			<data>
+			IEwb++4PGCa1A7iJVOylVt02s1MHb7HvrlP1ssRbPsk=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -215,6 +270,10 @@
 			<data>
 			ajE2otLfFqxnmF1FGzyGmQlHKTU=
 			</data>
+			<key>hash2</key>
+			<data>
+			+wpsGJDd3vwS2CL2QVoq2dYPbQg9dZTQP2lFWD8w0lw=
+			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
@@ -223,6 +282,10 @@
 			<key>hash</key>
 			<data>
 			slPrwPBN50WH0zXyFsvnkhEp1vY=
+			</data>
+			<key>hash2</key>
+			<data>
+			cs0VMHPgsvgFq2uKSFgiPBGYlvcZeOW2EIecrL7owuU=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -233,6 +296,10 @@
 			<data>
 			rfeAaGn5zJJ2Sz1SxYTZ0QJWNaM=
 			</data>
+			<key>hash2</key>
+			<data>
+			4oe2J3JmhXaV9xZPhnMP209wXRlfKxvC222yD/ahgjc=
+			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
@@ -241,6 +308,10 @@
 			<key>hash</key>
 			<data>
 			SBRBhpD/X0HLMJ06nyn6zM9mHjE=
+			</data>
+			<key>hash2</key>
+			<data>
+			lYGwljDNLJqLFwW1nyWEwP7EoA6Tfx7rbBik7E3NCtE=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -256,6 +327,10 @@
 			<data>
 			3Y/W+ushioKqDDmGDLWBxvruojw=
 			</data>
+			<key>hash2</key>
+			<data>
+			v7N9x93JPJ+l6PXEWSkapNY/cqkFmkmVtP2ffpjyp2s=
+			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
@@ -265,6 +340,10 @@
 			<data>
 			WLKD8f+Wocd31waRRU9SU/zPBLI=
 			</data>
+			<key>hash2</key>
+			<data>
+			LfCElLUtoT8JKoZ9yf8VW52r054qXv3WkA1/wcFbL4U=
+			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
@@ -273,6 +352,10 @@
 			<key>hash</key>
 			<data>
 			yrL1pRs0h6DuiuRoUUuGri1gboo=
+			</data>
+			<key>hash2</key>
+			<data>
+			q8xEtPPf+YkJzKFMeWDCIFhGSrf7udHcpmmi5vSSsZs=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -295,6 +378,11 @@
 			<true/>
 			<key>weight</key>
 			<real>1100</real>
+		</dict>
+		<key>^Resources/Base\.lproj/</key>
+		<dict>
+			<key>weight</key>
+			<real>1010</real>
 		</dict>
 		<key>^version.plist$</key>
 		<true/>
@@ -354,6 +442,11 @@
 			<true/>
 			<key>weight</key>
 			<real>1100</real>
+		</dict>
+		<key>^Resources/Base\.lproj/</key>
+		<dict>
+			<key>weight</key>
+			<real>1010</real>
 		</dict>
 		<key>^[^/]+$</key>
 		<dict>

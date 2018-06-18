@@ -14,11 +14,6 @@
 			<key>orderHint</key>
 			<integer>3</integer>
 		</dict>
-		<key>DBLoginWindowLoader.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>4</integer>
-		</dict>
 		<key>Dark Boot.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -38,6 +33,11 @@
 			<true/>
 		</dict>
 		<key>8D1107260486CEB800E47090</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FB88B35B20CA168500A6C007</key>
 		<dict>
 			<key>primary</key>
 			<true/>

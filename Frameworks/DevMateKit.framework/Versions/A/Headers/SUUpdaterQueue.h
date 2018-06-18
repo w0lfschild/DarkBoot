@@ -6,7 +6,11 @@
 //
 //
 
+#if __has_feature(modules)
+@import Foundation;
+#else
 #import <Foundation/Foundation.h>
+#endif
 #import "SUExport.h"
 
 @class SUUpdater;
@@ -22,3 +26,4 @@ SU_EXPORT @interface SUUpdaterQueue : NSObject
 @property (readonly) BOOL updateInProgress;
 
 @end
+

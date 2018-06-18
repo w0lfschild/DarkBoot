@@ -2,7 +2,7 @@
 //  DMTrial.h
 //  DevMateActivations
 //
-//  Copyright (c) 2013-2016 DevMate Inc. All rights reserved.
+//  Copyright (c) 2013-2018 DevMate Inc. All rights reserved.
 //
 
 #ifndef DevMateActivations__DMTrial_h
