@@ -10,6 +10,9 @@
 #import "ZKSwizzle.h"
 #import <objc/runtime.h>
 
+@interface DBLoginWindowDYLIB : NSObject
+@end
+
 void install(void) __attribute__ ((constructor));
 
 void redirectConsoleLogToDocumentFolder() {
@@ -18,14 +21,12 @@ void redirectConsoleLogToDocumentFolder() {
 }
 
 void install() {
-    redirectConsoleLogToDocumentFolder();
-    
-    NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
-    [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
-    NSLog(@"%@",[dateFormatter stringFromDate:[NSDate date]]);
-
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
+        redirectConsoleLogToDocumentFolder();
+        NSDateFormatter *dateFormatter=[[NSDateFormatter alloc] init];
+        [dateFormatter setDateFormat:@"yyyy-MM-dd HH:mm:ss"];
+        NSLog(@"%@",[dateFormatter stringFromDate:[NSDate date]]);
         NSUInteger osx_ver = NSProcessInfo.processInfo.operatingSystemVersion.minorVersion;
         if (osx_ver < 14) {
             ZKSwizzle(wb_LUIWindowController, LUIWindowController);
@@ -34,11 +35,9 @@ void install() {
             ZKSwizzle(wb_LUI2Window, LUI2Window);
             ZKSwizzle(wb_LUI2MessageViewController, LUI2MessageViewController);
         }
+        NSLog(@"%@ loaded into %@ on macOS 10.%ld", [DBLoginWindowDYLIB class], [[NSBundle mainBundle] bundleIdentifier], (long)osx_ver);
     });
 }
-
-@interface DBLoginWindowDYLIB : NSObject
-@end
 
 @implementation DBLoginWindowDYLIB
 
@@ -55,8 +54,6 @@ void install() {
 
 + (void)load {
     install();
-    NSUInteger osx_ver = [[NSProcessInfo processInfo] operatingSystemVersion].minorVersion;
-    NSLog(@"%@ loaded into %@ on macOS 10.%ld", [self class], [[NSBundle mainBundle] bundleIdentifier], (long)osx_ver);
 }
 
 - (void)setupLockBG:(NSWindow*)win {

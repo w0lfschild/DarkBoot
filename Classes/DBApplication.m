@@ -29,6 +29,7 @@ static NSString *DBErrorDomain          = @"Dark Boot";
 
 NSArray *tabViewButtons;
 NSArray *tabViews;
+Boolean *animateBootColor = false;
 
 enum BXErrorCode
 {
@@ -707,7 +708,7 @@ sip_c *sipc;
 }
 
 - (void)bootPreviewAnimate {
-    if (viewBootColor.state == NSOnState) {
+    if (animateBootColor) {
         double displayNum = bootColorIndicator.doubleValue;
         if (displayNum < 100.0) {
             displayNum += ((double)rand() / RAND_MAX) * 2;
@@ -874,11 +875,18 @@ sip_c *sipc;
 - (IBAction)selectView:(id)sender {
     if ([tabViewButtons containsObject:sender])
         [tabMain setSubviews:[NSArray arrayWithObject:[tabViews objectAtIndex:[tabViewButtons indexOfObject:sender]]]];
+    
     for (NSButton *g in tabViewButtons) {
         if (![g isEqualTo:sender])
             [[g layer] setBackgroundColor:[NSColor clearColor].CGColor];
         else
             [[g layer] setBackgroundColor:[NSColor colorWithCalibratedRed:0.121f green:0.4375f blue:0.1992f alpha:0.2578f].CGColor];
+    }
+    
+    if ([sender isEqualTo:viewBootColor]) {
+        animateBootColor = true;
+    } else {
+        animateBootColor = false;
     }
     
     if ([sender isEqualTo:viewBootImage]) {
