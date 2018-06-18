@@ -1,22 +1,31 @@
 # DarkBoot
 
-This application allows you to edit the boot screen of modern macs.
+This application allows you to edit a lot of boot related screens on your mac!
+* Boot Color
+* Boot Image
+* Login Screen Image
+* Lock Screen Image (Can use .GIF) and Text
+* Edit boot options like:
+*  Verbose Boot
+*  Safe Mode Boot
+*  Single User Mode
+*  Clamshell mode (laptops)
+*  Boot Sound (2015 or older)
+*  Auto Boot (laptops)
+*  Disbale Apple Mobile File Integrity
 
-![Preview](preview.png)
+![Preview](https://w0lfschild.github.io/images/dboot/example.png)
 
 ### Information:
-This should work on macOS 10.9 and above on all macs. 
+This should work on macOS 10.10+ on all macs. 
 Submit a report [here](https://github.com/w0lfschild/DarkBoot/issues/new) if it does not.
 
 ### How to use:
-1. Download the latest release: [here](https://github.com/w0lfschild/app_updates/tree/master/DarkBoot)
+1. Download the latest release: [here](https://github.com/w0lfschild/app_updates/raw/master/DarkBoot/DarkBoot_master.zip)
 2. Unzip the download
-3. Open the Dark Boot app
-4. Select the color you would like your boot screen to be and press Apply
-5. Enter your admin password and press OK
+3. Open `Dark Boot.app`
+4. Edit the settings you would like
+5. Applying requires entering your admin password for most settings
 6. **Reboot**
+7. Some changes may take two reboots to apply
 
-### License:
-Pretty much the BSD license, just don't repackage it and call it your own please!
-
-Also if you do make some changes, feel free to make a pull request and help make things more awesome!
