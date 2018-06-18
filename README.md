@@ -14,7 +14,7 @@ This application allows you to edit a lot of boot related screens on your mac!
 *  Auto Boot (laptops)
 *  Disbale Apple Mobile File Integrity
 
-![Preview](https://w0lfschild.github.io/images/dboot/example.png)
+![Preview](preview.png)
 
 ### Information:
 This should work on macOS 10.10+ on all macs. 
