@@ -1,0 +1,6 @@
+framework module Pods_Dark_Boot {
+  umbrella header "Pods-Dark Boot-umbrella.h"
+
+  export *
+  module * { export * }
+}

@@ -1,0 +1,1053 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		0FD1DEBD06F880620246F8C0 /* Pods_Dark_Boot.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B8C0F13F3295DE16EB1D4C58 /* Pods_Dark_Boot.framework */; };
+		284A5CAE11A5A07500EAC012 /* DBApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 284A5CAD11A5A07500EAC012 /* DBApplication.m */; };
+		286CC41C0CDCD61F00ACA824 /* BXBootImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 286CC41B0CDCD61F00ACA824 /* BXBootImageView.m */; };
+		28D089B611A5DCBE001B092C /* InstallBootImage in CopyFiles */ = {isa = PBXBuildFile; fileRef = 28D089AC11A5DC3C001B092C /* InstallBootImage */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		28D08A2411A5E54D001B092C /* InstallBootImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 285AC1F10CDF6C2C008AF706 /* InstallBootImage.m */; };
+		563EAEDF4E2F8959C2333B63 /* libPods-InstallBootImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DF8AA38833888DAA49247E2C /* libPods-InstallBootImage.a */; };
+		8D11072D0486CEB800E47090 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; settings = {ATTRIBUTES = (); }; };
+		DBFE0E2CAE772F64BF008B74 /* libPods-DBLoginWindow.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 32ECA3AD45CF6F30647EDAEB /* libPods-DBLoginWindow.a */; };
+		FB1120A920B105F4005263B5 /* AYProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = FB1120A820B105F4005263B5 /* AYProgressIndicator.m */; };
+		FB3E9F57246133DB00A09B97 /* MF_sidebarButton.m in Sources */ = {isa = PBXBuildFile; fileRef = FB3E9F56246133DB00A09B97 /* MF_sidebarButton.m */; };
+		FB3E9F6F2461440700A09B97 /* CocoaMarkdown.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB3E9F68246143F200A09B97 /* CocoaMarkdown.framework */; };
+		FB3E9F702461440700A09B97 /* CocoaMarkdown.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB3E9F68246143F200A09B97 /* CocoaMarkdown.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FB45020820B0DF2000BB77CB /* DBLoginWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = FB45020720B0DF2000BB77CB /* DBLoginWindow.m */; };
+		FB45020C20B0DF2000BB77CB /* ZKSwizzle.m in Sources */ = {isa = PBXBuildFile; fileRef = FB45020B20B0DF2000BB77CB /* ZKSwizzle.m */; };
+		FB6F2748246363A000CF4242 /* CREDITS.md in Resources */ = {isa = PBXBuildFile; fileRef = FB6F2744246363A000CF4242 /* CREDITS.md */; };
+		FB6F2749246363A000CF4242 /* LOGININFO.md in Resources */ = {isa = PBXBuildFile; fileRef = FB6F2745246363A000CF4242 /* LOGININFO.md */; };
+		FB6F274A246363A000CF4242 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = FB6F2746246363A000CF4242 /* README.md */; };
+		FB6F274B246363A000CF4242 /* LICENSE_EULA in Resources */ = {isa = PBXBuildFile; fileRef = FB6F2747246363A000CF4242 /* LICENSE_EULA */; };
+		FB73BDE423A5F42400240DED /* MacForgeKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FB73BDE323A5F42300240DED /* MacForgeKit.framework */; };
+		FB73BDE523A5F44D00240DED /* MacForgeKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = FB73BDE323A5F42300240DED /* MacForgeKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FBB312C424635D0100EE32A6 /* DBLoginWindow.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = FB4501FD20B0DF2000BB77CB /* DBLoginWindow.bundle */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		FBB312C724635E8E00EE32A6 /* DBImages.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FB3E9F922461494B00A09B97 /* DBImages.xcassets */; };
+		FBB312C824635EB000EE32A6 /* Application.xib in Resources */ = {isa = PBXBuildFile; fileRef = FBC129BD1DEA2E4000B0D6D5 /* Application.xib */; };
+		FBB312CA24635EBF00EE32A6 /* apple.png in Resources */ = {isa = PBXBuildFile; fileRef = FB1120A520B0F797005263B5 /* apple.png */; };
+		FBB312CB24635EBF00EE32A6 /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = 284A5C9D11A59F9100EAC012 /* default.png */; };
+		FBB312D124635EBF00EE32A6 /* com.macenhance.dbcolor.plist in Resources */ = {isa = PBXBuildFile; fileRef = FB5464E01CB9A8D900508447 /* com.macenhance.dbcolor.plist */; };
+		FBB312D224635EBF00EE32A6 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = FBF3F2F61CCBC5CB00B1B8CA /* dsa_pub.pem */; };
+		FBB312DB2463610700EE32A6 /* CHANGELOG.md in Resources */ = {isa = PBXBuildFile; fileRef = FBB312DA2463610700EE32A6 /* CHANGELOG.md */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		28D089B411A5DCB9001B092C /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 28D089AB11A5DC3C001B092C;
+			remoteInfo = InstallBootImage;
+		};
+		FB3E9F63246143F200A09B97 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FB3E9F58246143F200A09B97 /* CocoaMarkdown.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 729F53DA1A68641400CC7448;
+			remoteInfo = "CocoaMarkdown-iOS";
+		};
+		FB3E9F65246143F200A09B97 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FB3E9F58246143F200A09B97 /* CocoaMarkdown.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 729F53E51A68641400CC7448;
+			remoteInfo = "CocoaMarkdownTests-iOS";
+		};
+		FB3E9F67246143F200A09B97 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FB3E9F58246143F200A09B97 /* CocoaMarkdown.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 729F53FB1A68649200CC7448;
+			remoteInfo = "CocoaMarkdown-Mac";
+		};
+		FB3E9F69246143F200A09B97 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FB3E9F58246143F200A09B97 /* CocoaMarkdown.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 729F54051A68649200CC7448;
+			remoteInfo = "CocoaMarkdownTests-Mac";
+		};
+		FB3E9F6B246143F200A09B97 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FB3E9F58246143F200A09B97 /* CocoaMarkdown.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 72FE7EC91A68692400F23F46;
+			remoteInfo = "Example-iOS";
+		};
+		FB3E9F6D246143F200A09B97 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = FB3E9F58246143F200A09B97 /* CocoaMarkdown.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 72FE7EF41A68695100F23F46;
+			remoteInfo = "Example-Mac";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		28D3C3A60CDE8A5F003F3018 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 6;
+			files = (
+				28D089B611A5DCBE001B092C /* InstallBootImage in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FB968F6C2352C4720035E9E5 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				FB73BDE523A5F44D00240DED /* MacForgeKit.framework in Embed Frameworks */,
+				FB3E9F702461440700A09B97 /* CocoaMarkdown.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FBB312C524635D8500EE32A6 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 7;
+			files = (
+				FBB312C424635D0100EE32A6 /* DBLoginWindow.bundle in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		284A5C9D11A59F9100EAC012 /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = default.png; path = Resources/Images/default.png; sourceTree = SOURCE_ROOT; };
+		284A5CAC11A5A07500EAC012 /* DBApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = DBApplication.h; path = Classes/DBApplication.h; sourceTree = SOURCE_ROOT; };
+		284A5CAD11A5A07500EAC012 /* DBApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = DBApplication.m; path = Classes/DBApplication.m; sourceTree = SOURCE_ROOT; };
+		285AC1F10CDF6C2C008AF706 /* InstallBootImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = InstallBootImage.m; path = Classes/InstallBootImage.m; sourceTree = SOURCE_ROOT; };
+		286CC41A0CDCD61F00ACA824 /* BXBootImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BXBootImageView.h; path = Classes/BXBootImageView.h; sourceTree = SOURCE_ROOT; };
+		286CC41B0CDCD61F00ACA824 /* BXBootImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BXBootImageView.m; path = Classes/BXBootImageView.m; sourceTree = SOURCE_ROOT; };
+		28D089AC11A5DC3C001B092C /* InstallBootImage */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = InstallBootImage; sourceTree = BUILT_PRODUCTS_DIR; };
+		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = Classes/main.m; sourceTree = SOURCE_ROOT; };
+		31D0CD2798311E6CFBB543B6 /* libPods-DBLoginWindowLoader.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DBLoginWindowLoader.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		32ECA3AD45CF6F30647EDAEB /* libPods-DBLoginWindow.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DBLoginWindow.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4C7D6E68C167E6E7E0D9232A /* Pods-Dark Boot.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dark Boot.release.xcconfig"; path = "Target Support Files/Pods-Dark Boot/Pods-Dark Boot.release.xcconfig"; sourceTree = "<group>"; };
+		64A391865BF5730921B751F1 /* libPods-DBLoginWindowDYLIB.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-DBLoginWindowDYLIB.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		74072154EF503986B8FF6378 /* Pods-InstallBootImage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstallBootImage.release.xcconfig"; path = "Target Support Files/Pods-InstallBootImage/Pods-InstallBootImage.release.xcconfig"; sourceTree = "<group>"; };
+		798F2D6BF9C0196741A99E7A /* Pods-DBLoginWindowLoader.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DBLoginWindowLoader.debug.xcconfig"; path = "Target Support Files/Pods-DBLoginWindowLoader/Pods-DBLoginWindowLoader.debug.xcconfig"; sourceTree = "<group>"; };
+		7CBB9D75CA583173F46A8931 /* Pods-DBLoginWindow.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DBLoginWindow.debug.xcconfig"; path = "Target Support Files/Pods-DBLoginWindow/Pods-DBLoginWindow.debug.xcconfig"; sourceTree = "<group>"; };
+		8255C4DBCE3FB7524B4A883F /* Pods-DBLoginWindowDYLIB.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DBLoginWindowDYLIB.release.xcconfig"; path = "Target Support Files/Pods-DBLoginWindowDYLIB/Pods-DBLoginWindowDYLIB.release.xcconfig"; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Resources/Info.plist; sourceTree = SOURCE_ROOT; };
+		8D1107320486CEB800E47090 /* Dark Boot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Dark Boot.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		90C44267780FF8ECF9EC888A /* Pods-DBLoginWindow.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DBLoginWindow.release.xcconfig"; path = "Target Support Files/Pods-DBLoginWindow/Pods-DBLoginWindow.release.xcconfig"; sourceTree = "<group>"; };
+		A87EF00CAA1C01441F67D9EF /* Pods-InstallBootImage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstallBootImage.debug.xcconfig"; path = "Target Support Files/Pods-InstallBootImage/Pods-InstallBootImage.debug.xcconfig"; sourceTree = "<group>"; };
+		B8C0F13F3295DE16EB1D4C58 /* Pods_Dark_Boot.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Dark_Boot.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		BFD81DA7AE162B0DB1395DD1 /* Pods-Dark Boot.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Dark Boot.debug.xcconfig"; path = "Target Support Files/Pods-Dark Boot/Pods-Dark Boot.debug.xcconfig"; sourceTree = "<group>"; };
+		D9D52576F87914B20506FC22 /* Pods-DBLoginWindowDYLIB.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DBLoginWindowDYLIB.debug.xcconfig"; path = "Target Support Files/Pods-DBLoginWindowDYLIB/Pods-DBLoginWindowDYLIB.debug.xcconfig"; sourceTree = "<group>"; };
+		DF8AA38833888DAA49247E2C /* libPods-InstallBootImage.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-InstallBootImage.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		F4220372E0A6559AFE355775 /* Pods-DBLoginWindowLoader.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DBLoginWindowLoader.release.xcconfig"; path = "Target Support Files/Pods-DBLoginWindowLoader/Pods-DBLoginWindowLoader.release.xcconfig"; sourceTree = "<group>"; };
+		FB0A272720BCA1DD0066C021 /* FConvenience.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FConvenience.h; sourceTree = "<group>"; };
+		FB1120A520B0F797005263B5 /* apple.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = apple.png; sourceTree = "<group>"; };
+		FB1120A720B105F4005263B5 /* AYProgressIndicator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AYProgressIndicator.h; sourceTree = "<group>"; };
+		FB1120A820B105F4005263B5 /* AYProgressIndicator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AYProgressIndicator.m; sourceTree = "<group>"; };
+		FB3E9F55246133DB00A09B97 /* MF_sidebarButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MF_sidebarButton.h; sourceTree = "<group>"; };
+		FB3E9F56246133DB00A09B97 /* MF_sidebarButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MF_sidebarButton.m; sourceTree = "<group>"; };
+		FB3E9F58246143F200A09B97 /* CocoaMarkdown.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CocoaMarkdown.xcodeproj; path = CocoaMarkdown/CocoaMarkdown.xcodeproj; sourceTree = "<group>"; };
+		FB3E9F922461494B00A09B97 /* DBImages.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = DBImages.xcassets; path = "Dark Boot/DBImages.xcassets"; sourceTree = "<group>"; };
+		FB4501FD20B0DF2000BB77CB /* DBLoginWindow.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DBLoginWindow.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
+		FB45020420B0DF2000BB77CB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FB45020620B0DF2000BB77CB /* DBLoginWindow.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DBLoginWindow.h; sourceTree = "<group>"; };
+		FB45020720B0DF2000BB77CB /* DBLoginWindow.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DBLoginWindow.m; sourceTree = "<group>"; };
+		FB45020A20B0DF2000BB77CB /* ZKSwizzle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZKSwizzle.h; path = ZKSwizzle/ZKSwizzle.h; sourceTree = "<group>"; };
+		FB45020B20B0DF2000BB77CB /* ZKSwizzle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; name = ZKSwizzle.m; path = ZKSwizzle/ZKSwizzle.m; sourceTree = "<group>"; };
+		FB5464E01CB9A8D900508447 /* com.macenhance.dbcolor.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = com.macenhance.dbcolor.plist; path = Resources/com.macenhance.dbcolor.plist; sourceTree = SOURCE_ROOT; };
+		FB6F2744246363A000CF4242 /* CREDITS.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = CREDITS.md; path = Resources/Info/CREDITS.md; sourceTree = "<group>"; };
+		FB6F2745246363A000CF4242 /* LOGININFO.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = LOGININFO.md; path = Resources/Info/LOGININFO.md; sourceTree = "<group>"; };
+		FB6F2746246363A000CF4242 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = Resources/Info/README.md; sourceTree = "<group>"; };
+		FB6F2747246363A000CF4242 /* LICENSE_EULA */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = LICENSE_EULA; path = Resources/Info/LICENSE_EULA; sourceTree = "<group>"; };
+		FB73BDE323A5F42300240DED /* MacForgeKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MacForgeKit.framework; sourceTree = "<group>"; };
+		FBB312D624635F1D00EE32A6 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
+		FBB312DA2463610700EE32A6 /* CHANGELOG.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = CHANGELOG.md; path = ../CHANGELOG.md; sourceTree = "<group>"; };
+		FBC129BD1DEA2E4000B0D6D5 /* Application.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = Application.xib; path = Resources/Application.xib; sourceTree = "<group>"; };
+		FBF3F2F61CCBC5CB00B1B8CA /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = Resources/dsa_pub.pem; sourceTree = SOURCE_ROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		28D089AA11A5DC3C001B092C /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				563EAEDF4E2F8959C2333B63 /* libPods-InstallBootImage.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D11072E0486CEB800E47090 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB3E9F6F2461440700A09B97 /* CocoaMarkdown.framework in Frameworks */,
+				0FD1DEBD06F880620246F8C0 /* Pods_Dark_Boot.framework in Frameworks */,
+				FB73BDE423A5F42400240DED /* MacForgeKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FB4501FA20B0DF2000BB77CB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DBFE0E2CAE772F64BF008B74 /* libPods-DBLoginWindow.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		080E96DDFE201D6D7F000001 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				FB0A272720BCA1DD0066C021 /* FConvenience.h */,
+				FB3E9F55246133DB00A09B97 /* MF_sidebarButton.h */,
+				FB3E9F56246133DB00A09B97 /* MF_sidebarButton.m */,
+				FB1120A720B105F4005263B5 /* AYProgressIndicator.h */,
+				FB1120A820B105F4005263B5 /* AYProgressIndicator.m */,
+				286CC41A0CDCD61F00ACA824 /* BXBootImageView.h */,
+				286CC41B0CDCD61F00ACA824 /* BXBootImageView.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		19C28FACFE9D520D11CA2CBB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8D1107320486CEB800E47090 /* Dark Boot.app */,
+				28D089AC11A5DC3C001B092C /* InstallBootImage */,
+				FB4501FD20B0DF2000BB77CB /* DBLoginWindow.bundle */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		29B97314FDCFA39411CA2CEA /* BootXChanger */ = {
+			isa = PBXGroup;
+			children = (
+				FBB312DA2463610700EE32A6 /* CHANGELOG.md */,
+				FBB312D624635F1D00EE32A6 /* README.md */,
+				FB3E9F58246143F200A09B97 /* CocoaMarkdown.xcodeproj */,
+				FB45021220B0E01700BB77CB /* Dark Boot */,
+				FB45020220B0DF2000BB77CB /* DBLoginWindowBundle */,
+				29B97323FDCFA39411CA2CEA /* Frameworks */,
+				29B97315FDCFA39411CA2CEA /* InstallBootImage */,
+				19C28FACFE9D520D11CA2CBB /* Products */,
+				8487A6C0D07C7099DF6D185E /* Pods */,
+			);
+			name = BootXChanger;
+			sourceTree = "<group>";
+		};
+		29B97315FDCFA39411CA2CEA /* InstallBootImage */ = {
+			isa = PBXGroup;
+			children = (
+				285AC1F10CDF6C2C008AF706 /* InstallBootImage.m */,
+				29B97316FDCFA39411CA2CEA /* main.m */,
+			);
+			name = InstallBootImage;
+			sourceTree = "<group>";
+		};
+		29B97317FDCFA39411CA2CEA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				FB3E9F922461494B00A09B97 /* DBImages.xcassets */,
+				FB5464E01CB9A8D900508447 /* com.macenhance.dbcolor.plist */,
+				8D1107310486CEB800E47090 /* Info.plist */,
+				FBF3F2F61CCBC5CB00B1B8CA /* dsa_pub.pem */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		29B97323FDCFA39411CA2CEA /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				32ECA3AD45CF6F30647EDAEB /* libPods-DBLoginWindow.a */,
+				64A391865BF5730921B751F1 /* libPods-DBLoginWindowDYLIB.a */,
+				31D0CD2798311E6CFBB543B6 /* libPods-DBLoginWindowLoader.a */,
+				DF8AA38833888DAA49247E2C /* libPods-InstallBootImage.a */,
+				B8C0F13F3295DE16EB1D4C58 /* Pods_Dark_Boot.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		8487A6C0D07C7099DF6D185E /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				7CBB9D75CA583173F46A8931 /* Pods-DBLoginWindow.debug.xcconfig */,
+				90C44267780FF8ECF9EC888A /* Pods-DBLoginWindow.release.xcconfig */,
+				D9D52576F87914B20506FC22 /* Pods-DBLoginWindowDYLIB.debug.xcconfig */,
+				8255C4DBCE3FB7524B4A883F /* Pods-DBLoginWindowDYLIB.release.xcconfig */,
+				798F2D6BF9C0196741A99E7A /* Pods-DBLoginWindowLoader.debug.xcconfig */,
+				F4220372E0A6559AFE355775 /* Pods-DBLoginWindowLoader.release.xcconfig */,
+				BFD81DA7AE162B0DB1395DD1 /* Pods-Dark Boot.debug.xcconfig */,
+				4C7D6E68C167E6E7E0D9232A /* Pods-Dark Boot.release.xcconfig */,
+				A87EF00CAA1C01441F67D9EF /* Pods-InstallBootImage.debug.xcconfig */,
+				74072154EF503986B8FF6378 /* Pods-InstallBootImage.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+		FB11870F1DE639E3008BBBF1 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				FB1120A520B0F797005263B5 /* apple.png */,
+				284A5C9D11A59F9100EAC012 /* default.png */,
+			);
+			name = Images;
+			sourceTree = "<group>";
+		};
+		FB1187101DE639F5008BBBF1 /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				FB6F2744246363A000CF4242 /* CREDITS.md */,
+				FB6F2747246363A000CF4242 /* LICENSE_EULA */,
+				FB6F2745246363A000CF4242 /* LOGININFO.md */,
+				FB6F2746246363A000CF4242 /* README.md */,
+			);
+			name = Info;
+			sourceTree = "<group>";
+		};
+		FB3E9F59246143F200A09B97 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FB3E9F64246143F200A09B97 /* CocoaMarkdown.framework */,
+				FB3E9F66246143F200A09B97 /* CocoaMarkdownTests-iOS.xctest */,
+				FB3E9F68246143F200A09B97 /* CocoaMarkdown.framework */,
+				FB3E9F6A246143F200A09B97 /* CocoaMarkdownTests-Mac.xctest */,
+				FB3E9F6C246143F200A09B97 /* Example-iOS.app */,
+				FB3E9F6E246143F200A09B97 /* Example-Mac.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FB45020220B0DF2000BB77CB /* DBLoginWindowBundle */ = {
+			isa = PBXGroup;
+			children = (
+				FB45020920B0DF2000BB77CB /* ZKSwizzle */,
+				FB45020620B0DF2000BB77CB /* DBLoginWindow.h */,
+				FB45020720B0DF2000BB77CB /* DBLoginWindow.m */,
+				FB45020420B0DF2000BB77CB /* Info.plist */,
+			);
+			path = DBLoginWindowBundle;
+			sourceTree = "<group>";
+		};
+		FB45020920B0DF2000BB77CB /* ZKSwizzle */ = {
+			isa = PBXGroup;
+			children = (
+				FB45020A20B0DF2000BB77CB /* ZKSwizzle.h */,
+				FB45020B20B0DF2000BB77CB /* ZKSwizzle.m */,
+			);
+			name = ZKSwizzle;
+			sourceTree = "<group>";
+		};
+		FB45021220B0E01700BB77CB /* Dark Boot */ = {
+			isa = PBXGroup;
+			children = (
+				284A5CAC11A5A07500EAC012 /* DBApplication.h */,
+				284A5CAD11A5A07500EAC012 /* DBApplication.m */,
+				FBC129BD1DEA2E4000B0D6D5 /* Application.xib */,
+				FB11870F1DE639E3008BBBF1 /* Images */,
+				FB1187101DE639F5008BBBF1 /* Info */,
+				080E96DDFE201D6D7F000001 /* Classes */,
+				29B97317FDCFA39411CA2CEA /* Resources */,
+				FB73BDE323A5F42300240DED /* MacForgeKit.framework */,
+			);
+			name = "Dark Boot";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		28D089AB11A5DC3C001B092C /* InstallBootImage */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 28D089B211A5DC6D001B092C /* Build configuration list for PBXNativeTarget "InstallBootImage" */;
+			buildPhases = (
+				24F4C5FE34F62265ACFCC8CF /* [CP] Check Pods Manifest.lock */,
+				28D089A911A5DC3C001B092C /* Sources */,
+				28D089AA11A5DC3C001B092C /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = InstallBootImage;
+			productName = InstallBootImage;
+			productReference = 28D089AC11A5DC3C001B092C /* InstallBootImage */;
+			productType = "com.apple.product-type.tool";
+		};
+		8D1107260486CEB800E47090 /* Dark Boot */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Dark Boot" */;
+			buildPhases = (
+				460F15ED0EDC72226A4E59A0 /* [CP] Check Pods Manifest.lock */,
+				FBB312C624635E6F00EE32A6 /* Resources */,
+				FBB312C524635D8500EE32A6 /* CopyFiles */,
+				28D3C3A60CDE8A5F003F3018 /* CopyFiles */,
+				8D11072C0486CEB800E47090 /* Sources */,
+				FB968F6C2352C4720035E9E5 /* Embed Frameworks */,
+				8D11072E0486CEB800E47090 /* Frameworks */,
+				1C0FDD1EC3C5F9C45C78C668 /* [CP] Embed Pods Frameworks */,
+				FBB312E9246361F100EE32A6 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				28D089B511A5DCB9001B092C /* PBXTargetDependency */,
+			);
+			name = "Dark Boot";
+			productInstallPath = "$(HOME)/Applications";
+			productName = BootXChanger;
+			productReference = 8D1107320486CEB800E47090 /* Dark Boot.app */;
+			productType = "com.apple.product-type.application";
+		};
+		FB4501FC20B0DF2000BB77CB /* DBLoginWindow */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FB45021120B0DF2000BB77CB /* Build configuration list for PBXNativeTarget "DBLoginWindow" */;
+			buildPhases = (
+				9840E07E53340BEE7B38217A /* [CP] Check Pods Manifest.lock */,
+				FB4501F920B0DF2000BB77CB /* Sources */,
+				FB4501FA20B0DF2000BB77CB /* Frameworks */,
+				FB4501FB20B0DF2000BB77CB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DBLoginWindow;
+			productName = DBLoginWindow;
+			productReference = FB4501FD20B0DF2000BB77CB /* DBLoginWindow.bundle */;
+			productType = "com.apple.product-type.bundle";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		29B97313FDCFA39411CA2CEA /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 1130;
+				TargetAttributes = {
+					28D089AB11A5DC3C001B092C = {
+						DevelopmentTeam = EX596BNL45;
+						ProvisioningStyle = Manual;
+					};
+					8D1107260486CEB800E47090 = {
+						DevelopmentTeam = EX596BNL45;
+						ProvisioningStyle = Automatic;
+					};
+					FB4501FC20B0DF2000BB77CB = {
+						CreatedOnToolsVersion = 9.0.1;
+						DevelopmentTeam = EX596BNL45;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Dark Boot" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = en;
+			hasScannedForEncodings = 1;
+			knownRegions = (
+				zh_TW,
+				"British English",
+				zh_CN,
+				nl,
+				sv,
+				it,
+				Base,
+				es,
+				de,
+				fr,
+				en,
+				hu,
+				ja,
+				ru,
+			);
+			mainGroup = 29B97314FDCFA39411CA2CEA /* BootXChanger */;
+			productRefGroup = 19C28FACFE9D520D11CA2CBB /* Products */;
+			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = FB3E9F59246143F200A09B97 /* Products */;
+					ProjectRef = FB3E9F58246143F200A09B97 /* CocoaMarkdown.xcodeproj */;
+				},
+			);
+			projectRoot = "";
+			targets = (
+				8D1107260486CEB800E47090 /* Dark Boot */,
+				28D089AB11A5DC3C001B092C /* InstallBootImage */,
+				FB4501FC20B0DF2000BB77CB /* DBLoginWindow */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		FB3E9F64246143F200A09B97 /* CocoaMarkdown.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CocoaMarkdown.framework;
+			remoteRef = FB3E9F63246143F200A09B97 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FB3E9F66246143F200A09B97 /* CocoaMarkdownTests-iOS.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "CocoaMarkdownTests-iOS.xctest";
+			remoteRef = FB3E9F65246143F200A09B97 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FB3E9F68246143F200A09B97 /* CocoaMarkdown.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = CocoaMarkdown.framework;
+			remoteRef = FB3E9F67246143F200A09B97 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FB3E9F6A246143F200A09B97 /* CocoaMarkdownTests-Mac.xctest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = "CocoaMarkdownTests-Mac.xctest";
+			remoteRef = FB3E9F69246143F200A09B97 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FB3E9F6C246143F200A09B97 /* Example-iOS.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "Example-iOS.app";
+			remoteRef = FB3E9F6B246143F200A09B97 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FB3E9F6E246143F200A09B97 /* Example-Mac.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = "Example-Mac.app";
+			remoteRef = FB3E9F6D246143F200A09B97 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FB4501FB20B0DF2000BB77CB /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FBB312C624635E6F00EE32A6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FBB312CA24635EBF00EE32A6 /* apple.png in Resources */,
+				FB6F274B246363A000CF4242 /* LICENSE_EULA in Resources */,
+				FBB312CB24635EBF00EE32A6 /* default.png in Resources */,
+				FB6F274A246363A000CF4242 /* README.md in Resources */,
+				FBB312D124635EBF00EE32A6 /* com.macenhance.dbcolor.plist in Resources */,
+				FBB312D224635EBF00EE32A6 /* dsa_pub.pem in Resources */,
+				FBB312C824635EB000EE32A6 /* Application.xib in Resources */,
+				FBB312C724635E8E00EE32A6 /* DBImages.xcassets in Resources */,
+				FBB312DB2463610700EE32A6 /* CHANGELOG.md in Resources */,
+				FB6F2749246363A000CF4242 /* LOGININFO.md in Resources */,
+				FB6F2748246363A000CF4242 /* CREDITS.md in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1C0FDD1EC3C5F9C45C78C668 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Dark Boot/Pods-Dark Boot-frameworks.sh",
+				"${BUILT_PRODUCTS_DIR}/LetsMove/LetsMove.framework",
+				"${PODS_ROOT}/Sparkle/Sparkle.framework",
+				"${PODS_ROOT}/Sparkle/Sparkle.framework.dSYM",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/LetsMove.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Sparkle.framework",
+				"${DWARF_DSYM_FOLDER_PATH}/Sparkle.framework.dSYM",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Dark Boot/Pods-Dark Boot-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		24F4C5FE34F62265ACFCC8CF /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-InstallBootImage-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		460F15ED0EDC72226A4E59A0 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Dark Boot-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9840E07E53340BEE7B38217A /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DBLoginWindow-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FBB312E9246361F100EE32A6 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Increment build number\n\nbuildNumber=$(/usr/libexec/PlistBuddy -c \"Print CFBundleVersion\" \"${INFOPLIST_FILE}\")\nbuildNumber=$(($buildNumber + 1))\n/usr/libexec/PlistBuddy -c \"Set :CFBundleVersion $buildNumber\" \"${INFOPLIST_FILE}\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		28D089A911A5DC3C001B092C /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				28D08A2411A5E54D001B092C /* InstallBootImage.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		8D11072C0486CEB800E47090 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB1120A920B105F4005263B5 /* AYProgressIndicator.m in Sources */,
+				8D11072D0486CEB800E47090 /* main.m in Sources */,
+				286CC41C0CDCD61F00ACA824 /* BXBootImageView.m in Sources */,
+				FB3E9F57246133DB00A09B97 /* MF_sidebarButton.m in Sources */,
+				284A5CAE11A5A07500EAC012 /* DBApplication.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		FB4501F920B0DF2000BB77CB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FB45020820B0DF2000BB77CB /* DBLoginWindow.m in Sources */,
+				FB45020C20B0DF2000BB77CB /* ZKSwizzle.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		28D089B511A5DCB9001B092C /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 28D089AB11A5DC3C001B092C /* InstallBootImage */;
+			targetProxy = 28D089B411A5DCB9001B092C /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		28D089AE11A5DC3D001B092C /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = A87EF00CAA1C01441F67D9EF /* Pods-InstallBootImage.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = EX596BNL45;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				GCC_VERSION = "";
+				INSTALL_PATH = /usr/local/bin;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PRODUCT_NAME = InstallBootImage;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		28D089AF11A5DC3D001B092C /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 74072154EF503986B8FF6378 /* Pods-InstallBootImage.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = EX596BNL45;
+				ENABLE_HARDENED_RUNTIME = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				GCC_VERSION = "";
+				INSTALL_PATH = /usr/local/bin;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PRODUCT_NAME = InstallBootImage;
+				SDKROOT = macosx;
+				SKIP_INSTALL = YES;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		C01FCF4B08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BFD81DA7AE162B0DB1395DD1 /* Pods-Dark Boot.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = DBIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 222;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+					"$(PROJECT_DIR)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_1 = "\"$(SRCROOT)\"";
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_VERSION = "";
+				INFOPLIST_FILE = Resources/Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				MARKETING_VERSION = 8.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.macenhance.DarkBoot;
+				PRODUCT_NAME = "Dark Boot";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = app;
+				ZERO_LINK = YES;
+			};
+			name = Debug;
+		};
+		C01FCF4C08A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 4C7D6E68C167E6E7E0D9232A /* Pods-Dark Boot.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = DBIcon;
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 222;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_HARDENED_RUNTIME = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Frameworks",
+					"$(PROJECT_DIR)",
+				);
+				FRAMEWORK_SEARCH_PATHS_QUOTED_FOR_TARGET_1 = "\"$(SRCROOT)\"";
+				GCC_CHAR_IS_UNSIGNED_CHAR = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREFIX_HEADER = "";
+				GCC_VERSION = "";
+				INFOPLIST_FILE = Resources/Info.plist;
+				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				MARKETING_VERSION = 8.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.macenhance.DarkBoot;
+				PRODUCT_NAME = "Dark Boot";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SDKROOT = macosx;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		C01FCF4F08A954540054247B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_VERSION = 4.0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.4u.sdk";
+			};
+			name = Debug;
+		};
+		C01FCF5008A954540054247B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				GCC_VERSION = 4.0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
+				SDKROOT = "$(DEVELOPER_SDK_DIR)/MacOSX10.4u.sdk";
+				VALID_ARCHS = "i386 x86_64";
+			};
+			name = Release;
+		};
+		FB45020F20B0DF2000BB77CB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 7CBB9D75CA583173F46A8931 /* Pods-DBLoginWindow.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 2;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEPLOYMENT_LOCATION = YES;
+				DEVELOPMENT_TEAM = EX596BNL45;
+				DSTROOT = /;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = "${SRCROOT}/DBLoginWindowBundle/Info.plist";
+				INSTALL_PATH = "/Library/Application Support/MacEnhance/Plugins";
+				MACH_O_TYPE = mh_dylib;
+				MARKETING_VERSION = 1.0.1;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = com.macenhance.DBLoginWindow;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = NO;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Debug;
+		};
+		FB45021020B0DF2000BB77CB /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 90C44267780FF8ECF9EC888A /* Pods-DBLoginWindow.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_STYLE = Automatic;
+				COMBINE_HIDPI_IMAGES = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 2;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEPLOYMENT_LOCATION = YES;
+				DEVELOPMENT_TEAM = EX596BNL45;
+				DSTROOT = /;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = NO;
+				GCC_VERSION = "";
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				INFOPLIST_FILE = "${SRCROOT}/DBLoginWindowBundle/Info.plist";
+				INSTALL_PATH = "/Library/Application Support/MacEnhance/Plugins";
+				MACH_O_TYPE = mh_dylib;
+				MARKETING_VERSION = 1.0.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				PRODUCT_BUNDLE_IDENTIFIER = com.macenhance.DBLoginWindow;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = macosx;
+				SKIP_INSTALL = NO;
+				WRAPPER_EXTENSION = bundle;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		28D089B211A5DC6D001B092C /* Build configuration list for PBXNativeTarget "InstallBootImage" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				28D089AE11A5DC3D001B092C /* Debug */,
+				28D089AF11A5DC3D001B092C /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4A08A954540054247B /* Build configuration list for PBXNativeTarget "Dark Boot" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4B08A954540054247B /* Debug */,
+				C01FCF4C08A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "Dark Boot" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				C01FCF4F08A954540054247B /* Debug */,
+				C01FCF5008A954540054247B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FB45021120B0DF2000BB77CB /* Build configuration list for PBXNativeTarget "DBLoginWindow" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FB45020F20B0DF2000BB77CB /* Debug */,
+				FB45021020B0DF2000BB77CB /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 29B97313FDCFA39411CA2CEA /* Project object */;
+}

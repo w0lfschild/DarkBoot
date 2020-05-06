@@ -1,0 +1,21 @@
+platform :osx, '10.9'
+
+target 'Dark Boot' do
+  use_frameworks!
+
+  pod 'Sparkle'
+  pod 'AppCenter'
+  pod 'LetsMove'
+end
+
+target 'DBLoginWindow' do
+end
+
+target 'DBLoginWindowDYLIB' do
+end
+
+target 'DBLoginWindowLoader' do
+end
+
+target 'InstallBootImage' do
+end
